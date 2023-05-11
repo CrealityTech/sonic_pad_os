@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "==========post-dragon========"
+
+mv ${ROOT_DIR}/${IMG_NAME} ${ROOT_DIR}/t800${IMG_NAME#tina_r818}
+
+echo -e '\033[0;31;1m'
+echo ${ROOT_DIR}/t800${IMG_NAME#tina_r818}
+echo -e '\033[0m'
+
+echo "==========post-dragon done========"

@@ -1,0 +1,9 @@
+#.*
+*.o
+*.patch
+config/zconf.hash.c
+config/zconf.lex.c
+config/zconf.tab.c
+config/conf
+config/mconf
+config/mconf_check
