@@ -1,0 +1,1 @@
+srcs-y += pmu-aw1736.c

@@ -1,0 +1,13 @@
+
+menu "Services"
+
+
+config STANDBY_SERVICE
+	def_bool y
+	prompt "Standby service support"
+
+config FDT_USED
+	def_bool y
+	prompt "fdt lib support"
+
+endmenu

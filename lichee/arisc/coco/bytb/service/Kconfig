@@ -1,0 +1,13 @@
+menu "System service config"
+
+config CIR_WAKEUP
+	bool "Ir receive to wakeup system"
+	default n
+
+config LOOP_TASK
+	bool "Loop system service task"
+	default n
+
+source "bytb/service/psci/Kconfig"
+
+endmenu

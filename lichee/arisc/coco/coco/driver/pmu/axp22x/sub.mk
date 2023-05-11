@@ -1,0 +1,1 @@
+srcs-y += pmu-axp22x.c

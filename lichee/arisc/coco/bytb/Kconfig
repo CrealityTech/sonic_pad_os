@@ -1,0 +1,11 @@
+menu "BYTB configs"
+
+config BYTB_DEBUG
+	bool "BYTB task debug"
+	default n
+	---help---
+	create a task to debug bytb system
+
+source "bytb/service/Kconfig"
+
+endmenu

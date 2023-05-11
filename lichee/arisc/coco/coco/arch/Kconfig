@@ -1,0 +1,14 @@
+
+config CPUX_ARM32
+	bool
+
+config CPUX_ARM64
+	bool
+
+config OPENRISC
+	bool
+
+config COCO_OS
+	bool
+
+source "coco/arch/openrisc/Kconfig"

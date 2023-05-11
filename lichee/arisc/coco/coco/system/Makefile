@@ -1,0 +1,10 @@
+obj-y += device.o
+obj-y += idle.o
+obj-y += init.o
+obj-y += notifier.o
+obj-y += msgmanager.o
+obj-y += pipe.o
+obj-$(CFG_SYSTEM_DEBUG) += sysdebug.o
+obj-y += debug/
+obj-y += time/
+obj-y += cpu/

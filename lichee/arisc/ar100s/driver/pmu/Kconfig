@@ -1,0 +1,20 @@
+menuconfig PMU_USED
+	bool
+	prompt "PMU used"
+	default y
+
+if PMU_USED
+
+config AXP803_USED
+	bool "AXP803 used"
+
+config AXP2202_USED
+	bool "AXP2202 used"
+
+config AXP806_USED
+	bool "AXP806 used"
+
+config AXP858_USED
+	bool "AXP858 used"
+
+endif # PMU_USED

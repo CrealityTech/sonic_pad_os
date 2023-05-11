@@ -1,0 +1,4 @@
+menuconfig TWI_USED
+	def_bool y
+	prompt "TWI used"
+

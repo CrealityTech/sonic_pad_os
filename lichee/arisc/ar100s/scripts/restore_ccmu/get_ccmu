@@ -1,0 +1,106 @@
+#!/bin/bash
+#autor --luojie
+#date  --2017/09/26
+
+dec2hex() {
+	printf "%x" $1
+}
+
+case $1 in
+clean)
+	rm ccu_name_back.ccu
+	rm ccu_name_base.ccu
+	rm ccu_addr_x.ccu
+	rm ccu_addr_d.ccu
+	rm ccu_suspend_early.ccu
+	rm ccu_resume_early.ccu
+	rm ccu_name
+	;;
+
+get)
+
+rm ccu_suspend
+rm ccu_resume
+
+awk '{printf $1 "\n"}' $2 > ccu_name
+
+sed -i 's/[A-Z]/\l&/g' ccu_name
+sed -i 's/_/ /g' ccu_name
+sed -i 's/\b[a-z]/\u&/g' ccu_name
+sed -i 's/Reg//g' ccu_name
+sed -i 's/ //g' ccu_name
+sed -i 's/\///g' ccu_name
+sed  's/$/\;/g' ccu_name > ccu_name_struct
+
+awk '{printf $2 "\n"}' $2 > ccu_addr_x.ccu
+
+sed -i 's/x//g' ccu_addr_x.ccu
+awk 'BEGIN{
+	while(getline) {
+		n=$1;
+		m=strtonum("0x" $1)
+		print m
+	};
+	close("ccu_addr_x.ccu");
+}' ccu_addr_x.ccu > ccu_addr_d.ccu
+
+res_str_o="reserved"
+insert_line=1
+ccu_current_line=1
+ccu_member_line=`sed -n '$=' ccu_name`
+
+while [ $ccu_current_line -lt $ccu_member_line ]
+do
+	ccu_next_line=$((ccu_current_line + 1))
+	a=`awk 'NR=="'$ccu_current_line'" {print $1}' ccu_addr_d.ccu`
+	b=`awk 'NR=="'$ccu_next_line'" {print $1}' ccu_addr_d.ccu`
+	addr_hex=$(dec2hex $((a+4)))
+	c=$((b-a))
+	arrary_count=$((c/4))
+
+	if [ $arrary_count -eq 1 ]
+	then
+		echo "diao" >/dev/null
+	elif [ $arrary_count -eq 2 ]
+	then
+		res_str=${res_str_o}"${addr_hex}"";"
+		insert_line=$((ccu_current_line + already_insert))
+		sed -i ""$insert_line"a$res_str" ccu_name_struct
+		let already_insert++
+	else
+		let arrary_count--
+		res_str=${res_str_o}"${addr_hex}""["${arrary_count}"]"";"
+		insert_line=$((ccu_current_line  + already_insert))
+		sed -i ""$insert_line"a$res_str" ccu_name_struct
+		let already_insert++
+	fi
+
+	let ccu_current_line++
+done
+
+
+sed  's/^/CCM_REG_BACK./g' ccu_name > ccu_name_back.ccu
+sed  's/^/CCM_REG_BASE->/g' ccu_name > ccu_name_base.ccu
+
+awk 'NR==FNR{a[NR]=$0 ;next}{print a[FNR]" = "$0;}' ccu_name_back.ccu ccu_name_base.ccu > ccu_suspend_early.ccu
+awk 'NR==FNR{a[NR]=$0 ;next}{print a[FNR]" = "$0;}' ccu_name_base.ccu ccu_name_back.ccu > ccu_resume_early.ccu
+
+
+sed -r ':a;s/(^.{1,30})=/\1 =/;ta' ccu_suspend_early.ccu > ccu_suspend
+sed -r ':a;s/(^.{1,30})=/\1 =/;ta' ccu_resume_early.ccu > ccu_resume
+
+#rm ccu_name_back.ccu
+#rm ccu_name_base.ccu
+#rm ccu_addr_x.ccu
+#rm ccu_addr_d.ccu
+#rm ccu_suspend_early.ccu
+#rm ccu_resume_early.ccu
+#rm ccu_name
+
+sed -i 's/^/\t/g' ccu_suspend
+sed -i 's/^/\t/g' ccu_resume
+
+sed -i 's/$/\;/g' ccu_suspend
+sed -i 's/$/\;/g' ccu_resume
+	;;
+esac

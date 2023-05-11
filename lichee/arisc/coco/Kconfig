@@ -1,0 +1,11 @@
+mainmenu "coco cpus config"
+
+
+source "coco/arch/Kconfig"
+
+source "bytb/Kconfig"
+
+source "coco/Kconfig"
+
+
+

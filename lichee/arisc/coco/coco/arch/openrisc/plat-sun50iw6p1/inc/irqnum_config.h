@@ -1,0 +1,186 @@
+#ifndef __IRQNUM_CONFIG_H__
+#define __IRQNUM_CONFIG_H__
+//------------------------------------------------------------------------------
+// interrupt source
+//------------------------------------------------------------------------------
+#define INTC_R_NMI_IRQ      0
+#define INTC_R_TIMER0_IRQ   1
+#define INTC_R_TIMER1_IRQ   2
+#define INTC_R_TIMER2_IRQ   3
+#define INTC_R_TIMER3_IRQ   4
+#define INTC_R_ALM0_IRQ     5
+#define INTC_R_ALM1_IRQ     6
+#define INTC_R_WDOG_IRQ     7
+#define INTC_R_TWD_IRQ      8
+#define INTC_R_PL_EINT_IRQ  9
+#define INTC_R_UART_IRQ     10
+#define INTC_R_TWI_IRQ      11
+#define INTC_R_RSB_IRQ      12
+#define INTC_R_CIR_IRQ      13
+#define INTC_R_OWC_IRQ      14
+#define INTC_R_PM_EINT_IRQ  15
+#define INTC_R_CPUIDLE      16
+#define INTC_R_GIC_OUT_IRQ  17
+#define INTC_R_SPINLOCK_IRQ 18
+#define INTC_R_M_BOX_IRQ    19
+#define INTC_R_DMA_IRQ      20
+#define INTC_R_GINT0_IRQ    21
+#define INTC_R_GINT1_IRQ    22
+#define INTC_R_GINT2_IRQ    23
+#define INTC_R_GINT3_IRQ    24
+#define INTC_R_GINT4_IRQ    25
+#define INTC_R_GINT5_IRQ    26
+#define INTC_R_GINT6_IRQ    27
+#define INTC_R_GINT7_IRQ    28
+#define INTC_R_GINT8_IRQ    29
+#define INTC_R_GINT9_IRQ    30
+#define INTC_R_GINT10_IRQ   31
+#define INTC_R_GINT11_IRQ   32
+#define INTC_R_GINT12_IRQ   33
+#define INTC_R_GINT13_IRQ   34
+#define INTC_R_GINT14_IRQ   35
+#define INTC_R_GINT15_IRQ   36
+//------------------------------------------------------------------------------
+//the max interrupt source number
+//------------------------------------------------------------------------------
+#define IRQ_R_SOUCE_MAX     37
+
+/*
+ * gic of cpu define
+ */
+enum gic_interrupt {
+	GIC_INTERRUPT_PPI_END = 31,
+	GIC_INTERRUPT_UART0 = 32,
+	GIC_INTERRUPT_UART1,
+	GIC_INTERRUPT_UART2,
+	GIC_INTERRUPT_UART3,
+	GIC_INTERRUPT_TWI0,
+	GIC_INTERRUPT_TWI1,
+	GIC_INTERRUPT_TWI2,
+	GIC_INTERRUPT_TWI3,
+	GIC_INTERRUPT_SCR0,
+	GIC_INTERRUPT_SCR1,
+	GIC_INTERRUPT_SPI0,
+	GIC_INTERRUPT_SPI1,
+	GIC_INTERRUPT_GMAC0,
+
+	GIC_INTERRUPT_TS0 = 46,
+	GIC_INTERRUPT_THS,
+	GIC_INTERRUPT_LRADC,
+	GIC_INTERRUPT_IR_TX,
+	GIC_INTERRUPT_I2S_PCM0,
+	GIC_INTERRUPT_I2S_PCM1,
+	GIC_INTERRUPT_I2S_PCM2,
+	GIC_INTERRUPT_S_PDIF,
+	GIC_INTERRUPT_DMIC,
+	GIC_INTERRUPT_USB2_DRD_DEVICE,
+	GIC_INTERRUPT_USB2_DRD_EHCI,
+	GIC_INTERRUPT_USB2_DRD_OHCI,
+	GIC_INTERRUPT_USB3_HOST,
+
+	GIC_INTERRUPT_USB2_HOST3_EHCI = 60,
+	GIC_INTERRUPT_USB2_HOST3_OHCI,
+	GIC_INTERRUPT_I2S_PCM3,
+	GIC_INTERRUPT_AUDIO_HUB,
+
+	GIC_INTERRUPT_DRAM = 65,
+	GIC_INTERRUPT_NAND0,
+	GIC_INTERRUPT_SMHC0,
+	GIC_INTERRUPT_SMHC1,
+	GIC_INTERRUPT_SMHC2,
+
+	GIC_INTERRUPT_DMA = 75,
+	GIC_INTERRUPT_MBOX,
+	GIC_INTERRUPT_SPINLOCK,
+	GIC_INTERRUPT_HSTIMER0,
+	GIC_INTERRUPT_SMC,
+	GIC_INTERRUPT_TIMER0,
+	GIC_INTERRUPT_TIMER1,
+	GIC_INTERRUPT_WDOG,
+	GIC_INTERRUPT_GPIOB,
+
+	GIC_INTERRUPT_GPIOF = 85,
+	GIC_INTERRUPT_GPIOG,
+	GIC_INTERRUPT_CLK_DET,
+	GIC_INTERRUPT_BUS_TIMEOUT,
+	GIC_INTERRUPT_IOMMU,
+	GIC_INTERRUPT_PSI,
+	GIC_INTERRUPT_GPIOH,
+
+	GIC_INTERRUPT_HDMI_TX0 = 96,
+	GIC_INTERRUPT_TCON_LCD0,
+	GIC_INTERRUPT_TCON_TV0,
+	GIC_INTERRUPT_CSI0_DMA0,
+	GIC_INTERRUPT_CSI0_DMA1,
+
+	GIC_INTERRUPT_CSI0_PARSER0 = 102,
+
+	GIC_INTERRUPT_CSI0_CCI0 = 104,
+
+	GIC_INTERRUPT_R_EXTERNAL_NMI = 128,
+	GIC_INTERRUPT_R_TIMER0,
+	GIC_INTERRUPT_R_TIMER1,
+	GIC_INTERRUPT_R_TIMER2,
+	GIC_INTERRUPT_R_TIMER3,
+	GIC_INTERRUPT_R_ALARM0,
+	GIC_INTERRUPT_R_ALARM1,
+	GIC_INTERRUPT_R_WDOG,
+	GIC_INTERRUPT_R_TWDOG,
+	GIC_INTERRUPT_R_GPIOL,
+	GIC_INTERRUPT_R_UART0,
+	GIC_INTERRUPT_R_TWI0,
+	GIC_INTERRUPT_R_RSB,
+	GIC_INTERRUPT_R_IR,
+	GIC_INTERRUPT_R_OWC,
+	GIC_INTERRUPT_R_GPIOM,
+	GIC_INTERRUPT_R_CPUIDLE,
+};
+
+static u32 irq_table[][2] = {
+	{     INTC_R_NMI_IRQ,   GIC_INTERRUPT_R_EXTERNAL_NMI },
+	{  INTC_R_TIMER0_IRQ,         GIC_INTERRUPT_R_TIMER0 },
+	{  INTC_R_TIMER1_IRQ,         GIC_INTERRUPT_R_TIMER1 },
+	{  INTC_R_TIMER2_IRQ,         GIC_INTERRUPT_R_TIMER2 },
+	{  INTC_R_TIMER3_IRQ,         GIC_INTERRUPT_R_TIMER3 },
+	{    INTC_R_ALM0_IRQ,         GIC_INTERRUPT_R_ALARM0 },
+	{    INTC_R_ALM1_IRQ,         GIC_INTERRUPT_R_ALARM1 },
+	{    INTC_R_WDOG_IRQ,           GIC_INTERRUPT_R_WDOG },
+	{     INTC_R_TWD_IRQ,          GIC_INTERRUPT_R_TWDOG },
+	{ INTC_R_PL_EINT_IRQ,          GIC_INTERRUPT_R_GPIOL },
+	{    INTC_R_UART_IRQ,          GIC_INTERRUPT_R_UART0 },
+	{     INTC_R_TWD_IRQ,           GIC_INTERRUPT_R_TWI0 },
+	{     INTC_R_RSB_IRQ,            GIC_INTERRUPT_R_RSB },
+	{     INTC_R_CIR_IRQ,             GIC_INTERRUPT_R_IR },
+	{     INTC_R_OWC_IRQ,            GIC_INTERRUPT_R_OWC },
+	{ INTC_R_PM_EINT_IRQ,          GIC_INTERRUPT_R_GPIOM },
+	{     INTC_R_CPUIDLE,        GIC_INTERRUPT_R_CPUIDLE },
+};
+
+static inline s32 CPUS_IRQ_MAPTO_CPUX(u32 intno)
+{
+	u32 cpus_irq;
+
+	for (cpus_irq = 0; cpus_irq < 13; cpus_irq++) {
+		if (irq_table[cpus_irq][0] == intno)
+			return (irq_table[cpus_irq][1] -
+				(GIC_INTERRUPT_PPI_END + 1));
+	}
+
+	return -1;
+}
+
+static inline s32 CPUX_IRQ_MAPTO_CPUS(u32 intno)
+{
+	u32 cpux_irq;
+
+	for (cpux_irq = 0; cpux_irq < 13; cpux_irq++) {
+		if (irq_table[cpux_irq][1] ==
+		    (intno + (GIC_INTERRUPT_PPI_END + 1)))
+			return irq_table[cpux_irq][0];
+	}
+
+	return -1;
+}
+
+#endif
+

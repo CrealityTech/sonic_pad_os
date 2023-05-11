@@ -1,0 +1,13 @@
+#ifndef __RTC_LIB_H__
+#define __RTC_LIB_H__
+
+
+#define RTC_XO_CTRL			RTC_REG_BASE+ 0x160
+#define SUNXI_BOOT_CPU_STANDBY		R_CPUCFG_REG_BASE + 0x1d4
+#define SUNXI_STANDBY_SOFT_ENTRY	R_CPUCFG_REG_BASE + 0x1d8
+
+
+
+#endif
+
+

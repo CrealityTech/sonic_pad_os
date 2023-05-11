@@ -1,0 +1,4 @@
+menuconfig WATCHDOG_USED
+	def_bool y
+	prompt "WATCHDOG used"
+

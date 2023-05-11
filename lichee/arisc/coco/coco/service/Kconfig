@@ -1,0 +1,37 @@
+
+menu "Services"
+
+config RSB_SERVICE
+	def_bool y
+	prompt "RSB service support"
+	select RSB_USED
+
+config STANDBY_POWER
+	def_bool y
+	prompt "Standby power support"
+
+config DVFS_SERVICE
+	def_bool n
+	prompt "DVFS service support"
+
+if DVFS_SERVICE
+	config DVFS_CPU
+		def_bool n
+		prompt "CPU DVFS"
+
+	config DVFS_DRAM
+		def_bool n
+		prompt "DRAM DVFS"
+
+	if DVFS_CPU
+		config DVFS_USED
+			def_bool n
+			prompt "CPU DVFS way used"
+
+		help
+			CPU DVFS has two ways: DVFS way and AVS way.
+			Say Y here to use DVFS way, otherwise to use AVS way.
+	endif
+endif
+
+endmenu

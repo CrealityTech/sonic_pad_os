@@ -1,0 +1,16 @@
+
+menuconfig RSB_USED
+	def_bool y
+	prompt "RSB used"
+
+if RSB_USED
+
+config RSB_HALDWORD_OP
+	bool "RSB halfword operator"
+config RSB_WORD_OP
+	bool "RSB word operator"
+config RSB_BYTE_OP
+	bool "RSB byte operator"
+	default y
+endif
+

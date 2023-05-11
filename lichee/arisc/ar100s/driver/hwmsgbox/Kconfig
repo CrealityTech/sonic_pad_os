@@ -1,0 +1,18 @@
+menuconfig MSGBOX_USED
+	def_bool y
+	prompt "MSGBOX used"
+
+choice MSGBOX_IP
+	prompt "Sunxi msgbox to use"
+
+config HW_MSGBOX_USED
+	bool
+	prompt "Old IP MSGBOX used"
+	depends on MSGBOX_USED
+
+config HW_MSGBOX_EXTENDED_USED
+	bool
+	prompt "New IP MSGBOX used"
+	depends on MSGBOX_USED
+
+endchoice

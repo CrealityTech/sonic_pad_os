@@ -1,0 +1,49 @@
+
+choice PLATFORM
+	prompt "Sunxi-chip to use"
+	help
+	the ic we use for build
+
+config SUN50IW6P1
+	bool
+	imply CPUX_ARM64
+	select OPENRISC
+	prompt "AW1728 sun50iw6p1 H6 platform"
+
+config SUN8IW12P1
+	bool
+	imply CPUX_ARM32
+	select OPENRISC
+	prompt "AW1721 sun8iw12p1 V5 platform"
+
+config SUN8IW15P1
+	bool
+	imply CPUX_ARM32
+	select OPENRISC
+	prompt "AW1755 sun8iw15p1 A50/R311/MR133 platform"
+
+config SUN8IW16P1
+	bool
+	imply CPUX_ARM32
+	select OPENRISC
+	select COCO_OS
+	prompt "AW1816 sun8iw16p1 V5V200 platform"
+
+endchoice
+
+choice PLATFORM_SELECT
+	prompt "Platform used"
+
+config EVB_FLATFORM
+	bool "evb platfrom used"
+
+config FPGA_FLATFORM
+	bool "fpga platform used"
+
+endchoice
+
+
+
+
+
+source "coco/driver/dram/Kconfig"

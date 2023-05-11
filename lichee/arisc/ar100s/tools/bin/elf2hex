@@ -1,0 +1,41 @@
+#!/bin/bash
+
+show_help()
+{
+	printf "Usage:\n"
+	printf "elf2hex [-c compile prefix] [-i elf file] [-o hex file]\n"
+}
+
+
+if [ -z "$1" ]; then
+	printf "No arguments !!\n"
+    show_help
+    exit 0
+fi
+
+while getopts c:i:o: OPTION
+do
+    case $OPTION in
+    c) CC=$OPTARG
+    ;;
+    i) INPUT=$OPTARG
+    ;;
+    o) OUTPUT=$OPTARG
+    ;;
+    *) show_help
+    exit 0
+    ;;
+esac
+done
+
+echo "elf2hex $INPUT > $OUTPUT"
+echo ""
+
+${CC}objcopy -O binary -S $INPUT $INPUT.bin
+hexdump $INPUT.bin -v -C > temp.1
+
+sed "s/^[0-9a-fA-F]*//" temp.1 > temp.2
+sed "s/|.*|//" temp.2 > temp.1
+sed "s/\s/\n/g" temp.1 > temp.2
+sed "/^$/d" temp.2 > $OUTPUT
+rm temp.1 temp.2

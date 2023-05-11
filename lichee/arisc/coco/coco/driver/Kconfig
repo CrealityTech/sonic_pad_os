@@ -1,0 +1,11 @@
+menu "Device Drivers"
+
+source "coco/driver/pmu/Kconfig"
+
+source "coco/driver/rsb/Kconfig"
+
+config HWCPUIDLE_USED
+	def_bool n
+	prompt "Hardware cpu idle used"
+
+endmenu

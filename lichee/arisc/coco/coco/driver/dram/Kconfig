@@ -1,0 +1,45 @@
+source "coco/driver/dram/dram_sun8iw16p1/Kconfig"
+
+config HAVE_DDR_SEL_SUPPORT
+	bool
+
+config HAVE_DDR3_SUPPORT
+	bool
+
+config HAVE_DDR4_SUPPORT
+	bool
+
+config HAVE_LPDDR3_SUPPORT
+	bool
+
+config HAVE_LPDDR4_SUPPORT
+	bool
+
+choice DDR_TYPE_USED
+	prompt  "DDR type used"
+	depends on HAVE_DDR_SEL_SUPPORT
+
+	config DDR3
+	bool "ddr3"
+	depends on HAVE_DDR3_SUPPORT
+
+	config DDR4
+	bool "ddr4"
+	depends on HAVE_DDR4_SUPPORT
+
+	config LPDDR3
+	bool "lpddr3"
+	depends on HAVE_LPDDR3_SUPPORT
+
+	config LPDDR4
+	bool "lpddr4"
+	depends on HAVE_LPDDR4_SUPPORT
+
+endchoice
+
+config DDR_TYPE
+	string
+	default "ddr3" if DDR3
+	default "ddr4" if DDR4
+	default "lpddr3" if LPDDR3
+	default "lpddr4" if LPDDR4

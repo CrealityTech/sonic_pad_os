@@ -1,0 +1,18 @@
+menuconfig TIMER_CONFIG
+	def_bool y
+	prompt "timer used"
+
+choice TIMER_IP
+	prompt "Sunxi mtimer to use"
+
+config TIMER_USED
+	bool
+	prompt "Old IP TIMER used"
+	depends on TIMER_CONFIG
+
+config TIMER_EXTENDED_USED
+	bool
+	prompt "New IP TIMER used"
+	depends on TIMER_CONFIG
+
+endchoice

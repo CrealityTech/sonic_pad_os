@@ -1,0 +1,8 @@
+comment "CMSIS-DAP Project module"
+
+config CMSIS_DAP
+	tristate "CMSIS_DAP Project to program target flash through SWD"
+	depends on GPIOLIB
+	default n
+	help
+	  An "CMSIS-DAP module. Say Y when you want to support this tool.

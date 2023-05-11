@@ -1,0 +1,2 @@
+CFG_LOOP_TASK	= y
+CFG_STANDBY	= y

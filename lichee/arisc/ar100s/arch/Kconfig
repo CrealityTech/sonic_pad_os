@@ -1,0 +1,14 @@
+
+config CPUX_ARM32
+	bool
+
+config CPUX_ARM64
+	bool
+
+config OPENRISC
+	bool
+
+config AR100S_OS
+	bool
+
+source "arch/openrisc/Kconfig"

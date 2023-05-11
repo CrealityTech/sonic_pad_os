@@ -1,0 +1,10 @@
+srcs-y += device.c
+srcs-y += idle.c
+srcs-y += init.c
+srcs-y += notifier.c
+srcs-y += msgmanager.c
+srcs-y += pipe.c
+srcs-$(CFG_SYSTEM_DEBUG) += sysdebug.c
+subdirs-y += debug
+subdirs-y += time
+subdirs-y += cpu

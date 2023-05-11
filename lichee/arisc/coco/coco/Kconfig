@@ -1,0 +1,6 @@
+
+
+
+source "coco/driver/Kconfig"
+source "coco/system/Kconfig"
+source "coco/service/Kconfig"

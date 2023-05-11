@@ -1,0 +1,44 @@
+
+menu "Debug function"
+
+comment "debug printk function"
+
+config DEBUGGER_PRINTF
+	bool "debugger printf support"
+	default y
+
+if DEBUGGER_PRINTF
+
+config DEBUG_ERR
+	bool "err debug support"
+	default y
+
+config DEBUG_LOG
+	bool "log debug support"
+	default y
+
+config DEBUG_WRN
+	bool "warn debug support"
+	default y
+
+config DEBUG_INF
+	bool "inf debug support"
+	default n
+endif
+
+comment "shell function"
+
+config SHELL_USED
+	def_bool n
+	prompt "shell cmd support"
+	select DEBUGGER_PRINTF
+
+comment "system debug function"
+
+config SYSTEM_DEBUG
+	def_bool n
+	prompt "system debug"
+
+endmenu
+
+

@@ -1,0 +1,10 @@
+mainmenu "ar100s cpus config"
+
+source "arch/Kconfig"
+
+source "driver/Kconfig"
+
+source "service/Kconfig"
+
+source "system/Kconfig"
+

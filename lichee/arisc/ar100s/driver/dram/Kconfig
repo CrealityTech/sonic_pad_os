@@ -1,0 +1,39 @@
+
+#source "driver/dram/dram-sun50iw6p1/Kconfig"
+
+config HAVE_DDR_SEL_SUPPORT
+	bool
+
+config HAVE_DDR3_SUPPORT
+	bool
+
+config HAVE_DDR4_SUPPORT
+	bool
+
+config HAVE_LRDDR3_SUPPORT
+	bool
+
+config HAVE_LRDDR4_SUPPORT
+	bool
+
+choice DDR_TYPE
+	prompt  "DDR type used"
+	depends on HAVE_DDR_SEL_SUPPORT
+
+	config DDR3
+	bool "ddr3"
+	depends on HAVE_DDR3_SUPPORT
+
+	config DDR4
+	bool "ddr4"
+	depends on HAVE_DDR4_SUPPORT
+
+	config LRDDR3
+	bool "lpddr3"
+	depends on HAVE_LRDDR3_SUPPORT
+
+	config LRDDR4
+	bool "lpddr4"
+	depends on HAVE_LRDDR4_SUPPORT
+
+endchoice

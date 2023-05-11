@@ -1,0 +1,3 @@
+config PIN_M_USED
+	bool "pin_m_used?"
+	default n

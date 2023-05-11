@@ -1,0 +1,39 @@
+#!/bin/bash
+
+show_help()
+{
+	printf "Usage:\n"
+	printf "bin2hex [-i bin file] [-o hex file] [-s offset]\n"
+}
+
+if [ -z "$1" ]; then
+	printf "No arguments !!\n"
+    show_help
+    exit 0
+fi
+
+OFFSET=0
+while getopts i:o:s: OPTION
+do
+    case $OPTION in
+    i) INPUT=$OPTARG
+    ;;
+    o) OUTPUT=$OPTARG
+    ;;
+    s) OFFSET=$OPTARG
+    ;;
+    *) show_help
+    exit 0
+    ;;
+esac
+done
+
+echo "bin2hex $INPUT > $OUTPUT"
+echo ""
+
+hexdump $INPUT -s $OFFSET -v -C > temp.1
+sed "s/^[0-9a-fA-F]*//" temp.1 > temp.2
+sed "s/|.*|//" temp.2 > temp.1
+sed "s/\s/\n/g" temp.1 > temp.2
+sed "/^$/d" temp.2 > $OUTPUT
+rm temp.1 temp.2

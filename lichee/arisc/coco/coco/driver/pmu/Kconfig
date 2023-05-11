@@ -1,0 +1,7 @@
+
+config PMU_USED
+	bool
+	prompt "PMU used"
+	default y
+
+
