@@ -1,0 +1,10 @@
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file does nothing.
+amixer cset numid=96 1
+amixer cset numid=100 1
+amixer cset numid=105 1
+amixer cset numid=58 1
+amixer cset numid=62 1
+amixer cset numid=66 0
+amixer cset numid=67 0
+exit 0

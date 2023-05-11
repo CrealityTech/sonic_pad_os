@@ -1,0 +1,39 @@
+#!/bin/sh /etc/rc.common
+
+START=1
+STOP=98
+DEPEND=fstab
+USE_PROCD=1
+PROG=/usr/sbin/audio_setting.sh
+ASOUND_STATE=/etc/asound.state
+
+setting_init()
+{
+    # hpout playback
+    amixer -D hw:audiocodec cset name='Headphone Switch' 1
+    amixer -D hw:audiocodec cset name='Headphone Volume' 1
+    amixer -D hw:audiocodec cset name='HpSpeaker Switch' 1
+
+    # aec reference capture
+    amixer -D hw:audiocodec cset name='ADCL Input MIC1 Boost Switch' 1
+    amixer -D hw:audiocodec cset name='ADCR Input MIC2 Boost Switch' 1
+    amixer -D hw:audiocodec cset name='MIC1 gain volume' 0
+    amixer -D hw:audiocodec cset name='MIC2 gain volume' 0
+
+    # mic capture, 24dB
+    amixer -D hw:sndac10710036 cset name='Channel 1 PGA Gain' 25
+    amixer -D hw:sndac10710036 cset name='Channel 2 PGA Gain' 25
+
+    [ ! -f $ASOUND_STATE ] && touch $ASOUND_STATE
+    alsactl store -f $ASOUND_STATE
+}
+
+start_service() {
+
+    if [ -s $ASOUND_STATE ]; then
+        alsactl restore -f $ASOUND_STATE
+    else
+        setting_init
+    fi
+
+}

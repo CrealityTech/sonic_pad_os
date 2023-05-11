@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo "------run rc.final file-----"
+echo "insmod wifi modules"
+
+amixer -D hw:audiocodec cset name='SPK_L Mux' 1
+amixer -D hw:audiocodec cset name='SPK_R Mux' 1
+amixer -D hw:audiocodec cset name='Lineout volume' 24
+amixer -D hw:audiocodec cset name='Right Output Mixer DACR Switch' 1
+amixer -D hw:audiocodec cset name='Left Output Mixer DACL Switch' 1
+amixer -D hw:audiocodec cset name='digital volume' 0
+
+#codec capture#
+amixer -D hw:audiocodec cset name='LADC input Mixer MIC1 boost Switch' 1
+amixer -D hw:audiocodec cset name='MIC1 boost AMP gain control' 4

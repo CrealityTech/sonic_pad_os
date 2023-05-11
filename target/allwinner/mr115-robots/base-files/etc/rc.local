@@ -1,0 +1,16 @@
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file does nothing.
+
+#set audio channel
+amixer cset numid=5 16
+
+#Left Output Mixer DACL Switch
+amixer cset numid=10 1
+
+amixer cset numid=14 1
+
+amixer cset numid=29 1
+
+/usr/bin/tinyplay /usr/res/boot.wav &
+
+exit 0                          

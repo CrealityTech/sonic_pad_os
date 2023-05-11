@@ -1,0 +1,66 @@
+#!/bin/sh
+#
+# Load app driver modules....
+#
+
+MODULES_DIR="/lib/modules/`uname -r`"
+
+start() {
+    printf "Load driver modules\n"
+
+    insmod $MODULES_DIR/evdev.ko &
+
+    insmod $MODULES_DIR/of_touchscreen.ko &
+    insmod $MODULES_DIR/sunxi_gpadc.ko &
+    insmod $MODULES_DIR/ft6236.ko &
+    insmod $MODULES_DIR/gpio_keys.ko &
+
+    # insmod $MODULES_DIR/sysinfo.ko
+    insmod $MODULES_DIR/industrialio.ko
+    insmod $MODULES_DIR/kfifo_buf.ko
+    insmod $MODULES_DIR/industrialio-triggered-buffer.ko
+    insmod $MODULES_DIR/inv-mpu6050.ko
+    insmod $MODULES_DIR/inv-mpu6050-i2c.ko
+
+    insmod $MODULES_DIR/cfg80211.ko
+    insmod $MODULES_DIR/sunxi-wlan.ko
+}
+
+stop() {
+    printf "Unload driver modules\n"
+    # 卸载会崩溃, 暂时不做处理
+    insmod $MODULES_DIR/sunxi-wlan.ko
+    insmod $MODULES_DIR/cfg80211.ko
+
+    insmod $MODULES_DIR/inv-mpu6050-i2c.ko
+    insmod $MODULES_DIR/inv-mpu6050.ko
+    insmod $MODULES_DIR/industrialio-triggered-buffer.ko
+    insmod $MODULES_DIR/kfifo_buf.ko
+    insmod $MODULES_DIR/industrialio.ko
+
+    insmod $MODULES_DIR/gpio_keys.ko
+    insmod $MODULES_DIR/ft6236.ko
+    insmod $MODULES_DIR/sunxi_gpadc.ko
+    insmod $MODULES_DIR/of_touchscreen.ko
+    insmod $MODULES_DIR/evdev.ko
+    # insmod $MODULES_DIR/sysinfo.ko
+}
+
+case "$1" in
+    start)
+	start
+	;;
+    stop)
+	stop
+	;;
+    restart|reload)
+	stop
+	start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
+

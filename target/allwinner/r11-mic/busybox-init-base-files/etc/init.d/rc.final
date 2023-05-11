@@ -1,0 +1,26 @@
+#!/bin/sh
+
+echo "------run rc.final file-----"
+echo "insmod wifi modules"
+insmod  /lib/modules/3.4.39/xradio_mac.ko
+insmod  /lib/modules/3.4.39/xradio_core.ko
+insmod  /lib/modules/3.4.39/xradio_wlan.ko
+
+# nau8520 capture
+amixer -D hw:snddaudio cset name='Mic1 Volume' 1024
+amixer -D hw:snddaudio cset name='Frontend PGA1 Volume' 30
+amixer -D hw:snddaudio cset name='Digital CH1 Mux' 'ADC channel 1'
+amixer -D hw:snddaudio cset name='Mic4 Volume' 1024
+amixer -D hw:snddaudio cset name='Frontend PGA4 Volume' 30
+amixer -D hw:snddaudio cset name='Digital CH2 Mux' 'ADC channel 4'
+
+# audiocodec playback
+amixer -D hw:audiocodec cset name='SPK_L Mux' 0
+amixer -D hw:audiocodec cset name='SPK_R Mux' 0
+amixer -D hw:audiocodec cset name='Lineout volume' 25
+amixer -D hw:audiocodec cset name='Right Output Mixer DACR Switch' 1
+amixer -D hw:audiocodec cset name='Left Output Mixer DACL Switch' 1
+amixer -D hw:audiocodec cset name='digital volume' 6
+
+# audiocodec capture
+amixer -D hw:audiocodec cset name='LADC input Mixer MIC1 boost Switch' 1

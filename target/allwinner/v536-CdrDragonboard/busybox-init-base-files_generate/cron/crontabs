@@ -1,0 +1,5 @@
+# m h dom mon dow command
+*/1 * * * * /usr/bin/run-cron /etc/cron.minutely
+0 */1 * * * /usr/bin/run-cron /etc/cron.hourly
+0 0 * * * /usr/bin/run-cron /etc/cron.daily
+* * 1 */1 * /usr/bin/run-cron /etc/cron.mouthly

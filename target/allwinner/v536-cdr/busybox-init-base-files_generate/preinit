@@ -1,0 +1,208 @@
+#!/bin/sh
+#
+# Start the preinit
+#
+
+roroot=/squashfs
+rwroot=/overlay
+mtdp=/dev/mtdblock3
+CONSOLE=/dev/console
+
+early_setup() {
+
+	[ ! -e "/proc/mounts" ] && {
+		/bin/mount -t proc proc /proc
+	}
+
+	[ -z "$(grep '\s\/dev\s' /proc/mounts)" ] && {
+		/bin/mount -t devtmpfs none /dev
+	}
+
+	[ -z "$(grep '\<tmpfs\>' /proc/mounts)" ] && {
+		/bin/mount -t tmpfs none /tmp
+	}
+
+	[ -z "$(grep '\<sysfs\>' /proc/mounts)" ] && {
+		/bin/mount -t sysfs sysfs /sys
+	}
+}
+
+switch_extroot() { #<new_root>  <old_root>
+	[ -e $2 ] && {
+		if [ ! -e $1/$2 ]; then
+			mkdir -p $1/$2 2>&-
+		fi
+		mount -o noatime,move $2 $1/$2
+	}
+
+	pivot_root $1 $1/$2 && {
+		mount -o move $2/proc /proc
+		mount -o move $2/sys /sys 2>&-
+		mount -o move $2/tmp /tmp
+		mount -o move $2/dev /dev
+		#mount -o move $2 / 2>&-
+		return 0;
+	}
+	return 1
+}
+
+uionfs() { #<low> <overlay> <mountpoint> 
+	local lo=$1
+	local up=$2/upperdir
+	local wk=$2/workdir
+	local mt=$3
+
+	[ ! -e $up ] && mkdir -p $up
+	[ ! -e $wk ] && mkdir -p $wk
+
+	rm -vfr $wk/work/* 2>/dev/null
+
+	mount -t overlay -o lowerdir=$lo,upperdir=$up,workdir=$wk overlay $mt || return 1
+
+	return 0
+}
+
+auto_mount() { #<dev>  <mountpoint>
+	local _bdev=$1
+	local _mto=$2
+	local btm="/sys/module/block2mtd/parameters/block2mtd"
+	local _match=""
+	local _tmp=""
+	local _ft=$(grep -v '^nodev' /proc/filesystems)
+
+	#
+	# At first, we will try to mount normal filesystem witch rw flags
+	# such as, msdos, vfat, ext2/3/4. If it is failed, try to the nodev filesystem jffs2
+	#
+	for _t in $_ft; do
+		echo "Try to mount ${_bdev} using ${_t}"
+		mount -t $_t -o rw ${_bdev} ${_mto}  2>/dev/null && return 0;
+	done
+
+	#
+	# Cut the strings "mtdblock"
+	#
+	_tmp="${_bdev##*/}"
+	_match="${_tmp:0:8}"
+
+	#
+	# If <dev> is not MTD, we need to use block2mtd.
+	#
+	if [ ! -b "${_bdev}" ]; then
+		return 1;
+	fi
+
+	if [ -e "${btm}" -a "x${_match}x" != "xmtdblockx"  ]; then
+
+		#
+		# Change blkdev to mtdblockx
+		#
+		echo "${_bdev}" >${btm}
+
+		while read _l; do
+			_match=${_l##*block2mtd: };
+			if [ "x${_match%%\"*}x" == "x${_bdev}x" ]; then
+				_tmp=${_l%%:*};
+				_bdev=${_tmp/mtd/\/dev\/mtdblock};
+				if [ "x${_bdev}x" != "xx" ]; then
+					echo "[preinit]: Bind to ${_bdev}" >$CONSOLE
+					break;
+				fi
+			fi
+		done </proc/mtd;
+	fi
+
+	echo "Try to mount ${_bdev} using jffs2"
+	mount -t jffs2 ${_bdev} ${_mto} || return 1
+
+	return 0
+}
+
+do_switch() { #<rw_root> <ro_root> <combined_root>
+	local rw=$1
+	local ro=$2
+	local com=$3
+
+	[ ! -e  "$1" ] && {
+		mkdir -p /tmp/$1;
+		rw="/tmp/$1";
+	}
+
+	[ ! -e  "$2" ] && {
+		mkdir -p /tmp/$2;
+		ro="/tmp/$2";
+	}
+
+	echo "[preinit]: Uion filesystem" > $CONSOLE
+
+	uionfs "$ro" "$rw" "$com" || return 1
+
+	switch_extroot "$com" $ro && {
+		mount -n -o noatime,move $ro/$rw $rw
+		echo "done" > /tmp/.preinitdone
+	}
+
+	return 0;
+}
+
+get_overlay_part() { #<partitions strings>
+	local parts=$1;
+	local _m1="";
+	local _m2="";
+	local mblk="";
+
+	## partitions is from cmdline, format: paritions=<name1>@<partname>:<name2>@<partname>
+	if [ -n "${parts}" ]; then
+		_m1="${parts##*overlay@}"
+		_m2="${_m1%%:*}"
+		if [ -n "$_m2" ]; then
+			mblk="/dev/$_m2"
+			echo "[preinit]: Got overlay partitions is ${mblk}" >$CONSOLE
+		fi
+	fi
+	echo "${mblk}"
+}
+
+#
+# begin to execute script
+#
+if [ ! -e "/tmp/.preinitdone" ]; then
+echo '[preinit]: Early Setuping virtual filesystem' >$CONSOLE
+early_setup
+fi
+
+issquash=$(grep '\s\/\s\+squashfs' /proc/mounts)
+
+[ -z "$issquash" ] || {
+	# preinti is already done
+	[ -e "/tmp/.preinitdone" ] && {
+		echo "[preinit]: Already Switeched. Reinit process" >$CONSOLE
+		return 0
+	}
+
+	if [ ! -e $roroot ]; then
+		mkdir -p /tmp/root
+		roroot=/tmp/root
+	fi
+
+	mount -o bind / $roroot 
+	mtdp=$(get_overlay_part ${partitions})
+	#
+	# Successfully, it will not return
+	#
+	if [ "x${mtdp}x" != "xx" ]; then
+		auto_mount $mtdp $rwroot && {
+			do_switch "$rwroot" "$roroot" "/mnt" && exec /sbin/init
+		}
+	fi
+	
+	echo "[preinit]: Can't do normal switch, and do ramfs switch for wirteable" >$CONSOLE
+
+	mkdir -p /tmp/overlay
+	mount -t tmpfs none /tmp/overlay
+	rwroot=/tmp/overlay
+
+	do_switch "$rwroot" "$roroot" "/mnt" && exec /sbin/init
+
+	echo "[preinit]: Failed to switch rootfs to wirteable" >$CONSOLE
+}

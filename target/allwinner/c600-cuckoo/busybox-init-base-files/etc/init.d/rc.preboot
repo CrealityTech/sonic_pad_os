@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo "-- run rc.preboot --"
+
+echo "-- set volume --"
+#amixer cset iface=MIXER,name='head phone volume' 30
+tinymix set 22 32
+echo "-- play music --"
+#tinyplayer /etc/test.mp3  > /dev/null
+tinyplay /etc/kaiji.wav &
+
+echo "-- end --"

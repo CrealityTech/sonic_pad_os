@@ -1,0 +1,21 @@
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file does nothing.
+
+#playback#
+amixer -D hw:audiocodec cset name='Left Output Mixer DACL Switch' 1
+amixer -D hw:audiocodec cset name='Right Output Mixer DACR Switch' 1
+amixer -D hw:audiocodec cset name='Left LINEOUT Mux' "Left OMixer"
+amixer -D hw:audiocodec cset name='Right LINEOUT Mux' "Right OMixer"
+amixer -D hw:audiocodec cset name='digital volume' 63
+amixer -D hw:audiocodec cset name='LINEOUT volume' 28
+
+
+#capture#
+amixer -D hw:audiocodec cset name='Left Input Mixer MIC1 Boost Switch' 1
+amixer -D hw:audiocodec cset name='Right Input Mixer MIC2 Boost Switch' 1
+amixer -D hw:audiocodec cset name='Xadc Input Mixer MIC3 Boost Switch' 1
+amixer -D hw:audiocodec cset name='MIC1 boost volume' 4
+amixer -D hw:audiocodec cset name='MIC2 boost volume' 4
+amixer -D hw:audiocodec cset name='MIC3 boost volume' 4
+
+exit 0

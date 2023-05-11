@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# run kfc process
+#
+
+KFCTMPDIR="/tmp"
+
+start() {
+    echo "run kfc\n"
+    /usr/bin/iploader_server ${KFCTMPDIR} &
+    /usr/bin/kfc_server_pack /usr/lib/libkfc_server_enc.so /usr/lib/libip_loader_soft.so ${KFCTMPDIR} &
+}
+
+stop() {
+    printf "kill kfc\n"
+    killall iploader_server > /dev/null
+    killall kfc_server_pack > /dev/null
+}
+
+case "$1" in
+    start)
+	start
+	;;
+    stop)
+	stop
+	;;
+    restart|reload)
+	stop
+	start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?

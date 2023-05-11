@@ -1,0 +1,45 @@
+#!/bin/sh
+#
+# creat link file from /dev/mtdblock*
+# name of soft link file was got by /proc/mtd
+#
+
+DEV_PATH=/dev
+MTD_MANE=mtd_name
+
+start() {
+
+	rm ${DEV_PATH}/${MTD_MANE} -rf
+	mkdir -m 755 ${DEV_PATH}/${MTD_MANE}
+	line=`awk '{print NR}' /proc/mtd |tail -n1`
+	id=""
+	name=""
+
+	for i in $(seq 2 ${line})
+	do
+		id=`awk -v line=$i -F: '{if(NR==line) print $1}' /proc/mtd`
+		name=`awk -v line=$i '{if(NR==line) print $4}' /proc/mtd | sed 's/"//g'`
+		ln -s "${DEV_PATH}/mtdblock${id#*d}" "${DEV_PATH}/${MTD_MANE}/${name}"
+	done
+
+	exit 0
+}
+
+stop() {
+	echo ""
+	exit 0
+}
+
+case "$1" in
+    start)
+	start &
+	;;
+    stop)
+	stop &
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?

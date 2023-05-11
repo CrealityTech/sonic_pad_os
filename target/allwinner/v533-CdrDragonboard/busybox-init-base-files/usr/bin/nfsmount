@@ -1,0 +1,7 @@
+#!/bin/sh
+
+NFS_SERVER="192.168.205.200"
+MOUNT_POINT="/home"
+if [ "$1" != "" ];then MOUNT_POINT=$1;fi
+mount -t nfs -o nolock,tcp $NFS_SERVER:/nfs/chenweiming $MOUNT_POINT
+

@@ -1,0 +1,14 @@
+#!/bin/sh /etc/rc.common
+
+START=99
+STOP=99
+
+USE_PROCD=1
+
+start_service() {
+    [ -e /sys/class/leds/sys-led/trigger ] && echo timer > /sys/class/leds/sys-led/trigger
+}
+
+stop_service(){
+    [ -e /sys/class/leds/sys-led/trigger ] && echo none > /sys/class/leds/sys-led/trigger
+}

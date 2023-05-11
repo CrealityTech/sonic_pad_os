@@ -1,0 +1,35 @@
+#!/bin/sh
+
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+
+echo 8 > /proc/sys/kernel/printk
+
+# hostname
+[ -z "$HOSTNAME" -o "$HOSTNAME" == "(none)" ] && HOSTNAME=TinaLinux
+`/bin/hostname $HOSTNAME`
+
+
+if [ -f "/usr/bin/washing-machine" ]; then
+	/usr/bin/washing-machine &
+	# sleep 4s until the first picture displayed.
+	sleep 5
+fi
+
+if [ -f "/bin/adbd" ]; then
+	echo 0 > /sys/class/android_usb/android0/enable
+	echo 18d1 > /sys/class/android_usb/android0/idVendor
+	echo d002 > /sys/class/android_usb/android0/idProduct
+	echo adb > /sys/class/android_usb/android0/functions
+	echo 1 > /sys/class/android_usb/android0/enable
+	/bin/adbd > /dev/null 2>&1 &
+fi
+
+# self  boot application
+#for i in /etc/rc.d/S*;do
+#	usr/bin/bbrc-common.sh "$i" &
+#done
+
+#mkdir -p /tmp/lock/
+mkdir -p /tmp/log/
+#mkdir -p /dev/by-name/
+#ln -s /dev/mtdblock2 /dev/by-name/env

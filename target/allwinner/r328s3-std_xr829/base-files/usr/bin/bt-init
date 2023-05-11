@@ -1,0 +1,59 @@
+#!/bin/sh
+
+PROG=/usr/bin/bluealsa
+
+bt_init() {
+	hcidump_xr=$(ps | grep "hcidump_xr" | grep -v grep | awk '{print $1}')
+	if [ -n "$hcidump_xr" ] ;then
+		echo "hcidump_xr existed"
+	else
+		echo "hcidump_xr start"
+		hcidump_xr &
+	fi
+
+	hciconfig hci0 up
+	MAC_STR=`hciconfig | grep "BD Address" | awk '{print $3}'`
+	LE_MAC=${MAC_STR/2/C}
+	if [ -n "$MAC_STR" ] ;then
+		MAC1=`echo ${MAC_STR} | cut -d ':' -f 4`
+		MAC2=`echo ${MAC_STR} | cut -d ':' -f 5`
+		hciconfig hci0 name aw-$MAC1$MAC2-bt-test
+		hciconfig hci0 reset
+		hcitool -i hci0 cmd 0x03 0x0047 1
+		hciconfig hci0 piscan;
+		hciconfig hci0 lerandaddr $LE_MAC
+	else
+		echo "hciconfig hci0 up failed"
+		exit 1
+	fi
+}
+bluealsa_start() {
+	case "$1" in
+	  a2dp-sink)
+		"$PROG" -S -p a2dp-sink --a2dp-volume &
+		;;
+	  a2dp-source)
+		"$PROG" -S -p a2dp-source &
+		;;
+	  hfp-hf)
+		"$PROG" -S -p hfp-hf &
+		;;
+	  "")
+		"$PROG" -S -p a2dp-sink -p hfp-hf --a2dp-volume &
+		;;
+	  *)
+		"$PROG" -S -p a2dp-sink -p hfp-hf --a2dp-volume &
+		;;
+	esac
+}
+
+audio_init() {
+	if [ -f /etc/config/audio ] ;then
+		/etc/config/audio
+	else
+		echo "warning: audio init failed"
+	fi
+}
+bt_init
+bluealsa_start $1
+audio_init

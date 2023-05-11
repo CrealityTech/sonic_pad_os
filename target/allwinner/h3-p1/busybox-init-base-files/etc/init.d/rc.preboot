@@ -1,0 +1,20 @@
+#!/bin/sh
+
+echo "-- run rc.preboot --"
+
+wifi_connect()
+{
+	#cp firmware
+	mkdir -p /etc/firmware
+	cp /lib/firmware/* /etc/firmware/
+	#example for setting mac address,The actual production needs to be revised.
+	cp /etc/xr_wifi.conf /tmp/
+	echo "insmod wifi cfg80211 module"
+	insmod /lib/modules/4.4.89/cfg80211.ko
+	echo "insmod wifi kernel module"
+	insmod /lib/modules/4.4.89/xradio_wlan.ko
+	sleep 1
+}
+
+wifi_connect
+

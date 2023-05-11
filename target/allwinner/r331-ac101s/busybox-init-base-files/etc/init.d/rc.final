@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "------run rc.final file-----"
+echo "insmod wifi modules"
+insmod  /lib/modules/4.9.56/8723ds.ko

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo "-- run rc.final --"
+
+mkdir -p /var/run
+mkdir -p /var/lock
+
+echo "-- start log service --"
+/etc/init.d/dbus start
+/sbin/ubusd &
+/sbin/logd &
+

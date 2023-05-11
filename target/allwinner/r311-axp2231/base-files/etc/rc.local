@@ -1,0 +1,12 @@
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file does nothing.
+
+amixer -Dhw:audiocodec cset name='AIF1IN0L Mux' 'AIF1_DA0L';
+amixer -Dhw:audiocodec cset name='AIF1IN0R Mux' 'AIF1_DA0R';
+amixer -Dhw:audiocodec cset name='DACL Mixer AIF1DA0L Switch' 1;
+amixer -Dhw:audiocodec cset name='DACR Mixer AIF1DA0R Switch' 1;
+amixer -Dhw:audiocodec cset name='HP_L Mux' 'DACL HPL Switch' ;
+amixer -Dhw:audiocodec cset name='HP_R Mux' 'DACR HPR Switch';
+amixer -Dhw:audiocodec cset name='Headphone Switch' 1;
+
+exit 0

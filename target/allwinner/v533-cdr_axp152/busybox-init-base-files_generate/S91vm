@@ -1,0 +1,49 @@
+#!/bin/sh
+
+echo "run shell echo vm compact_memory and drop caches."
+i=0
+j=0
+
+start() {
+    echo "start S91vm"
+    while true;do
+        if [ $i -eq "1" ]
+    then
+            echo 1 > /proc/sys/vm/compact_memory
+            i=0
+            #cat /proc/buddyinfo
+        fi
+
+        if [ $j -eq "20" ]
+    then
+            echo 3 > /proc/sys/vm/drop_caches
+            j=0
+        fi
+
+        sleep 10
+
+        let i+=1
+        let j+=1
+    done
+}
+
+stop() {
+    echo "stop S91vm"
+}
+
+case "$1" in
+    start)
+    start &
+    ;;
+    stop)
+    stop
+    ;;
+    restart|reload)
+    stop
+    start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+esac
+exit $?

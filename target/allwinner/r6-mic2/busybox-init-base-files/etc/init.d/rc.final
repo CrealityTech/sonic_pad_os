@@ -1,0 +1,19 @@
+#!/bin/sh
+#Add your app or script that need to start after booting
+
+amixer -D hw:sndac1011001a cset name='MIC1 boost amplifier gain' 3
+amixer -D hw:sndac1011001a cset name='AIF1OUT0L Mux' 'AIF1_AD0L'
+amixer -D hw:sndac1011001a cset name='AIF1 AD0L Mixer ADCL Switch' 1
+amixer -D hw:sndac1011001a cset name='ADCL Mux' 'ADC'
+amixer -D hw:sndac1011001a cset name='LEFT ADC input Mixer MIC1 boost Switch' 1
+
+amixer -D hw:sndac1011001a cset name='MIC2 boost amplifier gain' 3
+amixer -D hw:sndac1011001a cset name='AIF1OUT0R Mux' 'AIF1_AD0R'
+amixer -D hw:sndac1011001a cset name='AIF1 AD0R Mixer ADCR Switch' 1
+amixer -D hw:sndac1011001a cset name='ADCR Mux' 'ADC'
+amixer -D hw:sndac1011001a cset name='RIGHT ADC input Mixer MIC2 boost Switch' 1
+amixer -D hw:sndac1011001a cset name='MIC2 SRC' 'MIC3'
+
+amixer -D hw:sndac1011001a cset name='AIF1 ADC timeslot 0 volume' 0x9a,0x9a
+
+amixer -D hw:audiocodec cset name='head phone volume' 50

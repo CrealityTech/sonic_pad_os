@@ -1,0 +1,28 @@
+{
+	"profile":{
+		"a2dp_sink":1,
+		"a2dp_source":0,
+		"avrcp":1,
+		"hfp_hf":1,
+		"hfp_ag":0,
+		"gatt_client":0,
+		"gatt_server":0
+	},
+	"a2dp_sink":{
+		"device":"default",
+		"buffer_size":30080,
+		"period_size":3760
+	},
+	"a2dp_source":{
+		"hci_index":0,
+		"DEV":"00:00:00:00:00:00",
+		"DELAY":20000
+	},
+	"hfp_pcm":{
+		"rate":16000,
+		"phone_to_dev_cap":"hw:snddaudio1",
+		"phone_to_dev_play":"default",
+		"dev_to_phone_cap":"CaptureMic",
+		"dev_to_phone_play":"hw:snddaudio1"
+	}
+}

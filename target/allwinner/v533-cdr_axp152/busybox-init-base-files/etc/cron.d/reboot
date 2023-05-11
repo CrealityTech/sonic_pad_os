@@ -1,0 +1,5 @@
+#!/bin/sh
+
+/sbin/reboot
+
+exit 0

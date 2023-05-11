@@ -1,0 +1,24 @@
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file does nothing.
+
+# hpout playback
+amixer -D hw:audiocodec cset name='Headphone Switch' 1
+amixer -D hw:audiocodec cset name='Headphone Volume' 3
+amixer -D hw:audiocodec cset name='HpSpeaker Switch' 1
+
+# lineout playback
+amixer -D hw:audiocodec cset name='LINEOUT Output Select' 'DAC_DIFFER'
+amixer -D hw:audiocodec cset name='LINEOUT Switch' 1
+amixer -D hw:audiocodec cset name='LINEOUT volume' 20
+
+# aec reference capture
+#amixer -D hw:audiocodec cset name='ADCL Input MIC1 Boost Switch' 1
+#amixer -D hw:audiocodec cset name='ADCR Input MIC2 Boost Switch' 1
+#amixer -D hw:audiocodec cset name='MIC1 gain volume' 0
+#amixer -D hw:audiocodec cset name='MIC2 gain volume' 0
+
+# mic capture, 24dB
+amixer -D hw:sndac10710036 cset name='Channel 1 PGA Gain' 25
+amixer -D hw:sndac10710036 cset name='Channel 2 PGA Gain' 25
+
+exit 0

@@ -1,0 +1,51 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2006 OpenWrt.org
+
+START=95
+DEPEND=fstab,nativepower,mtp,adbd
+BLACK_DIRS="/etc /proc /sys /usr/share/script"
+WHITE_DIRS="/mnt/UDISK"
+BLACK_FILES="/dev/kmsg"
+
+boot() {
+	mount_root done
+	rm -f /sysupgrade.tgz
+
+	# limits creality user
+	for dir in $BLACK_DIRS
+		do
+			[ -d $dir ] && {
+				chmod o=x $dir
+			}
+		done
+
+	for dir in $WHITE_DIRS
+		do
+			[ -d $dir ] && {
+				chmod o=rwx $dir
+			}
+		done
+
+	for file in $BLACK_FILES
+		do
+			chmod o-rwx $file
+		done
+
+	# limits application data
+	chmod -R o-rwx /mnt/UDISK/.crealityprint/*
+	chmod -R o+rwx /mnt/UDISK/.crealityprint/video
+	chmod -R o+rwx /mnt/UDISK/.crealityprint/upload
+	chmod -R o+rx /mnt/UDISK/.crealityprint/logs
+
+	# process user commands
+	[ -f /etc/rc.local ] && {
+		sh /etc/rc.local
+	}
+
+	# set leds to normal state
+	. /etc/diag.sh
+	set_state done
+	[ -x /usr/bin/nativepower_utils ] && {
+		nativepower_utils --module scene --set boot_complete
+	}
+}

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+bluealsa=`ps | grep "bluealsa" | grep -v grep`
+
+[ -z "$bluealsa" ] && bt-init $1
+
+play=`ps | grep "bluealsa-aplay" | grep -v grep`
+[ -n "$play" ] && {
+	killall bluealsa-aplay
+	sleep 1
+}
+
+if [ "$1" != "a2dp-source" ];then
+	bluealsa-aplay 00:00:00:00:00:00 &
+fi

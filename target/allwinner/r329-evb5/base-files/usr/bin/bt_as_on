@@ -1,0 +1,26 @@
+#!/bin/sh
+
+bt=`ps | grep bt_test | grep -v grep`
+[ -n "$bt" ] && {
+	killall bt_test
+	sleep 1
+}
+
+as=`ps | grep bluealsa | grep -v grep`
+[ -n "$as" ] && {
+	killall bluealsa
+	sleep 1
+}
+
+/etc/bluetooth/bt_init.sh start
+
+hci_is_up=`hciconfig hci0 | grep "UP RUNNING"`
+[ -z "$hci_is_up" ] && {
+	hciconfig hci0 up
+}
+
+[ -d "/sys/class/bluetooth/hci0" ] && {
+	bluealsa -p a2dp-source -p a2dp-sink &
+}
+
+

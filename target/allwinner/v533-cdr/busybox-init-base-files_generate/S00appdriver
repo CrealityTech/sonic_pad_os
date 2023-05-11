@@ -1,0 +1,49 @@
+#!/bin/sh
+#
+# Load app driver modules....
+#
+
+MODULES_DIR="/lib/modules/`uname -r`"
+
+start() {
+    printf "Load driver modules\n"
+
+    insmod $MODULES_DIR/sunxi_gpadc.ko &
+    insmod $MODULES_DIR/ft6x-ts.ko &
+    # insmod $MODULES_DIR/sysinfo.ko
+    # insmod $MODULES_DIR/kfifo_buf.ko
+    insmod $MODULES_DIR/industrialio-triggered-buffer.ko
+    insmod $MODULES_DIR/inv-mpu6050.ko
+    # insmod $MODULES_DIR/sunxi-wlan.ko
+}
+
+stop() {
+    printf "Unload driver modules\n"
+    # 卸载会崩溃, 暂时不做处理
+    # rmmod $MODULES_DIR/sunxi-wlan.ko
+    rmmod $MODULES_DIR/inv-mpu6050.ko
+    rmmod $MODULES_DIR/industrialio-triggered-buffer.ko
+    # rmmod $MODULES_DIR/kfifo_buf.ko
+    # rmmod $MODULES_DIR/sysinfo.ko
+    rmmod $MODULES_DIR/ft6x-ts.ko
+    rmmod $MODULES_DIR/sunxi_gpadc.ko
+}
+
+case "$1" in
+    start)
+	start
+	;;
+    stop)
+	stop
+	;;
+    restart|reload)
+	stop
+	start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
+

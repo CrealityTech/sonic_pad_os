@@ -1,0 +1,10 @@
+#!/bin/sh /etc/rc.common
+
+START=1
+STOP=98
+USE_PROCD=1
+
+start_service() {
+	cat /sys/devices/platform/soc/usbc0/usb_host
+}
+

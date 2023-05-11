@@ -1,0 +1,20 @@
+#!/bin/sh
+
+echo "------run rc.modules file-----"
+#insmod sound modules
+echo "insmod sound modules"
+/sbin/insmod /lib/modules/3.4.39/snd-seq-device.ko
+/sbin/insmod /lib/modules/3.4.39/snd-mixer-oss.ko
+/sbin/insmod /lib/modules/3.4.39/snd-pcm-oss.ko
+
+
+#insmod uvcvideo modules
+echo "insmod uvcvideo modules"
+/sbin/insmod /lib/modules/3.4.39/videobuf2-core.ko
+/sbin/insmod /lib/modules/3.4.39/videobuf2-memops.ko
+/sbin/insmod /lib/modules/3.4.39/videobuf2-vmalloc.ko
+/sbin/insmod /lib/modules/3.4.39/uvcvideo.ko
+
+insmod  /lib/modules/3.4.39/xradio_mac.ko
+insmod  /lib/modules/3.4.39/xradio_core.ko
+insmod  /lib/modules/3.4.39/xradio_wlan.ko

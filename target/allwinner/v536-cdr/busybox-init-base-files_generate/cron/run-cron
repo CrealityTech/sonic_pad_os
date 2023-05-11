@@ -1,0 +1,14 @@
+#!/bin/sh
+# this is a bare-bones alternative to Debian's run-parts
+
+if ! [ -d "$1" ]; then
+   echo "Usage: $0 crondir" >&2
+   exit 1
+fi
+
+for cronfile in "$1"/* ; do
+	if [ -x "$cronfile" ]; then
+		"$cronfile"
+	fi
+done
+unset cronfile

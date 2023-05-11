@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo "------run rc.final file-----"
+echo "insmod wifi modules"
+insmod  /lib/modules/3.4.39/xradio_mac.ko
+insmod  /lib/modules/3.4.39/xradio_core.ko
+insmod  /lib/modules/3.4.39/xradio_wlan.ko
+sleep 1
+wpa_supplicant  -Dnl80211 -iwlan0 -c /etc/wpa_supplicant.conf -B
+sleep 1
+udhcpc -iwlan0&
+

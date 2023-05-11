@@ -1,0 +1,19 @@
+#!/bin/sh
+
+bt=`ps | grep bt_test | grep -v grep`
+[ -n "$bt" ] && {
+	killall bt_test
+	sleep 1
+}
+
+as=`ps | grep bluealsa | grep -v grep`
+[ -n "$as" ] && {
+	killall bluealsa
+	sleep 1
+}
+
+bt_on_test
+
+[ $? != 0 ] && exit 1
+
+bluealsa -p a2dp-source -p a2dp-sink &

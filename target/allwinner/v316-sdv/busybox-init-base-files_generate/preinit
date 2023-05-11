@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# Start the preinit
+#
+
+#
+# There are nothing to need be run.
+#if you need do someting in startup, you can write shell script to here.
+#

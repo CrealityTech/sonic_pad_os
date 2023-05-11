@@ -1,0 +1,4 @@
+#!/bin/sh
+#Add your app or script that need to start before booting
+tinymix set 22 32
+aplay /etc/kaiji.wav &

@@ -1,0 +1,29 @@
+#!/bin/sh
+
+echo "------run rc.preboot file-----"
+#insmod tp modules
+echo "insmod tp modules"
+if [ -f "/lib/modules/3.4.39/atmel_mxt_ts.ko" ]; then
+	/sbin/insmod /lib/modules/3.4.39/atmel_mxt_ts.ko > /dev/null 2>&1 &
+fi
+if [ -f "/lib/modules/3.4.39/icn85xx_ts.ko" ]; then
+        /sbin/insmod /lib/modules/3.4.39/icn85xx_ts.ko > /dev/null 2>&1 &
+fi
+#insmod vfe modules
+echo "insmod vfe modules"
+/sbin/insmod /lib/modules/3.4.39/videobuf-core.ko
+/sbin/insmod /lib/modules/3.4.39/videobuf-dma-contig.ko
+/sbin/insmod /lib/modules/3.4.39/cci.ko
+/sbin/insmod /lib/modules/3.4.39/vfe_os.ko
+/sbin/insmod /lib/modules/3.4.39/vfe_subdev.ko
+/sbin/insmod /lib/modules/3.4.39/hm2131.ko
+#/sbin/insmod /lib/modules/3.4.39/n3.ko
+/sbin/insmod /lib/modules/3.4.39/vfe_v4l2.ko
+
+echo "insmod r11-board"
+if [ -f "/usr/bin/r11-board" ]; then
+	/usr/bin/r11-board > /dev/null 2>&1 &
+	#sleep until the first frame is displayed.
+	sleep 3
+fi
+

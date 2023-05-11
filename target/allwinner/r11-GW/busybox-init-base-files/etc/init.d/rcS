@@ -1,0 +1,57 @@
+#!/bin/sh
+
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+mdev -s
+
+echo 8 > /proc/sys/kernel/printk
+
+# hostname
+HOSTNAME=TinaLinux
+`/bin/hostname $HOSTNAME`
+
+#insmod sound modules
+/sbin/insmod /lib/modules/3.4.39/snd-seq-device.ko
+/sbin/insmod /lib/modules/3.4.39/snd-mixer-oss.ko
+/sbin/insmod /lib/modules/3.4.39/snd-pcm-oss.ko
+
+#insmod vfe modules
+/sbin/insmod /lib/modules/3.4.39/videobuf-core.ko
+/sbin/insmod /lib/modules/3.4.39/videobuf-dma-contig.ko
+/sbin/insmod /lib/modules/3.4.39/cci.ko
+/sbin/insmod /lib/modules/3.4.39/vfe_os.ko
+/sbin/insmod /lib/modules/3.4.39/vfe_subdev.ko
+/sbin/insmod /lib/modules/3.4.39/hm2131.ko
+/sbin/insmod /lib/modules/3.4.39/n3.ko
+/sbin/insmod /lib/modules/3.4.39/vfe_v4l2.ko
+
+#if [ -f "/usr/bin/tinacvr" ]; then
+#	/usr/bin/tinacvr > /dev/null 2>&1 &
+#	#sleep until the first frame is displayed.
+#	sleep 5
+#fi
+
+#if [ -f "/bin/adbd" ]; then
+#	echo 0 > /sys/class/android_usb/android0/enable
+#	echo 18d1 > /sys/class/android_usb/android0/idVendor
+#	echo d002 > /sys/class/android_usb/android0/idProduct
+#	echo adb > /sys/class/android_usb/android0/functions
+#	echo 1 > /sys/class/android_usb/android0/enable
+#	/bin/adbd > /dev/null 2>&1 &
+#fi
+
+# self  boot application
+#for i in /etc/rc.d/S*;do
+#	usr/bin/bbrc-common.sh "$i" &
+#done
+
+#auto start application
+for script in /etc/rc.d/S[0-9]*;do
+	#$script "$1" 2>/dev/null &
+	$script "$1" &
+done
+
+#mkdir -p /tmp/lock/
+mkdir -p /tmp/log/
+
+#mkdir -p /dev/by-name/
+#ln -s /dev/mtdblock2 /dev/by-name/env

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo "-- run rc.final --"
+
+smartlinkd_demo_config()
+{
+	#start smartlinkd config
+	echo "smartlinkd_demo 4"
+	/usr/bin/smartlinkd_demo 4 &
+	sleep 1
+}
+
+mkdir -p /var/run
+smartlinkd_demo_config
+

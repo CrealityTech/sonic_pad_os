@@ -1,0 +1,195 @@
+#!/bin/sh /etc/rc.common
+
+START=51
+STOP=51
+SETIP_SH=/etc/wifi/setIP.sh
+#与setIP.sh此变量的路径保持一致
+STATIC_IP_FILE=/etc/wifi/staticIP.conf
+INIT_WIFI_LOG_FILE=/var/log/initWifi.log
+#保存最后一次连接的wifi热点名称
+SAVE_LAST_WIFI_SSID_FILE=/etc/wifi/saveLastWifiSSID.conf
+XR_WIFI_CONF=/etc/wifi/xr_wifi.conf
+
+write_log()
+{
+    echo `date` ": " $1 >> $INIT_WIFI_LOG_FILE
+}
+
+set_log()
+{
+    [ ! -f $INIT_WIFI_LOG_FILE ] && touch $INIT_WIFI_LOG_FILE && chmod o-r $INIT_WIFI_LOG_FILE
+}
+
+set_DHCP()
+{
+    write_log "set DHCP..."
+    /etc/wifi/udhcpc_wlan0 restart
+    write_log "/etc/wifi/udhcpc_wlan0 restart"
+    if [ -e $STATIC_IP_FILE ]
+    then
+        rm -rf $STATIC_IP_FILE
+        write_log "rm -rf $STATIC_IP_FILE"
+    fi
+    if [ -e $SAVE_LAST_WIFI_SSID_FILE ]
+    then
+        rm -rf $SAVE_LAST_WIFI_SSID_FILE
+        write_log "rm -rf $SAVE_LAST_WIFI_SSID_FILE"
+    fi
+    write_log "set DHCP success"
+}
+
+set_macaddr()
+{
+    wifi_mac=$(awk 'BEGIN { RS=" "; FS="="; } $1 == "wifi_mac" { print $2 }' < /proc/cmdline)
+    [ -z $wifi_mac ] && return
+
+    echo $wifi_mac > $XR_WIFI_CONF
+}
+
+insmod_xr819_module()
+{
+    insmod /lib/modules/4.9.191/xr819_mac.ko
+    insmod /lib/modules/4.9.191/xr819_core.ko
+    insmod /lib/modules/4.9.191/xr819_wlan.ko
+}
+
+cleanup_xr819_module()
+{
+    rmmod xr819_wlan
+    rmmod xr819_core
+    rmmod xr819_mac
+}
+
+insmod_xr829_module()
+{
+    insmod /lib/modules/4.9.191/xr829_mac.ko
+    insmod /lib/modules/4.9.191/xr829_core.ko
+    insmod /lib/modules/4.9.191/xr829_wlan.ko
+}
+
+cleanup_xr829_module()
+{
+    rmmod xr829_wlan
+    rmmod xr829_core
+    rmmod xr829_mac
+}
+
+start(){
+    set_macaddr
+    set_log
+
+    insmod_xr819_module
+    if [ $? != 0 ]; then
+        cleanup_xr819_module
+        sleep 1
+        insmod_xr829_module
+
+        if [ $? != 0 ]; then
+            cleanup_xr829_module
+            echo "insmod xr829 module failed"
+            exit 1;
+        else
+            echo "insmod xr829 module successfully"
+        fi
+
+    else
+        echo "insmod xr819 module successfully"
+    fi
+
+    ifconfig wlan0 up
+
+    write_log "/etc/init.d/wpa_supplicant restart"
+    /etc/init.d/wpa_supplicant restart
+    sleep 1
+
+    #如果条件成立，则说明之前是设置为静态IP
+    if [ -e $STATIC_IP_FILE ]
+    then
+        #如果之前是设置为静态IP，并且现在连接的wifi与之前的一致，则继续按照之前的配置。否则则进行动态IP设置
+        if [ -e $SAVE_LAST_WIFI_SSID_FILE ]
+        then
+            write_log "check the last SSID and the cur SSID start"
+            LAST_SSID=`cat $SAVE_LAST_WIFI_SSID_FILE`
+            # 20201218:此部分存在bug，当当前没有连接wifi时，wifi_get_connection_info_test会一直在后台运行，导致此脚本卡死；
+            #          最新方案，换成wifi_list_networks_test验证
+            # CONNECT_AP_SSID=`wifi_get_connection_info_test 1 | grep "Connected AP: "`
+            # CUR_SSID=${CONNECT_AP_SSID#*: }
+            # 20201218：因为新的命令执行太快完成，所以增加延时
+            sleep 5
+            CUR_SSID=`wifi_list_networks_test | grep "CURRENT" | cut -f 2`
+            TIMEOUT=0
+            write_log "cur SSID= $CUR_SSID , timeout = $TIMEOUT"
+
+            #当CUR_SSID为空，并且timeout <= 2时，继续
+            while [ ! $CUR_SSID ] && [ $TIMEOUT -lt 2 ]
+            do
+                # CONNECT_AP_SSID=`wifi_get_connection_info_test 1 | grep "Connected AP: "`
+                # CUR_SSID=${CONNECT_AP_SSID#*: }
+                CUR_SSID=`wifi_list_networks_test | grep "CURRENT" | cut -f 2`
+                let TIMEOUT++
+                write_log "cur SSID= $CUR_SSID , timeout = $TIMEOUT"
+                sleep 5
+            done
+
+            #timeout >= 2
+            if [ $TIMEOUT -ge 2 ]
+            then
+                write_log "check the SSID timeout."
+                set_DHCP
+                exit $RET_OK
+            fi
+
+            #如果这里CUR_SSID不为空，则说明有wifi热点，不会导致wifi_get_connection_info_test卡死
+            if [ $CUR_SSID ]
+            then
+                CONNECT_AP_SSID=`wifi_get_connection_info_test 1 | grep "Connected AP: " | tail -n 1`
+                CUR_SSID=${CONNECT_AP_SSID#*: }
+                write_log "Reconfirm: cur SSID = $CUR_SSID"
+            fi
+
+            if [ $CUR_SSID != $LAST_SSID ]
+            then
+                write_log "the Cur SSID $CUR_SSID != Last SSID $LAST_SSID"
+                set_DHCP
+                exit $RET_OK
+            fi
+            write_log "check the last SSID $LAST_SSID and the cur SSID $CUR_SSID end"
+        else
+            #如果找不到之前记录的最后一次SSID，则进行动态获取
+            write_log "check the last SSID fail."
+            set_DHCP
+            exit $RET_OK
+        fi
+
+        while read line;
+        do
+            eval "$line"
+        done < ${STATIC_IP_FILE};
+
+        echo "IP=$IP,NETMASK=$NETMASK,GATEWAY=$GATEWAY"
+        write_log "static IP: $IP netmask: $NETMASK gateway: $GATEWAY"
+        #如果IP为空，或者NETMASK为空，或者两个相等，都为错
+        if [ ! $IP ] || [ ! $NETMASK ] || [ $IP = $NETMASK ] [ ! $GATEWAY ]
+        #if [ ! -n "$IP" ] || [ ! -n "$NETMASK" ] || [ $IP = $NETMASK ]
+        then
+            write_log "set the static IP fail."
+            set_DHCP
+            exit $RET_OK
+        fi
+        $SETIP_SH static $IP $NETMASK $GATEWAY
+        write_log "set ip=$IP netmask=$NETMASK gateway=$GATEWAY success"
+        exit $RET_OK
+    else
+        set_DHCP
+        exit $RET_OK
+    fi
+    /etc/init.d/cxmudp reload
+}
+
+stop(){
+    ifconfig wlan0 down
+    cleanup_xr819_module
+    cleanup_xr829_module
+    echo "xradio shutdown"
+}
+

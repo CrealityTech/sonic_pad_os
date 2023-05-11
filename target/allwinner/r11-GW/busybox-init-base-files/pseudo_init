@@ -1,0 +1,87 @@
+#!/bin/sh
+
+PARTITION="/dev/mtdblock5"
+
+################################## functions ##################################
+mount_etc_jffs2()
+{
+	# mount rootfs_data partition to /etc
+	/bin/mount -t jffs2 $PARTITION /etc
+
+	if [ ! -f /etc/init.d/rcS ]; then
+		echo "ERROR: rcS does not exist in $PARTITION, format $PARTITION"
+
+		/bin/umount $PARTITION
+
+		# format $PARTITION.
+		/bin/mount -t tmpfs tmpfs /tmp
+		/bin/mkdir -p /tmp/jffs2.dir/tmp
+		/usr/sbin/mkfs.jffs2 -p -e 0x10000 -d /tmp/jffs2.dir -o /tmp/jffs2.img
+		/bin/dd if=/tmp/jffs2.img of=$PARTITION
+		/bin/rm -rf /tmp/jffs2.img /tmp/jffs2.dir
+
+		# 2. copy /etc to this partiton.
+		/bin/mount -t jffs2 $PARTITION /mnt
+		# note: vfat does not support symlink.
+		/bin/cp -af /etc/* /mnt/
+		/bin/umount $PARTITION
+
+		# 3. mount this partiton to /etc
+		/bin/mount -t jffs2 $PARTITION /etc
+	fi
+}
+
+mount_etc_ext2()
+{
+	# mount rootfs_data partition to /etc
+	/bin/mount $PARTITION /etc
+
+	# if mount failed, format.
+	if [ $? -ne 0 ]; then
+		echo "ERROR: mount $PARTITION error, format it"
+
+		# 1. format partition.
+		/usr/sbin/mkfs.ext2 $PARTITION
+
+		# 2. copy /etc to this partiton.
+		/bin/mount $PARTITION /mnt
+		# note FAT does not support symlink.
+		/bin/cp -af /etc/* /mnt/
+
+		# 3. mount this partiton to /etc
+		/bin/umount $PARTITION
+		/usr/sbin/e2fsck -y $PARTITION
+		/bin/mount $PARTITION /etc
+	fi
+}
+
+mount_etc_fat()
+{
+	# mount rootfs_data partition to /etc
+	/bin/mount $PARTITION /etc
+
+	# if mount failed, format.
+	if [ $? -ne 0 ]; then
+		echo "ERROR: mount $PARTITION error, format it"
+
+		# 1. format partition.
+		/sbin/mkfs.vfat $PARTITION
+
+		# 2. copy /etc to this partiton.
+		/bin/mount $PARTITION /mnt
+		/bin/cp -af /etc/* /mnt/
+
+		# 3. mount this partiton to /etc
+		/bin/umount $PARTITION
+		/bin/mount $PARTITION /etc
+	fi
+}
+
+#----------------------------------------------------------------
+/bin/mount -t proc /proc /proc
+
+mount_etc_jffs2
+# mount_etc_ext2
+# mount_etc_fat
+
+exec /sbin/init

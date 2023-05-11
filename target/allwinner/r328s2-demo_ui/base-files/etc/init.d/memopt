@@ -1,0 +1,13 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2006-2011 OpenWrt.org
+
+START=99
+USE_PROCD=1
+OOM_ADJ=-17
+
+start_service() {
+	/bin/rm -f /etc/init.d/network
+	/bin/kill `/bin/ps | grep netifd | grep -v "grep" | awk '{print $1}'`
+	/bin/rm -f /etc/init.d/sysntpd
+	/bin/kill `/bin/ps | grep ntpd | grep -v "grep" | awk '{print $1}'`
+}

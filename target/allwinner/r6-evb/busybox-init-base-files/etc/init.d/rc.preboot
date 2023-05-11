@@ -1,0 +1,59 @@
+#!/bin/sh
+
+wifi_connect1()
+{
+	#example for setting mac address,The actual production needs to be revised.
+	cp /etc/xr_wifi.conf /tmp/
+	echo 4 > /proc/sys/kernel/printk
+	echo "insmod wifi kernel module --------------------"
+	insmod /lib/modules/3.10.65/xradio_wlan.ko
+	echo "start wpa_supplicant ------------------------"
+	wpa_supplicant  -Dnl80211 -iwlan0 -c /etc/wpa_supplicant.conf -B
+	sleep 1
+	echo "start udhcpc ----------------"
+	udhcpc -iwlan0 &
+}
+wifi_connect2()
+{
+	#example for setting mac address,The actual production needs to be revised.
+	cp /etc/xr_wifi.conf /tmp/
+	count=0
+	echo 4 > /proc/sys/kernel/printk
+	echo "insmod wifi kernel module --------------------"
+	insmod /lib/modules/3.10.65/xradio_wlan.ko
+	echo "start wpa_supplicant ------------------------"
+	wpa_supplicant -iwlan0 -Dnl80211 -c/etc/wpa_supplicant.conf > /tmp/wifi.log &
+
+	sleep 1
+
+	while true
+	do
+		usleep 500
+		let count++
+		grep "CTRL-EVENT-CONNECTED" /tmp/wifi.log && {
+			echo "start udhcpc ----------------"
+			/sbin/udhcpc -i wlan0 &
+			return
+		}
+		if [ $count -eq 500 ]; then
+			echo "wifi connect fail!!!!!!!!!!!!!!!!!!!!!!"
+			return
+		fi
+	done
+}
+
+echo "-- rcS begin --"
+
+echo "-- insmod snd module --"
+
+#/sbin/insmod /lib/modules/3.10.65/snd-seq-device.ko
+#/sbin/insmod /lib/modules/3.10.65/snd-mixer-oss.ko
+#/sbin/insmod /lib/modules/3.10.65/snd-pcm-oss.ko
+
+echo "-- set volume --"
+#amixer cset iface=MIXER,name='head phone volume' 30
+tinymix set 22 32
+echo "-- play music --"
+#tinyplayer /etc/test.mp3  > /dev/null
+tinyplay /etc/kaiji.wav &
+echo "-- end --"

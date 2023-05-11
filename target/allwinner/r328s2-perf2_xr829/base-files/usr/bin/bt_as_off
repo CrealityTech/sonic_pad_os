@@ -1,0 +1,13 @@
+#!/bin/sh
+
+as=`ps | grep bluealsa | grep -v grep`
+[ -n "$as" ] && {
+	killall bluealsa
+	sleep 1
+}
+
+play=`ps | grep aplay | grep -v grep`
+[ -n "$play" ] && {
+	killall aplay
+	sleep 1
+}

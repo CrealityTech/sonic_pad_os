@@ -1,0 +1,4 @@
+#!/bin/sh
+#Add your app or script that need to start after booting
+#ifconfig wlan0 up
+#wifi_connect_ap_test AWTest 1qaz@WSX

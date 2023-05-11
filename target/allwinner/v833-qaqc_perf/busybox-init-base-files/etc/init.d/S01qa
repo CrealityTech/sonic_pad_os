@@ -1,0 +1,46 @@
+#!/bin/sh
+
+start() {
+    if [ -e "/dev/mmcblk0" -a -e "/dev/mmcblk0p1" -a -e "/dev/mmcblk1p1"]; then
+        mount /dev/mmcblk0 /mnt/extsd
+        mount /dev/mmcblk0p1 /mnt/extsd
+        mount /dev/mmcblk1p1 /mnt/extsd 
+        mount /dev/mmcblk1 /mnt/extsd 
+    elif [ -e "/dev/mmcblk0" -a ! -e "/dev/mmcblk0p1" ]; then
+        mount /dev/mmcblk0 /mnt/extsd
+    elif [ -e "/dev/mmcblk1p1" ]; then
+        mount /dev/mmcblk1p1 /mnt/extsd 
+    else
+        echo "-----------------------can not find mmcblk0 and mmcblk0p1----------------------"
+    fi
+    sleep 1
+    cp /usr/bin/sample_v459_QA /tmp
+    ./tmp/sample_v459_QA &
+}
+
+stop() {
+    hwclock --systohc
+
+    pid=$(ps | awk -v partten="wpa_supplicant" '{if ($5~partten) print $1}')
+    kill -9 $pid
+
+    sleep 1
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart|reload)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $?

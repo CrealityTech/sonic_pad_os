@@ -1,0 +1,14 @@
+#!/bin/sh /etc/rc.common
+# Example script
+# Copyright (C) 2007 OpenWrt.org
+
+START=11
+STOP=97
+
+boot(){
+	echo 0 > /sys/devices/soc/spi0/active
+	echo 0 > /sys/devices/soc/sdc1/active
+	echo 1 > /sys/devices/soc/spi0/active
+	echo 0 > /sys/devices/soc/spi0/active
+	echo 1 > /sys/devices/soc/sdc1/active
+}

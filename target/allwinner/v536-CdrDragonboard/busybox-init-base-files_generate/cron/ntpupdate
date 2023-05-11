@@ -1,0 +1,5 @@
+#!/bin/sh
+
+ntpclient -s 192.168.205.200 &
+
+exit 0

@@ -1,0 +1,57 @@
+#!/bin/sh
+
+echo "-- run rc.final --"
+
+wifi_connect1()
+{
+	#example for setting mac address,The actual production needs to be revised.
+	cp /etc/xr_wifi.conf /tmp/
+	#echo 4 > /proc/sys/kernel/printk
+	#echo "insmod wifi kernel module --------------------"
+	#insmod /lib/modules/3.10.65/xradio_wlan.ko
+	echo "start wpa_supplicant ------------------------"
+	wpa_supplicant  -Dnl80211 -iwlan0 -c /etc/wifi/wpa_supplicant.conf -B
+	sleep 1
+	echo "start udhcpc ----------------"
+	udhcpc -iwlan0 &
+}
+wifi_connect2()
+{
+	#example for setting mac address,The actual production needs to be revised.
+	cp /etc/xr_wifi.conf /tmp/
+	count=0
+	#echo 4 > /proc/sys/kernel/printk
+	echo "insmod wifi kernel module --------------------"
+	insmod /lib/modules/3.10.65/xradio_wlan.ko
+	echo "start wpa_supplicant ------------------------"
+	wpa_supplicant -iwlan0 -Dnl80211 -c/etc/wpa_supplicant.conf > /tmp/wifi.log &
+
+	sleep 1
+
+	while true
+	do
+		usleep 500
+		let count++
+		grep "CTRL-EVENT-CONNECTED" /tmp/wifi.log && {
+			echo "start udhcpc ----------------"
+			/sbin/udhcpc -i wlan0 &
+			return
+		}
+		if [ $count -eq 500 ]; then
+			echo "wifi connect fail!!!!!!!!!!!!!!!!!!!!!!"
+			return
+		fi
+	done
+}
+
+echo "insmod F1C200s-board"
+if [ -f "/usr/bin/F1C200s-board" ]; then
+	/usr/bin/F1C200s-board > /dev/null 2>&1 &
+	sleep 3
+	echo "app start..."
+fi
+
+echo "-- wifi connect --"
+#wifi_connect1
+
+echo "-- end --"

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+amixer cset numid=3 15;
+amixer cset numid=22 1;
+amixer cset numid=23 1;
+amixer cset numid=16  1;
+amixer cset numid=11  1;

@@ -1,0 +1,29 @@
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config interface 'wan'
+	option ifname 'eth0'
+	option proto  'dhcp'
+
+config wifi-device 'wlan0'
+	option type mac80211
+	option channel '11'
+	option hwmod '11ng'
+	option htmode 'HT20'
+	list ht_capab 'SHORT-GI-40'
+	list ht_capab 'TX-STBC'
+	list ht_capab 'RX-STBC1'
+	list ht_capab 'DSSS_CCK-40'
+	option txpower '17'
+	option country '00'
+
+config wifi-iface
+	option device 'wlan0'
+	option network 'lan'
+	option mode 'ap'
+	option ssid 'BU2-Tina'
+	option encryption 'psk2'
+	option key 'TinaLinux'

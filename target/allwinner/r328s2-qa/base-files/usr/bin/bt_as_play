@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# a2dp source test
+# $1 object mac $2 audio source
+aplay -D bluealsa:HCI=hci0,DEV=$1,PROFILE=a2dp $2
