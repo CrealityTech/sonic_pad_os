@@ -1,0 +1,102 @@
+From 3b9886e7c7581f985ccaca0702e2f889328abc51 Mon Sep 17 00:00:00 2001
+From: junsenhuang <junsenhuang@allwinnertech.com>
+Date: Thu, 15 Aug 2019 16:29:44 +0800
+Subject: [PATCH 9/9] gst-omx/omx: fix green bottom of video playbacking.
+
+Crop infomation should be required by gstomxvideodec and update the video meta data.
+Then Gstwaylandsink gets correct display width and height by calling
+gst_buffer_get_video_meta interface.
+
+Change-Id: I61ba58621db203585d0f13f88d0ec8717d24ad83
+---
+ omx/gstomx.c         | 20 ++++++++++++++++++++
+ omx/gstomx.h         |  3 +++
+ omx/gstomxvideodec.c | 16 ++++++++++++----
+ 3 files changed, 35 insertions(+), 4 deletions(-)
+
+diff --git a/omx/gstomx.c b/omx/gstomx.c
+index 0cba89c..d90b5bc 100644
+--- a/omx/gstomx.c
++++ b/omx/gstomx.c
+@@ -1328,6 +1328,26 @@ gst_omx_port_get_port_definition (GstOMXPort * port,
+ }
+ 
+ OMX_ERRORTYPE
++gst_omx_port_get_output_crop_config (GstOMXPort * port,
++    OMX_CONFIG_RECTTYPE * output_crop)
++{
++  GstOMXComponent *comp;
++  OMX_ERRORTYPE err;
++
++  g_return_val_if_fail (port != NULL, OMX_ErrorBadParameter);
++
++  comp = port->comp;
++
++  GST_OMX_INIT_STRUCT (output_crop);
++  output_crop->nPortIndex = port->index;
++
++  err = gst_omx_component_get_config (comp, OMX_IndexConfigCommonOutputCrop,
++      output_crop);
++
++  return err;
++}
++
++OMX_ERRORTYPE
+ gst_omx_port_update_port_definition (GstOMXPort * port,
+     OMX_PARAM_PORTDEFINITIONTYPE * port_def)
+ {
+diff --git a/omx/gstomx.h b/omx/gstomx.h
+index a5330bd..9af3336 100644
+--- a/omx/gstomx.h
++++ b/omx/gstomx.h
+@@ -454,6 +454,9 @@ gboolean          gst_omx_buffer_import_fd (GstOMXBuffer * buffer, GstBuffer * i
+ 
+ void              gst_omx_set_default_role (GstOMXClassData *class_data, const gchar *default_role);
+ 
++OMX_ERRORTYPE     gst_omx_port_get_output_crop_config (GstOMXPort * port, OMX_CONFIG_RECTTYPE * output_crop);
++
++
+ /* refered by plugin_init */
+ GST_DEBUG_CATEGORY_EXTERN (gst_omx_video_debug_category);
+ 
+diff --git a/omx/gstomxvideodec.c b/omx/gstomxvideodec.c
+index 46d44b3..5d705b9 100644
+--- a/omx/gstomxvideodec.c
++++ b/omx/gstomxvideodec.c
+@@ -1412,10 +1412,14 @@ gst_omx_video_dec_reconfigure_output_port (GstOMXVideoDec * self)
+       port_def.format.video.eColorFormat,
+       (guint) port_def.format.video.nFrameWidth,
+       (guint) port_def.format.video.nFrameHeight);
++  OMX_CONFIG_RECTTYPE output_crop;
++  gst_omx_port_get_output_crop_config(port, &output_crop);
++  GST_DEBUG_OBJECT (self,"output crop info. left [%ld] top [%ld] width [%ld] height [ld]",
++      output_crop.nLeft, output_crop.nTop, output_crop.nWidth, output_crop.nHeight);
+ 
+   state = gst_video_decoder_set_output_state (GST_VIDEO_DECODER (self),
+-      format, port_def.format.video.nFrameWidth,
+-      port_def.format.video.nFrameHeight, self->input_state);
++      format,output_crop.nWidth/* port_def.format.video.nFrameWidth*/,
++      output_crop.nHeight/*port_def.format.video.nFrameHeight*/, self->input_state);
+ 
+   if (!gst_video_decoder_negotiate (GST_VIDEO_DECODER (self))) {
+     gst_video_codec_state_unref (state);
+@@ -1617,10 +1621,14 @@ gst_omx_video_dec_loop (GstOMXVideoDec * self)
+           port_def.format.video.eColorFormat,
+           (guint) port_def.format.video.nFrameWidth,
+           (guint) port_def.format.video.nFrameHeight);
++      OMX_CONFIG_RECTTYPE output_crop;
++      gst_omx_port_get_output_crop_config(port, &output_crop);
++      GST_DEBUG_OBJECT (self,"Just update caps. output crop info. left [%ld] top [%ld] width [%ld] height [%ld].",
++          output_crop.nLeft, output_crop.nTop, output_crop.nWidth, output_crop.nHeight);
+ 
+       state = gst_video_decoder_set_output_state (GST_VIDEO_DECODER (self),
+-          format, port_def.format.video.nFrameWidth,
+-          port_def.format.video.nFrameHeight, self->input_state);
++          format, output_crop.nWidth,
++          output_crop.nHeight, self->input_state);
+ 
+       /* Take framerate and pixel-aspect-ratio from sinkpad caps */
+ 
+-- 
+1.9.1
+

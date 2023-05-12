@@ -1,0 +1,20 @@
+--- a/conf/nginx.conf
++++ b/conf/nginx.conf
+@@ -564,6 +564,17 @@ index index.html;
+             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+             proxy_read_timeout 86400;
+         }
++        
++        location /settings {
++            proxy_pass http://127.0.0.1:8004;
++         }
++         location /files {
++           proxy_pass http://127.0.0.1:8004;
++        }
++
++         location /time_lapse {
++           proxy_pass http://127.0.0.1:8004;
++        }
+ 
+         location ~ ^/(printer|api|access|machine|server)/ {
+             proxy_pass http://apiserver$request_uri;

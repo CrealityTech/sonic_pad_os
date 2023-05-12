@@ -1,0 +1,13 @@
+--- a/conf/nginx.conf
++++ b/conf/nginx.conf
+@@ -613,6 +613,10 @@ index index.html;
+            proxy_pass http://127.0.0.1:8004;
+         }
+ 
++         location /slice {
++           proxy_pass http://127.0.0.1:8004;
++        }
++
+ 
+         location ~ ^/(printer|api|access|machine|server)/ {
+             proxy_pass http://apiserver$request_uri;

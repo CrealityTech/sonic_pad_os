@@ -1,0 +1,26 @@
+From d290cff83b2b57bc74321bffe06ceb5ebb9632e9 Mon Sep 17 00:00:00 2001
+From: junsenhuang <junsenhuang@allwinnertech.com>
+Date: Fri, 21 Jun 2019 16:25:30 +0800
+Subject: [PATCH 08/11] wayland: add waylandsink initial window position.
+
+Change-Id: I32fa6a7f2e300b25d68e5e1133aa662fdb9a53de
+---
+ ext/wayland/wlwindow.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/ext/wayland/wlwindow.c b/ext/wayland/wlwindow.c
+index c63eacb..43ff0d3 100644
+--- a/ext/wayland/wlwindow.c
++++ b/ext/wayland/wlwindow.c
+@@ -410,6 +410,8 @@ gst_wl_window_set_render_rectangle (GstWlWindow * window, gint x, gint y,
+   window->render_rectangle.w = w;
+   window->render_rectangle.h = h;
+ 
++  wl_shell_surface_set_window_position(window->shell_surface, x, y);
++
+   /* position the area inside the parent - needs a parent commit to apply */
+   if (window->area_subsurface)
+     wl_subsurface_set_position (window->area_subsurface, x, y);
+-- 
+1.9.1
+

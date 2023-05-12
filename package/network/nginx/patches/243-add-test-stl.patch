@@ -1,0 +1,18 @@
+--- a/conf/nginx.conf
++++ b/conf/nginx.conf
+@@ -696,6 +696,15 @@ index index.html;
+         location = /index.html {
+             add_header Cache-Control "no-store, no-cache, must-revalidate";
+         }
++		
++        location /test_stl {
++            add_header Access-Control-Allow-Origin *;
++            add_header Access-Control-Allow-Methods 'GET,POST,PUT,OPTIONS,DELETE,PATCH,VIEW';
++            add_header Access-Control-Allow-Headers 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization';
++            add_header Referrer-Policy "no-referrer" always;
++            alias /mnt/UDISK/test_stl;
++            autoindex on;
++        }
+ 
+         location /websocket {
+             proxy_pass http://apiserver/websocket;

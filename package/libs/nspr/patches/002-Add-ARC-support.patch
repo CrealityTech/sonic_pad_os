@@ -1,0 +1,83 @@
+From 815812d2d209b9a37b0e10531bba425a8487a16b Mon Sep 17 00:00:00 2001
+From: anruliu <anruliu@allwinnertech.com>
+Date: Thu, 1 Aug 2019 14:07:24 +0800
+Subject: [PATCH] Add-ARC-support
+
+Signed-off-by: anruliu <anruliu@allwinnertech.com>
+---
+ pr/include/md/_linux.cfg | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ pr/include/md/_linux.h   |  2 ++
+ 2 files changed, 47 insertions(+)
+
+diff --git a/nspr/pr/include/md/_linux.cfg b/nspr/pr/include/md/_linux.cfg
+index 8cbf0cb..512d78a 100644
+--- a/nspr/pr/include/md/_linux.cfg
++++ b/nspr/pr/include/md/_linux.cfg
+@@ -174,6 +174,51 @@
+ #define PR_BYTES_PER_WORD_LOG2  3
+ #define PR_BYTES_PER_DWORD_LOG2 3
+ 
++#elif defined(__arc__)
++
++#define IS_LITTLE_ENDIAN 1
++#undef  IS_BIG_ENDIAN
++
++#define PR_BYTES_PER_BYTE   1
++#define PR_BYTES_PER_SHORT  2
++#define PR_BYTES_PER_INT    4
++#define PR_BYTES_PER_INT64  8
++#define PR_BYTES_PER_LONG   4
++#define PR_BYTES_PER_FLOAT  4
++#define PR_BYTES_PER_DOUBLE 8
++#define PR_BYTES_PER_WORD   4
++#define PR_BYTES_PER_DWORD  8
++
++#define PR_BITS_PER_BYTE    8
++#define PR_BITS_PER_SHORT   16
++#define PR_BITS_PER_INT     32
++#define PR_BITS_PER_INT64   64
++#define PR_BITS_PER_LONG    32
++#define PR_BITS_PER_FLOAT   32
++#define PR_BITS_PER_DOUBLE  64
++#define PR_BITS_PER_WORD    32
++
++#define PR_BITS_PER_BYTE_LOG2   3
++#define PR_BITS_PER_SHORT_LOG2  4
++#define PR_BITS_PER_INT_LOG2    5
++#define PR_BITS_PER_INT64_LOG2  6
++#define PR_BITS_PER_LONG_LOG2   5
++#define PR_BITS_PER_FLOAT_LOG2  5
++#define PR_BITS_PER_DOUBLE_LOG2 6
++#define PR_BITS_PER_WORD_LOG2   5
++
++#define PR_ALIGN_OF_SHORT   2
++#define PR_ALIGN_OF_INT     4
++#define PR_ALIGN_OF_LONG    4
++#define PR_ALIGN_OF_INT64   4
++#define PR_ALIGN_OF_FLOAT   4
++#define PR_ALIGN_OF_DOUBLE  4
++#define PR_ALIGN_OF_POINTER 4
++#define PR_ALIGN_OF_WORD    4
++
++#define PR_BYTES_PER_WORD_LOG2   2
++#define PR_BYTES_PER_DWORD_LOG2  3
++
+ #elif defined(__ia64__)
+ 
+ #define IS_LITTLE_ENDIAN 1
+diff --git a/nspr/pr/include/md/_linux.h b/nspr/pr/include/md/_linux.h
+index b4b298b..5b56387 100644
+--- a/nspr/pr/include/md/_linux.h
++++ b/nspr/pr/include/md/_linux.h
+@@ -57,6 +57,8 @@
+ #define _PR_SI_ARCHITECTURE "m32r"
+ #elif defined(__or1k__)
+ #define _PR_SI_ARCHITECTURE "or1k"
++#elif defined(__arc__)
++#define _PR_SI_ARCHITECTURE "arc"
+ #else
+ #error "Unknown CPU architecture"
+ #endif
+-- 
+1.9.1
+

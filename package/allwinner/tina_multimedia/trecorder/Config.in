@@ -1,0 +1,15 @@
+config DEFAULT_SOUNDCARD
+    int
+    prompt "Choose default card"
+        depends on TRECORDER
+        default 0
+        help
+            Choose which soundcard to recorder.
+
+config DEFAULT_DEVICE
+    int
+    prompt "Choose default pcm device"
+        depends on TRECORDER
+        default 0
+        help
+            Choose which pcm device to recorder.

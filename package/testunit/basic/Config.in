@@ -1,0 +1,10 @@
+menuconfig TESTUNIT_BASIC
+    bool "basic"
+    default y
+
+if TESTUNIT_BASIC
+    source cpu/Config.in
+    source storage/Config.in
+    source tool/Config.in
+endif
+

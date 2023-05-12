@@ -1,0 +1,187 @@
+From 0216f2d76d7a88fb9cb6e2c0dfdf0a8040d811d0 Mon Sep 17 00:00:00 2001
+From: junsenhuang <junsenhuang@allwinnertech.com>
+Date: Fri, 21 Jun 2019 14:47:04 +0800
+Subject: [PATCH 06/11] waylandsink: wayland support zero-copy decoding.
+ 1.gst-plugins-1.14.4 has supported OMX_UseBuffer. 2.cedarc omx has not been
+ adapted to gstreamer UseBuffer way. 3.Currently cedarc omx would notify
+ unsupport for UseBuffer call. Instead, gstwaylandsink would use legacy
+ AllocateBuffer way.
+
+Change-Id: I054a42ea4f794f62af0b00c606aae7d1995826af
+---
+ ext/wayland/gstwaylandsink.c | 21 +++++++++++++++++++-
+ ext/wayland/gstwaylandsink.h | 15 +++++++++++++++
+ ext/wayland/wlshmallocator.c | 46 ++++++++++++++++++++++++++++++++++++++++++++
+ ext/wayland/wlshmallocator.h |  3 +++
+ ext/wayland/wlvideoformat.c  |  1 +
+ 5 files changed, 85 insertions(+), 1 deletion(-)
+
+diff --git a/ext/wayland/gstwaylandsink.c b/ext/wayland/gstwaylandsink.c
+index c922999..c8dff06 100644
+--- a/ext/wayland/gstwaylandsink.c
++++ b/ext/wayland/gstwaylandsink.c
+@@ -280,6 +280,7 @@ gst_wayland_sink_init (GstWaylandSink * sink)
+   sink->scale = 0;
+   sink->out_width = 0;
+   sink->out_height = 0;
++  sink->sBuffer = g_new0(OmxPrivateBuffer, 1);
+ }
+ 
+ static void
+@@ -287,7 +288,6 @@ gst_wayland_sink_get_property (GObject * object,
+     guint prop_id, GValue * value, GParamSpec * pspec)
+ {
+   GstWaylandSink *sink = GST_WAYLAND_SINK (object);
+-
+   switch (prop_id) {
+     case PROP_DISPLAY:
+       GST_OBJECT_LOCK (sink);
+@@ -356,6 +356,7 @@ gst_wayland_sink_finalize (GObject * object)
+   GstWaylandSink *sink = GST_WAYLAND_SINK (object);
+ 
+   GST_DEBUG_OBJECT (sink, "Finalizing the sink..");
++  g_free(sink->sBuffer);
+ 
+   if (sink->last_buffer)
+     gst_buffer_unref (sink->last_buffer);
+@@ -834,6 +835,24 @@ gst_wayland_sink_show_frame (GstVideoSink * vsink, GstBuffer * buffer)
+     if (gst_buffer_n_memory (buffer) == 1 && gst_is_fd_memory (mem))
+       wbuf = gst_wl_shm_memory_construct_wl_buffer (mem, sink->display,
+           &sink->video_info);
++		 /*Get fd. construct a wlbuffer. */
++	  if (!wbuf && gst_wl_display_check_format_for_shm (sink->display, format)){
++		 GstVideoFrame src;
++		 GstVideoInfo src_info = sink->video_info;
++		 if (!gst_video_frame_map (&src, &src_info, buffer, GST_MAP_READ)) {
++		   gst_video_frame_unmap (&src);
++		   goto src_map_failed;
++		 }
++		 memcpy(sink->sBuffer, (char*)src.data[0], sizeof(OmxPrivateBuffer));
++		 gst_video_frame_unmap (&src);
++		 if (sink->sBuffer->nID == 0x5A45524F43F45059)//ASIIC magic code of "ZEROCOPY"
++		 {
++		   wbuf = gst_wl_shm_memory_construct_wl_buffer_by_fd (mem, sink->display,
++			   &sink->video_info, sink->sBuffer->nShareBufFd);
++		   GST_LOG_OBJECT(sink, "construct wl buffer by fd. wbuf %p. id: %lx. fd: %d.\n",
++			   wbuf, sink->sBuffer->nID, sink->sBuffer->nShareBufFd);
++		 }
++	  }
+ 
+     /* If nothing worked, copy into our internal pool */
+     if (!wbuf) {
+diff --git a/ext/wayland/gstwaylandsink.h b/ext/wayland/gstwaylandsink.h
+index c3ec0df..b490f82 100644
+--- a/ext/wayland/gstwaylandsink.h
++++ b/ext/wayland/gstwaylandsink.h
+@@ -47,6 +47,20 @@ G_BEGIN_DECLS
+ 
+ typedef struct _GstWaylandSink GstWaylandSink;
+ typedef struct _GstWaylandSinkClass GstWaylandSinkClass;
++typedef struct OmxPrivateBuffer {
++    uint64_t       nID;
++    unsigned int   nFlag;
++    unsigned char* pAddrPhyY;
++    unsigned char* pAddrPhyC;
++    unsigned char* pAddrVirY;
++    unsigned char* pAddrVirC;
++    int            bEnableCrop;
++    int            nLeft;
++    int            nTop;
++    int            nWidth;
++    int            nHeight;
++    int            nShareBufFd;
++}OmxPrivateBuffer;
+ 
+ struct _GstWaylandSink
+ {
+@@ -71,6 +85,7 @@ struct _GstWaylandSink
+   gint out_width;   /* property out_width */
+   gint out_height;  /* property out_height */
+   uint32_t scale;
++  OmxPrivateBuffer* sBuffer; /*private buffer that contains buffer fd and other info, which is defined by omx.*/
+ };
+ 
+ struct _GstWaylandSinkClass
+diff --git a/ext/wayland/wlshmallocator.c b/ext/wayland/wlshmallocator.c
+index 5e384fd..a343807 100644
+--- a/ext/wayland/wlshmallocator.c
++++ b/ext/wayland/wlshmallocator.c
+@@ -232,3 +232,49 @@ gst_wl_shm_memory_construct_wl_buffer (GstMemory * mem, GstWlDisplay * display,
+ 
+   return wbuffer;
+ }
++struct wl_buffer *
++gst_wl_shm_memory_construct_wl_buffer_by_fd (GstMemory * mem, GstWlDisplay * display,
++    const GstVideoInfo * info, int fd)
++{
++  gint width, height, stride;
++  gsize offset, size, memsize, maxsize;
++  enum wl_shm_format format;
++  struct wl_shm_pool *wl_pool;
++  struct wl_buffer *wbuffer;
++
++  /* if format is YV12 will not check info */
++  if (info->finfo->format != GST_VIDEO_FORMAT_YV12 && 0) {
++    if (!gst_wl_shm_validate_video_info (info)) {
++      GST_DEBUG_OBJECT (display, "Unsupported strides and offsets.");
++      return NULL;
++    }
++  }
++
++  width = GST_VIDEO_INFO_WIDTH (info);
++  height = GST_VIDEO_INFO_HEIGHT (info);
++  stride = GST_VIDEO_INFO_PLANE_STRIDE (info, 0);
++  size = GST_VIDEO_INFO_SIZE (info);
++  format = gst_video_format_to_wl_shm_format (GST_VIDEO_INFO_FORMAT (info));
++
++  memsize = gst_memory_get_sizes (mem, &offset, &maxsize);
++  offset += GST_VIDEO_INFO_PLANE_OFFSET (info, 0);
++
++  //g_return_val_if_fail (gst_is_fd_memory (mem), NULL);
++  //g_return_val_if_fail (size <= memsize, NULL);
++  g_return_val_if_fail (gst_wl_display_check_format_for_shm (display,
++          GST_VIDEO_INFO_FORMAT (info)), NULL);
++
++  GST_DEBUG_OBJECT (display, "Creating wl_buffer from SHM of size %"
++      G_GSSIZE_FORMAT " (%d x %d, stride %d), format %s", size, width, height,
++      stride, gst_wl_shm_format_to_string (format));
++
++  wl_pool = wl_shm_create_pool (display->shm, fd,
++      memsize);
++
++  wbuffer = wl_shm_pool_create_buffer (wl_pool, offset, width, height, stride,
++      format);
++  wl_shm_pool_destroy (wl_pool);
++
++  return wbuffer;
++}
++
+diff --git a/ext/wayland/wlshmallocator.h b/ext/wayland/wlshmallocator.h
+index 07ae17f..952ef4c 100644
+--- a/ext/wayland/wlshmallocator.h
++++ b/ext/wayland/wlshmallocator.h
+@@ -58,6 +58,9 @@ void gst_wl_shm_allocator_register (void);
+ GstAllocator * gst_wl_shm_allocator_get (void);
+ 
+ gboolean gst_is_wl_shm_memory (GstMemory * mem);
++struct wl_buffer * gst_wl_shm_memory_construct_wl_buffer_by_fd (GstMemory * mem,
++    GstWlDisplay * display, const GstVideoInfo * info, int fd);
++
+ struct wl_buffer * gst_wl_shm_memory_construct_wl_buffer (GstMemory * mem,
+     GstWlDisplay * display, const GstVideoInfo * info);
+ 
+diff --git a/ext/wayland/wlvideoformat.c b/ext/wayland/wlvideoformat.c
+index dd0f64e..747fe05 100644
+--- a/ext/wayland/wlvideoformat.c
++++ b/ext/wayland/wlvideoformat.c
+@@ -111,6 +111,7 @@ static const wl_DmabufVideoFormat dmabuf_formats[] = {
+   {DRM_FORMAT_YUYV, GST_VIDEO_FORMAT_YUY2},
+   {DRM_FORMAT_NV12, GST_VIDEO_FORMAT_NV12},
+   {DRM_FORMAT_YVU420, GST_VIDEO_FORMAT_YV12},
++  {DRM_FORMAT_YVU420, GST_VIDEO_FORMAT_I420},
+ };
+ 
+ enum wl_shm_format
+-- 
+1.9.1
+

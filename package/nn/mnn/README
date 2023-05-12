@@ -1,0 +1,13 @@
+MNN-benchmark:
+
+Usage:
+    /etc/MNN/benchmark/benchmark.out models_folder [loop_count] [warmup] [forwardtype] [numberThread] [precision]
+
+forwardtype:
+    0: CPU
+    3: OpenCL
+    6: OpenGL
+    7: Vulkan
+
+Examples:
+    /etc/MNN/benchmark/benchmark.out /etc/MNN/benchmark/models 10 5 0 2

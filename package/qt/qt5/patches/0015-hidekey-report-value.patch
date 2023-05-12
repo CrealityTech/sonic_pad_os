@@ -1,0 +1,10 @@
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/components/HideKeyboardKey.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/components/HideKeyboardKey.qml
+@@ -42,6 +42,7 @@ import QtQuick.VirtualKeyboard 2.1
+ */
+ 
+ BaseKey {
++    key: Qt.Key_Escape
+     functionKey: true
+     onClicked: InputContext.priv.hideInputPanel()
+     keyPanelDelegate: keyboard.style ? keyboard.style.hideKeyPanel : undefined

@@ -1,0 +1,23 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2009-2014 OpenWrt.org
+
+START=90
+STOP=10
+
+USE_PROCD=1
+DEPEND=fstab
+PROG=/usr/bin/webcamd
+USERDATA=/mnt/UDISK/
+PRINTER_CONFIG_DIR=$USERDATA/printer_config
+PRINTER_DEFAULT_DIR=/usr/share/klipper-brain/printer_config
+
+start_service() {
+    sleep 5
+
+    [ -d $PRINTER_CONFIG_DIR ] || mkdir -p $PRINTER_CONFIG_DIR
+    [ `ls $PRINTER_CONFIG_DIR/webcam*.txt 2>/dev/null  | wc -l` -eq 0 ] && cp $PRINTER_DEFAULT_DIR/webcam*.txt $PRINTER_CONFIG_DIR/ 
+
+    procd_open_instance
+    procd_set_param command "$PROG"
+    procd_close_instance
+}

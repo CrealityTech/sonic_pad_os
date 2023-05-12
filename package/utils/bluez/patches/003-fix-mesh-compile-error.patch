@@ -1,0 +1,36 @@
+From 97c23ebe0f697e036f337e3e96b523ca3b5f0ef4 Mon Sep 17 00:00:00 2001
+From: liumingyuan <liumingyuan@allwinnertech.com>
+Date: Wed, 1 Apr 2020 10:04:41 +0800
+Subject: [PATCH] fix mesh compile error.
+
+libreadline.so: undefined reference to `tputs'
+libreadline.so: undefined reference to `tgoto'
+libreadline.so: undefined reference to `tgetflag'
+libreadline.so: undefined reference to `UP'
+libreadline.so: undefined reference to `tgetent'
+libreadline.so: undefined reference to `tgetnum'
+libreadline.so: undefined reference to `PC'
+libreadline.so: undefined reference to `tgetstr'
+libreadline.so: undefined reference to `BC'
+
+Signed-off-by: liumingyuan <liumingyuan@allwinnertech.com>
+---
+ Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index e59e568..377c6ce 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -3470,7 +3470,7 @@ unit_tests = $(am__append_54) unit/test-eir unit/test-uuid \
+ @MESH_TRUE@@TOOLS_TRUE@				mesh/crypto.h mesh/crypto.c
+ 
+ @MESH_TRUE@@TOOLS_TRUE@tools_mesh_cfgclient_LDADD = lib/libbluetooth-internal.la src/libshared-ell.la \
+-@MESH_TRUE@@TOOLS_TRUE@						$(ell_ldadd) -ljson-c -lreadline
++@MESH_TRUE@@TOOLS_TRUE@						$(ell_ldadd) -ljson-c -lreadline -lncurses
+ 
+ @DEPRECATED_TRUE@@TOOLS_TRUE@tools_hciattach_SOURCES = tools/hciattach.c tools/hciattach.h \
+ @DEPRECATED_TRUE@@TOOLS_TRUE@						tools/hciattach_st.c \
+-- 
+1.9.1
+

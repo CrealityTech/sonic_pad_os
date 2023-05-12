@@ -1,0 +1,13 @@
+--- a/conf/nginx.conf
++++ b/conf/nginx.conf
+@@ -322,6 +322,10 @@ index index.html;
+         add_header Access-Control-Allow-Headers 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization'; 
+         add_header Referrer-Policy "no-referrer" always;                                                                    
+         location / {                                                  
++            slice             1m;
++            proxy_cache_key   $uri$is_args$args$slice_range;
++            proxy_set_header  Range $slice_range;
++            proxy_cache_valid 200 206 1h;
+             proxy_buffer_size 10240k;
+             proxy_buffers 16 10240k;
+             proxy_busy_buffers_size 40960k;

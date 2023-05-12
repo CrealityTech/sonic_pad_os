@@ -1,0 +1,7 @@
+menuconfig TINATEST_BASE_BT
+    bool "bt"
+
+if TINATEST_BASE_BT
+    source bt_on/Config.in
+    source bt_off/Config.in
+endif

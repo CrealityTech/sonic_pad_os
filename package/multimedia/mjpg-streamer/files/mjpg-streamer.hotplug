@@ -1,0 +1,17 @@
+case "$ACTION" in
+	add)
+		# start process
+		if [ -c /dev/video[0-9] ] &&
+			!(pgrep -f mjpg_streamer >/dev/null 2>&1) &&
+			[ -x "/usr/bin/mjpg_streamer" ]; then
+				/etc/init.d/mjpg-streamer start
+		fi
+		;;
+	remove)
+		# stop process
+		if [ ! -c /dev/video[0-9] ] &&
+			(pgrep -f mjpg_streamer >/dev/null 2>&1); then
+			/etc/init.d/mjpg-streamer stop
+		fi
+		;;
+esac

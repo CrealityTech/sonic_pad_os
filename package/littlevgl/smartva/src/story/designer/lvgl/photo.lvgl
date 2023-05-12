@@ -1,0 +1,33 @@
+{
+    "lvgl": {
+        "name": "photo.lvgl",
+        "resolution": {
+            "height": 480,
+            "width": 800
+        },
+        "screen color": "#55aaff",
+        "widgets": [
+            {
+                "accessible": true,
+                "auto size": true,
+                "class": "lv_img",
+                "drag": true,
+                "geometry": {
+                    "height": 64,
+                    "width": 64,
+                    "x": 220,
+                    "y": 128
+                },
+                "locked": false,
+                "name": "image_1",
+                "offset": {
+                    "X": 0,
+                    "Y": 0
+                },
+                "source": "calendar_set.png",
+                "visible": true,
+                "widget": "Image"
+            }
+        ]
+    }
+}

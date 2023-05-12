@@ -1,0 +1,14 @@
+--- a/block.c
++++ b/block.c
+@@ -1029,6 +1029,11 @@ static int mount_device(struct probe_inf
+ 	if (!pr)
+ 		return -1;
+ 
++	if (!strncmp(pr->type, "ntfs", 4)) {
++		ULOG_ERR("%s: do not mount ntfs device %s by fstools\n", __func__, pr->dev);
++		return -1;
++	}
++
+ 	device = basename(pr->dev);
+ 
+ 	if (!strcmp(pr->type, "swap")) {

@@ -1,0 +1,13 @@
+diff --git a/build/cmake/CMakeLists.txt b/build/cmake/CMakeLists.txt
+index 9d0e7fb..657f2f8 100644
+--- a/build/cmake/CMakeLists.txt
++++ b/build/cmake/CMakeLists.txt
+@@ -124,7 +124,7 @@ endif ()
+ #-----------------------------------------------------------------------------
+ add_subdirectory(lib)
+ 
+-option(ZSTD_PROGRAMS_LINK_SHARED "PROGRAMS LINK SHARED" OFF)
++option(ZSTD_PROGRAMS_LINK_SHARED "PROGRAMS LINK SHARED" ON)
+ 
+ if (ZSTD_BUILD_PROGRAMS)
+     if (NOT ZSTD_BUILD_STATIC AND NOT ZSTD_PROGRAMS_LINK_SHARED)

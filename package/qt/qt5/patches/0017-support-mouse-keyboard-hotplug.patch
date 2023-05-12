@@ -1,0 +1,256 @@
+--- a/qtbase/src/platformsupport/devicediscovery/devicediscovery.pro
++++ b/qtbase/src/platformsupport/devicediscovery/devicediscovery.pro
+@@ -10,8 +10,8 @@ DEFINES += QT_NO_CAST_FROM_ASCII
+ HEADERS += qdevicediscovery_p.h
+ 
+ qtConfig(libudev) {
+-    SOURCES += qdevicediscovery_udev.cpp
+-    HEADERS += qdevicediscovery_udev_p.h
++    SOURCES += qdevicediscovery_hotplug.cpp
++    HEADERS += qdevicediscovery_hotplug_p.h
+     QMAKE_USE_PRIVATE += libudev
+ } else: qtConfig(evdev) {
+     SOURCES += qdevicediscovery_static.cpp
+--- /dev/null
++++ b/qtbase/src/platformsupport/devicediscovery/qdevicediscovery_hotplug.cpp
+@@ -0,0 +1,185 @@
++/****************************************************************************
++**
++** usb input device hot plug function
++** by sn02241 
++**
++****************************************************************************/
++ 
++#include "qdevicediscovery_hotplug_p.h"
++ 
++#include <QCoreApplication>
++#include <QObject>
++#include <QHash>
++#include <QDir>
++#include <QLoggingCategory>
++#include <QtCore/private/qcore_unix_p.h>
++ 
++#include <linux/input.h>
++#include <fcntl.h>
++ 
++/* android (and perhaps some other linux-derived stuff) don't define everything
++ * in linux/input.h, so we'll need to do that ourselves.
++ */
++#ifndef KEY_CNT
++#define KEY_CNT                 (KEY_MAX+1)
++#endif
++#ifndef REL_CNT
++#define REL_CNT                 (REL_MAX+1)
++#endif
++#ifndef ABS_CNT
++#define ABS_CNT                 (ABS_MAX+1)
++#endif
++ 
++#define LONG_BITS (sizeof(long) * 8 )
++#define LONG_FIELD_SIZE(bits) ((bits / LONG_BITS) + 1)
++ 
++static bool testBit(long bit, const long *field)
++{
++    return (field[bit / LONG_BITS] >> bit % LONG_BITS) & 1;
++}
++ 
++QT_BEGIN_NAMESPACE
++ 
++Q_LOGGING_CATEGORY(lcDD, "qt.qpa.input")
++ 
++QDeviceDiscovery *QDeviceDiscovery::create(QDeviceTypes types, QObject *parent)
++{
++    return new QDeviceDiscoveryHotPlug(types, parent);
++}
++ 
++QDeviceDiscoveryHotPlug::QDeviceDiscoveryHotPlug(QDeviceTypes types, QObject *parent)
++    : QDeviceDiscovery(types, parent),m_fileWatcher(0)
++{
++    // 初始化文件监听器
++    m_fileWatcher = new QFileSystemWatcher(this);
++    m_fileWatcher->addPath(QString::fromLatin1(QT_EVDEV_DEVICE_PATH));// "dev/input/"
++    connect(m_fileWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(handleHotPlugWatch(QString)));
++ 
++    qCDebug(lcDD) << "hotplug device discovery for type" << types;
++}
++ 
++QStringList QDeviceDiscoveryHotPlug::scanConnectedDevices()
++{
++    m_devices.clear();
++    QDir dir;
++    dir.setFilter(QDir::System);
++ 
++    // check for input devices
++    if (m_types & Device_InputMask) {
++        dir.setPath(QString::fromLatin1(QT_EVDEV_DEVICE_PATH));
++        foreach (const QString &deviceFile, dir.entryList()) {
++            QString absoluteFilePath = dir.absolutePath() + QString::fromLatin1("/") + deviceFile;
++            if (checkDeviceType(absoluteFilePath))
++                m_devices << absoluteFilePath;
++        }
++    }
++ 
++    // check for drm devices
++    if (m_types & Device_VideoMask) {
++        dir.setPath(QString::fromLatin1(QT_DRM_DEVICE_PATH));
++        foreach (const QString &deviceFile, dir.entryList()) {
++            QString absoluteFilePath = dir.absolutePath() + QString::fromLatin1("/") + deviceFile;
++            if (checkDeviceType(absoluteFilePath))
++                m_devices << absoluteFilePath;
++        }
++    }
++ 
++    qCDebug(lcDD) << "Found matching devices" << m_devices;
++ 
++    return m_devices;
++}
++ 
++bool QDeviceDiscoveryHotPlug::checkDeviceType(const QString &device)
++{
++    bool ret = false;
++    int fd = QT_OPEN(device.toLocal8Bit().constData(), O_RDONLY | O_NDELAY, 0);
++    if (!fd) {
++        qWarning() << "Device discovery cannot open device" << device;
++        return false;
++    }
++ 
++    long bitsKey[LONG_FIELD_SIZE(KEY_CNT)];
++    if (ioctl(fd, EVIOCGBIT(EV_KEY, sizeof(bitsKey)), bitsKey) >= 0 ) {
++        if (!ret && (m_types & Device_Keyboard)) {
++            if (testBit(KEY_Q, bitsKey)) {
++                qCDebug(lcDD) << "Found keyboard at" << device;
++                ret = true;
++            }
++        }
++ 
++        if (!ret && (m_types & Device_Mouse)) {
++            long bitsRel[LONG_FIELD_SIZE(REL_CNT)];
++            if (ioctl(fd, EVIOCGBIT(EV_REL, sizeof(bitsRel)), bitsRel) >= 0 ) {
++                if (testBit(REL_X, bitsRel) && testBit(REL_Y, bitsRel) && testBit(BTN_MOUSE, bitsKey)) {
++                    qCDebug(lcDD) << "Found mouse at" << device;
++                    ret = true;
++                }
++            }
++        }
++ 
++        if (!ret && (m_types & (Device_Touchpad | Device_Touchscreen))) {
++            long bitsAbs[LONG_FIELD_SIZE(ABS_CNT)];
++            if (ioctl(fd, EVIOCGBIT(EV_ABS, sizeof(bitsAbs)), bitsAbs) >= 0 ) {
++                if (testBit(ABS_X, bitsAbs) && testBit(ABS_Y, bitsAbs)) {
++                    if ((m_types & Device_Touchpad) && testBit(BTN_TOOL_FINGER, bitsKey)) {
++                        qCDebug(lcDD) << "Found touchpad at" << device;
++                        ret = true;
++                    } else if ((m_types & Device_Touchscreen) && testBit(BTN_TOUCH, bitsKey)) {
++                        qCDebug(lcDD) << "Found touchscreen at" << device;
++                        ret = true;
++                    } else if ((m_types & Device_Tablet) && (testBit(BTN_STYLUS, bitsKey) || testBit(BTN_TOOL_PEN, bitsKey))) {
++                        qCDebug(lcDD) << "Found tablet at" << device;
++                        ret = true;
++                    }
++                }
++				if(!ret && (m_types & Device_Touchscreen) && testBit(BTN_TOUCH, bitsKey)) {
++                    qCDebug(lcDD) << "Found one touchscreen at" << device;
++                    ret = true;
++				}
++            }
++        }
++ 
++        if (!ret && (m_types & Device_Joystick)) {
++            long bitsAbs[LONG_FIELD_SIZE(ABS_CNT)];
++            if (ioctl(fd, EVIOCGBIT(EV_ABS, sizeof(bitsAbs)), bitsAbs) >= 0 ) {
++                if ((m_types & Device_Joystick)
++                    && (testBit(BTN_A, bitsKey) || testBit(BTN_TRIGGER, bitsKey) || testBit(ABS_RX, bitsAbs))) {
++                    qCDebug(lcDD) << "Found joystick/gamepad at" << device;
++                    ret = true;
++                }
++            }
++        }
++    }
++ 
++    if (!ret && (m_types & Device_DRM) && device.contains(QString::fromLatin1(QT_DRM_DEVICE_PREFIX)))
++        ret = true;
++ 
++    QT_CLOSE(fd);
++    return ret;
++}
++ 
++void QDeviceDiscoveryHotPlug::handleHotPlugWatch(const QString &path)
++{
++	if(path.compare(QString::fromLatin1(QT_EVDEV_DEVICE_PATH)))
++	{
++		return;
++	}
++ 
++	QStringList devices;
++ 
++	// 先移除原来的设备
++    foreach (const QString &device, m_devices)
++        deviceRemoved(device);
++ 
++	// 获取现在的设备
++	// 注，这里获取的设备已经经过过滤，原因是在对该类进行实例化的时候
++	// 已经传进了筛选参数，如：QDeviceDiscovery::Device_Keyboard
++	devices = this->scanConnectedDevices();
++ 
++	// 重新添加设备
++    foreach (const QString &device, devices)
++        deviceDetected(device);
++}
++ 
++QT_END_NAMESPACE
++
+--- /dev/null
++++ b/qtbase/src/platformsupport/devicediscovery/qdevicediscovery_hotplug_p.h
+@@ -0,0 +1,52 @@
++/****************************************************************************
++**
++** usb input device hot plug function
++** by sn02241
++**
++****************************************************************************/
++ 
++#ifndef QDEVICEDISCOVERY_HOTPLUG_H
++#define QDEVICEDISCOVERY_HOTPLUG_H
++ 
++//
++//  W A R N I N G
++//  -------------
++//
++// This file is not part of the Qt API.  It exists purely as an
++// implementation detail.  This header file may change from version to
++// version without notice, or even be removed.
++//
++// We mean it.
++//
++ 
++#include "qdevicediscovery_p.h"
++#include <QFileSystemWatcher>
++#include <QStringList>
++ 
++QT_BEGIN_NAMESPACE
++ 
++class QDeviceDiscoveryHotPlug : public QDeviceDiscovery
++{
++    Q_OBJECT
++ 
++public:
++    QDeviceDiscoveryHotPlug(QDeviceTypes types, QObject *parent = 0);
++    QStringList scanConnectedDevices() Q_DECL_OVERRIDE;
++ 
++private slots:
++    void handleHotPlugWatch(const QString &path);
++ 
++private:
++    bool checkDeviceType(const QString &device);
++ 
++    // 用于检测鼠标键盘热插拔
++    QFileSystemWatcher *m_fileWatcher;
++ 
++	// 原有的设备列表
++    QStringList m_devices;
++};
++ 
++QT_END_NAMESPACE
++ 
++#endif // QDEVICEDISCOVERY_HOTPLUG_H
++

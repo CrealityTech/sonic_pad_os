@@ -1,0 +1,44 @@
+From 2f9603966ad54f352545b3d472f7e1afeb4c2844 Mon Sep 17 00:00:00 2001
+From: houxiaoni <houxiaoni@allwinnertech.com>
+Date: Tue, 14 Jul 2020 11:38:30 +0800
+Subject: [PATCH 1/5] introspection.m4: prefix pkgconfig paths with
+ PKG_CONFIG_SYSROOT_DIR
+
+We can't use our tweaked introspection.m4 from gobject-introspection tarball
+because gstreamer also defines INTROSPECTION_INIT in its introspection.m4, which
+is later supplied to g-ir-scanner.
+
+Upstream-Status: Pending [review on oe-core list]
+
+Change-Id: Ifaa49a712dbfb33ea5bca7d2ce599e02776063bb
+Signed-off-by: houxiaoni <houxiaoni@allwinnertech.com>
+---
+ common/m4/introspection.m4 | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/common/m4/introspection.m4 b/common/m4/introspection.m4
+index 162be57..933f979 100644
+--- a/common/m4/introspection.m4
++++ b/common/m4/introspection.m4
+@@ -54,14 +54,14 @@ m4_define([_GOBJECT_INTROSPECTION_CHECK_INTERNAL],
+     INTROSPECTION_GIRDIR=
+     INTROSPECTION_TYPELIBDIR=
+     if test "x$found_introspection" = "xyes"; then
+-       INTROSPECTION_SCANNER=`$PKG_CONFIG --variable=g_ir_scanner gobject-introspection-1.0`
+-       INTROSPECTION_COMPILER=`$PKG_CONFIG --variable=g_ir_compiler gobject-introspection-1.0`
+-       INTROSPECTION_GENERATE=`$PKG_CONFIG --variable=g_ir_generate gobject-introspection-1.0`
++       INTROSPECTION_SCANNER=$PKG_CONFIG_SYSROOT_DIR`$PKG_CONFIG --variable=g_ir_scanner gobject-introspection-1.0`
++       INTROSPECTION_COMPILER=$PKG_CONFIG_SYSROOT_DIR`$PKG_CONFIG --variable=g_ir_compiler gobject-introspection-1.0`
++       INTROSPECTION_GENERATE=$PKG_CONFIG_SYSROOT_DIR`$PKG_CONFIG --variable=g_ir_generate gobject-introspection-1.0`
+        INTROSPECTION_GIRDIR=`$PKG_CONFIG --variable=girdir gobject-introspection-1.0`
+        INTROSPECTION_TYPELIBDIR="$($PKG_CONFIG --variable=typelibdir gobject-introspection-1.0)"
+        INTROSPECTION_CFLAGS=`$PKG_CONFIG --cflags gobject-introspection-1.0`
+        INTROSPECTION_LIBS=`$PKG_CONFIG --libs gobject-introspection-1.0`
+-       INTROSPECTION_MAKEFILE=`$PKG_CONFIG --variable=datadir gobject-introspection-1.0`/gobject-introspection-1.0/Makefile.introspection
++       INTROSPECTION_MAKEFILE=$PKG_CONFIG_SYSROOT_DIR`$PKG_CONFIG --variable=datadir gobject-introspection-1.0`/gobject-introspection-1.0/Makefile.introspection
+        INTROSPECTION_INIT="extern void gst_init(gint*,gchar**); gst_init(NULL,NULL);"
+     fi
+     AC_SUBST(INTROSPECTION_SCANNER)
+-- 
+1.9.1
+

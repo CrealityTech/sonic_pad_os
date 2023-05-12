@@ -1,0 +1,21 @@
+diff -Naur a/init/init.c b/init/init.c
+--- a/init/init.c	2020-03-26 11:28:26.640212759 +0800
++++ b/init/init.c	2020-03-26 11:29:25.856215282 +0800
+@@ -1177,9 +1177,14 @@
+	}
+
+	ret = setcon("u:r:init:s0");
+-	if (ret)
+-		fprintf(stdout, "setcon init failed!\n");
+-	else
++	if (ret) {
++		ret = setcon("system_u:system_r:init_t");
++
++		if (ret)
++			fprintf(stdout, "setcon init failed!\n");
++		else
++			fprintf(stdout, "setcon init 0x%x success!\n", ret);
++	} else
+		fprintf(stdout, "setcon init 0x%x success!\n", ret);
+
+	// load file_contexts

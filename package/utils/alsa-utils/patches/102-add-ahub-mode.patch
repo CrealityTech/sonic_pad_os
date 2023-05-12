@@ -1,0 +1,67 @@
+Index: alsa-utils-1.1.0/aplay/aplay.c
+===================================================================
+--- alsa-utils-1.1.0.orig/aplay/aplay.c
++++ alsa-utils-1.1.0/aplay/aplay.c
+@@ -122,6 +122,7 @@ static int interactive = 0;
+ static int can_pause = 0;
+ static int fatal_errors = 0;
+ static int loop_play = 0;
++static int ahub_mode = 0;
+ static int verbose = 0;
+ static int vumeter = VUMETER_NONE;
+ static int buffer_pos = 0;
+@@ -429,8 +430,19 @@ enum {
+ 	OPT_DUMP_HWPARAMS,
+ 	OPT_FATAL_ERRORS,
+ 	OPT_LOOP_PLAY,
++	OPT_AHUB,
+ };
+ 
++static int ahub_mode_detect(void)
++{
++	if (ahub_mode) {
++		/* wait forever */
++		while (1)
++			sleep(10);
++	}
++}
++
++
+ int main(int argc, char *argv[])
+ {
+ 	int option_index;
+@@ -480,6 +492,7 @@ int main(int argc, char *argv[])
+ 		{"dump-hw-params", 0, 0, OPT_DUMP_HWPARAMS},
+ 		{"fatal-errors", 0, 0, OPT_FATAL_ERRORS},
+ 		{"loop-play", 0, 0, OPT_LOOP_PLAY},
++		{"ahub", 0, 0, OPT_AHUB},
+ #ifdef CONFIG_SUPPORT_CHMAP
+ 		{"chmap", 1, 0, 'm'},
+ #endif
+@@ -701,6 +714,9 @@ int main(int argc, char *argv[])
+ 		case OPT_LOOP_PLAY:
+ 			loop_play = 1;
+ 			break;
++		case OPT_AHUB:
++			ahub_mode = 1;
++			break;
+ #ifdef CONFIG_SUPPORT_CHMAP
+ 		case 'm':
+ 			channel_map = snd_pcm_chmap_parse_string(optarg);
+@@ -736,6 +752,8 @@ int main(int argc, char *argv[])
+ 		return 1;
+ 	}
+ 
++	
++
+ 	if (nonblock) {
+ 		err = snd_pcm_nonblock(handle, 1);
+ 		if (err < 0) {
+@@ -2667,6 +2685,7 @@ static void playback_go(int fd, size_t l
+ 	header(rtype, name);
+ 	if (!loop_play)
+ 		set_params();
++	ahub_mode_detect();
+ 
+ 	while (loaded > chunk_bytes && written < count && !in_aborting) {
+ 		if (pcm_write(audiobuf + written, chunk_size) <= 0)

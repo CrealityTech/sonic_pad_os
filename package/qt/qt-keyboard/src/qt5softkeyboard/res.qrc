@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>dict/dict_pinyin.dat</file>
+        <file>dict/pinyinEx.ini</file>
+        <file>images/backspace.png</file>
+        <file>images/enter.png</file>
+        <file>images/hidekeyboard.png</file>
+        <file>images/globe.png</file>
+        <file>images/shift.png</file>
+        <file>images/shift_checked.png</file>
+        <file>images/shift_double_checked.png</file>
+        <file>layout/main.json</file>
+        <file>layout/symbols.json</file>
+    </qresource>
+</RCC>

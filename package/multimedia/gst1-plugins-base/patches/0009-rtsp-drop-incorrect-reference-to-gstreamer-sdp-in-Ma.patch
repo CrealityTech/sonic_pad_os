@@ -1,0 +1,27 @@
+From 1b44b4eec494964bc122490b79ae2c8fb7921152 Mon Sep 17 00:00:00 2001
+From: houxiaoni <houxiaoni@allwinnertech.com>
+Date: Tue, 14 Jul 2020 11:13:03 +0800
+Subject: [PATCH 07/12] rtsp: drop incorrect reference to gstreamer-sdp in
+ Makefile.am
+
+Change-Id: I504ded10dec0c5cd4d5ee241fe7b3cf4e7b9a45c
+Signed-off-by: houxiaoni <houxiaoni@allwinnertech.com>
+---
+ gst-libs/gst/rtsp/Makefile.am | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/gst-libs/gst/rtsp/Makefile.am b/gst-libs/gst/rtsp/Makefile.am
+index 79027cb..2987e23 100644
+--- a/gst-libs/gst/rtsp/Makefile.am
++++ b/gst-libs/gst/rtsp/Makefile.am
+@@ -79,7 +79,6 @@ GstRtsp-@GST_API_VERSION@.gir: $(INTROSPECTION_SCANNER) libgstrtsp-@GST_API_VERS
+ 		--libtool="$(LIBTOOL)" \
+ 		--pkg gio-2.0 \
+ 		--pkg gstreamer-@GST_API_VERSION@ \
+-		--pkg gstreamer-sdp-@GST_API_VERSION@ \
+ 		--pkg-export gstreamer-rtsp-@GST_API_VERSION@ \
+ 		--add-init-section="$(INTROSPECTION_INIT)" \
+ 		--output $@ \
+-- 
+1.9.1
+

@@ -1,0 +1,45 @@
+diff --git a/qtwebengine/src/core/ozone/gl_ozone_egl_qt.cpp b/qtwebengine/src/core/ozone/gl_ozone_egl_qt.cpp
+index 2fa86d79b..2f40d8321 100644
+--- a/qtwebengine/src/core/ozone/gl_ozone_egl_qt.cpp
++++ b/qtwebengine/src/core/ozone/gl_ozone_egl_qt.cpp
+@@ -78,15 +78,21 @@ base::NativeLibrary LoadLibrary(const base::FilePath& filename) {
+ 
+ bool GLOzoneEGLQt::LoadGLES2Bindings(gl::GLImplementation /*implementation*/)
+ {
+-    base::NativeLibrary eglgles2Library = dlopen(NULL, RTLD_LAZY);
+-    if (!eglgles2Library) {
++    base::NativeLibrary eglLibrary = dlopen("/usr/lib/libEGL.so", RTLD_LAZY);
++    if (!eglLibrary) {
++        LOG(ERROR) << "Failed to open EGL/GLES2 context " << dlerror();
++        return false;
++    }
++
++    base::NativeLibrary gles2Library = dlopen("/usr/lib/libGLESv2.so", RTLD_LAZY);
++    if (!gles2Library) {
+         LOG(ERROR) << "Failed to open EGL/GLES2 context " << dlerror();
+         return false;
+     }
+ 
+     gl::GLGetProcAddressProc get_proc_address =
+             reinterpret_cast<gl::GLGetProcAddressProc>(
+-                base::GetFunctionPointerFromNativeLibrary(eglgles2Library,
++                base::GetFunctionPointerFromNativeLibrary(eglLibrary,
+                                                           "eglGetProcAddress"));
+ #ifndef QT_NO_OPENGL
+     if (!get_proc_address) {
+@@ -100,12 +106,14 @@ bool GLOzoneEGLQt::LoadGLES2Bindings(gl::GLImplementation /*implementation*/)
+ 
+     if (!get_proc_address) {
+         LOG(ERROR) << "eglGetProcAddress not found.";
+-        base::UnloadNativeLibrary(eglgles2Library);
++        base::UnloadNativeLibrary(eglLibrary);
++        base::UnloadNativeLibrary(gles2Library);
+         return false;
+     }
+ 
+     gl::SetGLGetProcAddressProc(get_proc_address);
+-    gl::AddGLNativeLibrary(eglgles2Library);
++    gl::AddGLNativeLibrary(eglLibrary);
++    gl::AddGLNativeLibrary(gles2Library);
+     return true;
+ }

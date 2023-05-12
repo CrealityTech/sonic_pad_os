@@ -1,0 +1,22 @@
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/style.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/style.qml
+@@ -707,7 +707,7 @@ KeyboardStyle {
+             anchors.leftMargin: Math.round((compactSelectionList ? 50 : 140) * scaleHint)
+             anchors.verticalCenter: parent.verticalCenter
+             text: decorateText(display, wordCompletionLength)
+-            color: "#80c342"
++            color: "#00DEFF"
+             font {
+                 family: fontFamily
+                 weight: Font.Normal
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/style.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/style.qml
+@@ -707,7 +707,7 @@ KeyboardStyle {
+             anchors.leftMargin: Math.round((compactSelectionList ? 50 : 190) * scaleHint)
+             anchors.verticalCenter: parent.verticalCenter
+             text: decorateText(display, wordCompletionLength)
+-            color: "#80c342"
++            color: "#00DEFF"
+             font {
+                 family: fontFamily
+                 weight: Font.Normal

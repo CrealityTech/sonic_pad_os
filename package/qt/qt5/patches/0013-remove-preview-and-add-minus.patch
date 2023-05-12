@@ -1,0 +1,74 @@
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/fallback/dialpad.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/fallback/dialpad.qml
+@@ -48,53 +48,70 @@ KeyboardLayout {
+                 Key {
+                     key: Qt.Key_1
+                     text: "1"
++                    showPreview: false
+                 }
+                 Key {
+                     key: Qt.Key_2
+                     text: "2"
++                    showPreview: false
+                 }
+                 Key {
+                     key: Qt.Key_3
+                     text: "3"
++                    showPreview: false
+                 }
+             }
+             KeyboardRow {
+                 Key {
+                     key: Qt.Key_4
+                     text: "4"
++                    showPreview: false
+                 }
+                 Key {
+                     key: Qt.Key_5
+                     text: "5"
++                    showPreview: false
+                 }
+                 Key {
+                     key: Qt.Key_6
+                     text: "6"
++                    showPreview: false
+                 }
+             }
+             KeyboardRow {
+                 Key {
+                     key: Qt.Key_7
+                     text: "7"
++                    showPreview: false
+                 }
+                 Key {
+                     key: Qt.Key_8
+                     text: "8"
++                    showPreview: false
+                 }
+                 Key {
+                     key: Qt.Key_9
+                     text: "9"
++                    showPreview: false
+                 }
+             }
+             KeyboardRow {
+                 Key {
++                    key: Qt.Key_Minus
++                    text: "-"
++                    showPreview: false
++                    weight: 50
++                }
++                Key {
+                     key: Qt.Key_0
+                     text: "0"
+-                    weight: 100
++                    showPreview: false
++                    weight: 50
+                 }
+                 Key {
+                     key: Qt.Key_Period
+                     text: "."
++                    showPreview: false
+                     weight: 50
+                 }
+             }

@@ -1,0 +1,5 @@
+menuconfig TESTUNIT_MULTIMEDIA
+    bool "multimedia"
+	select PACKAGE_tplayerdemo
+	select PACKAGE_trecorderdemo
+	select PACKAGE_jpegdecodedemo

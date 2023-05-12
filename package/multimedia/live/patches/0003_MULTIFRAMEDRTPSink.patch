@@ -1,0 +1,15 @@
+diff --git a/liveMedia/MultiFramedRTPSink.cpp b/liveMedia/MultiFramedRTPSink.cpp
+old mode 100644
+new mode 100755
+index 48f984e..ecf9b05
+--- a/liveMedia/MultiFramedRTPSink.cpp
++++ b/liveMedia/MultiFramedRTPSink.cpp
+@@ -35,7 +35,7 @@ void MultiFramedRTPSink::setPacketSizes(unsigned preferredPacketSize,
+ }
+ 
+ #ifndef RTP_PAYLOAD_MAX_SIZE
+-#define RTP_PAYLOAD_MAX_SIZE 1456
++#define RTP_PAYLOAD_MAX_SIZE 1436
+       // Default max packet size (1500, minus allowance for IP, UDP, UMTP headers)
+       // (Also, make it a multiple of 4 bytes, just in case that matters.)
+ #endif

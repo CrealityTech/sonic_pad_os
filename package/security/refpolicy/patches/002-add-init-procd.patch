@@ -1,0 +1,27 @@
+diff -Naur refpolicy-2.20190201/Makefile refpolicy-2.20190201-new/Makefile
+--- refpolicy-2.20190201/Makefile	2020-03-26 10:33:24.188072025 +0800
++++ refpolicy-2.20190201-new/Makefile	2020-03-26 11:10:16.384166298 +0800
+@@ -196,6 +196,8 @@
+	M4PARAM += -D init_systemd
+ endif
+
++M4PARAM += -D init_procd
++
+ ifneq ($(OUTPUT_POLICY),)
+	CHECKPOLICY += -c $(OUTPUT_POLICY)
+ endif
+diff -Naur refpolicy-2.20190201/policy/modules/system/init.te refpolicy-2.20190201-new/policy/modules/system/init.te
+--- refpolicy-2.20190201/policy/modules/system/init.te	2019-02-02 04:03:42.000000000 +0800
++++ refpolicy-2.20190201-new/policy/modules/system/init.te	2020-03-26 11:12:23.472171713 +0800
+@@ -214,6 +214,11 @@
+
+ miscfiles_read_localization(init_t)
+
++ifdef(`init_procd',`
++	# for openwrt procd
++	kernel_dyntrans_to(init_t)
++')
++
+ ifdef(`init_systemd',`
+	# handle instances where an old labeled init script is encountered.
+	typeattribute init_t init_run_all_scripts_domain;

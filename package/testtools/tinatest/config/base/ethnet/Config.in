@@ -1,0 +1,7 @@
+menuconfig TINATEST_BASE_ETHNET
+    bool "ethnet"
+
+if TINATEST_BASE_ETHNET
+    source ethdhcp/Config.in
+    source ethping/Config.in
+endif

@@ -1,0 +1,60 @@
+diff --git a/src/font/fontcache.c b/src/font/fontcache.c
+index 0804bad..f95b290 100644
+--- a/src/font/fontcache.c
++++ b/src/font/fontcache.c
+@@ -43,21 +43,20 @@
+  
+ #include "common.h"
+ 
+-#ifdef _MGFONT_TTF_CACHE
+-#include "minigui.h"
+-#include "gdi.h"
+-
+-#ifdef _MGFONT_TTF 
++#ifdef _MGFONT_TTF
+ #include <freetype/freetype.h>
+ #include <freetype/ftxkern.h>
+ #include <freetype/ftnameid.h>
+ #include <freetype/ftxcmap.h>
+ #include <freetype/ftxwidth.h>
+ #include "freetype.h"
+-#else 
++#else
+ #include "freetype2.h"
+ #endif
+ 
++#ifdef _MGFONT_TTF_CACHE
++#include "minigui.h"
++#include "gdi.h"
+ 
+ typedef struct _MemBlk
+ {
+diff --git a/src/font/freetype2.c b/src/font/freetype2.c
+index 5c5d959..63fd96a 100644
+--- a/src/font/freetype2.c
++++ b/src/font/freetype2.c
+@@ -865,8 +865,9 @@ delete_instance (DEVFONT* devfont)
+     if (ft_inst_info->cache) {
+         __mg_ttc_release(ft_inst_info->cache);
+     }
+-#endif 
+-    FT_Done_Size(ft_inst_info->size);
++#else
++	FT_Done_Size(ft_inst_info->size);
++#endif
+     free (ft_inst_info);
+     free (devfont->data);
+     free (devfont);
+diff --git a/src/font/freetype2.h b/src/font/freetype2.h
+index 87839fc..4cac863 100644
+--- a/src/font/freetype2.h
++++ b/src/font/freetype2.h
+@@ -55,7 +55,7 @@ extern "C" {
+ #include FT_TRIGONOMETRY_H
+ #include FT_IMAGE_H
+ 
+-#if 0
++#if 1
+ #define _MGFONT_TTF_CACHE 1
+ #define _MGMAX_TTF_CACHE  20
+ #define _MGTTF_CACHE_SIZE 128

@@ -1,0 +1,3 @@
+menuconfig TESTUNIT_DISPLAY
+    bool "display"
+	select PACKAGE_smart-music-player

@@ -1,0 +1,188 @@
+From 54280175477a8e84a301d2b53061af17a52347ec Mon Sep 17 00:00:00 2001
+From: Kevin Zhang <kevin.zhang3@cn.bosch.com>
+Date: Tue, 21 Jan 2020 08:55:50 +0100
+Subject: [PATCH] handlers: add readback handler
+
+To verify that an image was written properly, this readback handler
+calculates the sha256 hash of a partition (or part of it) and compares
+it against a given hash value.
+
+Signed-off-by: Kevin Zhang <kevin.zhang3@cn.bosch.com>
+Signed-off-by: Mark Jonas <mark.jonas@de.bosch.com>
+Acked-by: Stefano Babic <sbabic@denx.de>
+---
+ handlers/Config.in          |  12 ++++
+ handlers/Makefile           |   1 +
+ handlers/readback_handler.c | 125 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 138 insertions(+)
+ create mode 100644 handlers/readback_handler.c
+
+diff --git a/handlers/Config.in b/handlers/Config.in
+index 41eac1c..347552b 100644
+--- a/handlers/Config.in
++++ b/handlers/Config.in
+@@ -106,6 +106,18 @@ config RDIFFHANDLER
+ 	  Add support for applying librsync's rdiff patches,
+ 	  see http://librsync.sourcefrog.net/
+ 
++config READBACKHANDLER
++	bool "readback"
++	depends on HASH_VERIFY
++	default n
++	help
++	  To verify that an image was written properly, this readback handler
++	  calculates the sha256 hash of a partition (or part of it) and compares
++	  it against a given hash value.
++
++	  This is a post-install handler running at the same time as
++	  post-install scripts.
++
+ config LUASCRIPTHANDLER
+ 	bool "Lua Script"
+ 	depends on LUA
+diff --git a/handlers/Makefile b/handlers/Makefile
+index 61e4f76..b756f31 100644
+--- a/handlers/Makefile
++++ b/handlers/Makefile
+@@ -15,6 +15,7 @@ obj-$(CONFIG_CFIHAMMING1)+= flash_hamming1_handler.o
+ obj-$(CONFIG_LUASCRIPTHANDLER) += lua_scripthandler.o
+ obj-$(CONFIG_RAW)	+= raw_handler.o
+ obj-$(CONFIG_RDIFFHANDLER) += rdiff_handler.o
++obj-$(CONFIG_READBACKHANDLER) += readback_handler.o
+ obj-$(CONFIG_REMOTE_HANDLER) += remote_handler.o
+ obj-$(CONFIG_SHELLSCRIPTHANDLER) += shell_scripthandler.o
+ obj-$(CONFIG_SSBLSWITCH) += ssbl_handler.o
+diff --git a/handlers/readback_handler.c b/handlers/readback_handler.c
+new file mode 100644
+index 0000000..a86164f
+--- /dev/null
++++ b/handlers/readback_handler.c
+@@ -0,0 +1,125 @@
++/*
++ * SPDX-FileCopyrightText: 2020 Bosch Sicherheitssysteme GmbH
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include <stdio.h>
++#include <stdlib.h>
++#include <unistd.h>
++#include <errno.h>
++#include <fcntl.h>
++#include <sys/ioctl.h>
++#include <linux/fs.h>
++
++#include "swupdate.h"
++#include "handler.h"
++#include "sslapi.h"
++#include "util.h"
++
++void readback_handler(void);
++static int readback_postinst(struct img_type *img);
++
++static int readback(struct img_type *img, void *data)
++{
++	if (!data)
++		return -1;
++
++	script_fn scriptfn = *(script_fn *)data;
++	switch (scriptfn) {
++	case POSTINSTALL:
++		return readback_postinst(img);
++	case PREINSTALL:
++	default:
++		return 0;
++	}
++}
++
++static int readback_postinst(struct img_type *img)
++{
++	/* Get property: partition hash */
++	unsigned char hash[SHA256_HASH_LENGTH];
++	char *ascii_hash = dict_get_value(&img->properties, "sha256");
++	if (!ascii_hash || ascii_to_hash(hash, ascii_hash) < 0 || !IsValidHash(hash)) {
++		ERROR("Invalid hash");
++		return -EINVAL;
++	}
++
++	/* Get property: partition size */
++	unsigned int size = 0;
++	char *value = dict_get_value(&img->properties, "size");
++	if (value) {
++		size = strtoul(value, NULL, 10);
++	} else {
++		TRACE("Property size not found, use partition size");
++	}
++
++	/* Get property: offset */
++	unsigned long offset = 0;
++	value = dict_get_value(&img->properties, "offset");
++	if (value) {
++		offset = strtoul(value, NULL, 10);
++	} else {
++		TRACE("Property offset not found, use default 0");
++	}
++
++	/* Open the device (partition) */
++	int fdin = open(img->device, O_RDONLY);
++	if (fdin < 0) {
++		ERROR("Failed to open %s: %s", img->device, strerror(errno));
++		return -ENODEV;
++	}
++
++	/* Get the real size of the partition, if size is not set. */
++	if (size == 0) {
++		if (ioctl(fdin, BLKGETSIZE64, &size) < 0) {
++			ERROR("Cannot get size of %s", img->device);
++			close(fdin);
++			return -EFAULT;
++		}
++		TRACE("Partition size: %u", size);
++	}
++
++	/* 
++	 * Seek the file descriptor before passing it to copyfile().
++	 * This is necessary because copyfile() only accepts streams,
++	 * so the file descriptor shall be already at the right position.
++	 */
++	if (lseek(fdin, offset, SEEK_SET) < 0) {
++		ERROR("Seek %lu bytes failed: %s", offset, strerror(errno));
++		close(fdin);
++		return -EFAULT;
++	}
++
++	/*
++	 * Perform hash verification. We do not need to pass an output device to
++	 * the copyfile() function, because we only want it to verify the hash of
++	 * the input device.
++	 */
++	unsigned long offset_out = 0;
++	int status = copyfile(fdin,
++			NULL,  /* no output */
++			size,
++			&offset_out,
++			0,     /* no output seek */
++			1,     /* skip file, do not write to the output */
++			0,     /* no compressed */
++			NULL,  /* no checksum */
++			hash,
++			0,     /* no encrypted */
++			NULL); /* no callback */
++	if (status == 0) {
++		INFO("Readback verification success");
++	} else {
++		ERROR("Readback verification failed, status=%d", status);
++	}
++
++	close(fdin);
++	return status;
++}
++
++__attribute__((constructor))
++void readback_handler(void)
++{
++	register_handler("readback", readback, SCRIPT_HANDLER | NO_DATA_HANDLER, NULL);
++}
+-- 
+2.24.0
+

@@ -1,0 +1,26 @@
+if PACKAGE_smartva
+
+config lvgl
+    bool "Enabel lvgl core"
+    default y
+        help
+	lvgl core
+
+config lv_drivers
+    bool "Enabel lvgl drivers"
+    default y
+        help
+	lvgl drivers
+
+config lv_examples
+    bool "Enabel lvgl examples"
+    default y
+        help
+	lvgl examples
+
+config story
+    bool "Enabel story"
+    default y
+        help
+	story-machine: 800X480 screen
+endif

@@ -1,0 +1,14 @@
+--- a/rules/60-serial.rules
++++ b/rules/60-serial.rules
+@@ -20,7 +20,9 @@ IMPORT{builtin}="usb_id"
+ ENV{ID_SERIAL}=="", GOTO="serial_end"
+ SUBSYSTEMS=="usb", ENV{ID_USB_INTERFACE_NUM}="$attr{bInterfaceNumber}"
+ ENV{ID_USB_INTERFACE_NUM}=="", GOTO="serial_end"
+-ENV{.ID_PORT}=="", SYMLINK+="serial/by-id/$env{ID_BUS}-$env{ID_SERIAL}-if$env{ID_USB_INTERFACE_NUM}"
+-ENV{.ID_PORT}=="?*", SYMLINK+="serial/by-id/$env{ID_BUS}-$env{ID_SERIAL}-if$env{ID_USB_INTERFACE_NUM}-port$env{.ID_PORT}"
++ENV{ID_PATH}=="platform-5200000.ehci1-controller-usb-0:1.3:1.0", SYMLINK+="serial/by-id/usb_serial_1"
++ENV{ID_PATH}=="platform-5200000.ehci1-controller-usb-0:1.1:1.0", SYMLINK+="serial/by-id/usb_serial_2"
++ENV{ID_PATH}=="platform-5200000.ehci1-controller-usb-0:1.2:1.0", SYMLINK+="serial/by-id/usb_serial_3"
++ENV{ID_PATH}=="platform-5101000.ohci0-controller-usb-0:1:1.0", SYMLINK+="serial/by-id/usb_serial_4"
+ 
+ LABEL="serial_end"

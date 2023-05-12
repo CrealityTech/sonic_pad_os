@@ -1,0 +1,4 @@
+menuconfig TESTUNIT_CAMERA
+    bool "camera"
+	select PACKAGE_camerademo
+	select ENABLE_VIN_ISP

@@ -1,0 +1,41 @@
+From 78e520f5cd6bad0928f7017272165ca4ba039d10 Mon Sep 17 00:00:00 2001
+From: anruliu <anruliu@allwinnertech.com>
+Date: Thu, 1 Aug 2019 14:09:41 +0800
+Subject: [PATCH] native_and_musl_fix
+
+Signed-off-by: anruliu <anruliu@allwinnertech.com>
+---
+ config/Makefile.in | 2 +-
+ config/config.mk   | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/nspr/config/Makefile.in b/nspr/config/Makefile.in
+index 7062c5c..3ed86e7 100644
+--- a/nspr/config/Makefile.in
++++ b/nspr/config/Makefile.in
+@@ -30,7 +30,7 @@ CSRCS	= now.c
+ 
+ # This version hasn't been ported for us; the one in mozilla/config has
+ ifneq ($(OS_ARCH),OS2)
+-CSRCS  += nsinstall.c
++#CSRCS  += nsinstall.c
+  
+ PLSRCS	= nfspwd.pl
+ endif
+diff --git a/nspr/config/config.mk b/nspr/config/config.mk
+index 05db076..8a9bc73 100644
+--- a/nspr/config/config.mk
++++ b/nspr/config/config.mk
+@@ -126,6 +126,9 @@ endif
+ 
+ ifeq ($(USE_IPV6),1)
+ DEFINES += -D_PR_INET6
++ifeq ($(MUSL),1)
++CFLAGS += -D_PR_POLL_AVAILABLE -D_PR_HAVE_OFF64_T -D_PR_INET6 -D_PR_HAVE_INET_NTOP -D_PR_HAVE_GETHOSTBYNAME2 -D_PR_HAVE_GETADDRINFO -D_PR_INET6_PROBE
++endif
+ endif
+ 
+ ifeq ($(MOZ_UNICODE),1)
+-- 
+1.9.1
+

@@ -1,0 +1,18 @@
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -2,6 +2,7 @@
+ license_files = 
+ 	LICENSE
+ name = backports.functools_lru_cache
++version = 1.6.4
+ author = Raymond Hettinger
+ author_email = raymond.hettinger@gmail.com
+ maintainer = Jason R. Coombs
+@@ -22,7 +23,6 @@ packages = find:
+ include_package_data = true
+ python_requires = >=2.6
+ install_requires = 
+-setup_requires = setuptools_scm[toml] >= 3.4.1
+ 
+ [options.packages.find]
+ exclude = 

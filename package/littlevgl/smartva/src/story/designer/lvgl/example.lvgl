@@ -1,0 +1,32 @@
+{
+    "lvgl": {
+        "name": "example.lvgl",
+        "resolution": {
+            "height": 480,
+            "width": 800
+        },
+        "widgets": [
+            {
+                "accessible": true,
+                "class": "lv_btn",
+                "drag": false,
+                "geometry": {
+                    "height": 43,
+                    "width": 626,
+                    "x": 174,
+                    "y": 0
+                },
+                "ink in time": 0,
+                "ink out time": 0,
+                "ink wait time": 0,
+                "layout": "Center",
+                "locked": false,
+                "name": "button_1",
+                "state": "Released",
+                "toggle": false,
+                "visible": true,
+                "widget": "Button"
+            }
+        ]
+    }
+}

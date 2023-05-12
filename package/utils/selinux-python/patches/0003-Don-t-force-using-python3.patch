@@ -1,0 +1,66 @@
+From 193e708d53517802040742e63041716e1f89a039 Mon Sep 17 00:00:00 2001
+From: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+Date: Wed, 2 Oct 2019 13:40:20 +0200
+Subject: [PATCH] Don't force using python3
+
+Signed-off-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+---
+ audit2allow/audit2allow    | 2 +-
+ audit2allow/sepolgen-ifgen | 2 +-
+ chcat/chcat                | 2 +-
+ semanage/semanage          | 2 +-
+ sepolicy/sepolicy.py       | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/audit2allow/audit2allow b/audit2allow/audit2allow
+index 09b06f66..81f610ad 100644
+--- a/audit2allow/audit2allow
++++ b/audit2allow/audit2allow
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python3 -Es
++#!/usr/bin/python -Es
+ # Authors: Karl MacMillan <kmacmillan@mentalrootkit.com>
+ # Authors: Dan Walsh <dwalsh@redhat.com>
+ #
+diff --git a/audit2allow/sepolgen-ifgen b/audit2allow/sepolgen-ifgen
+index be2d093b..99700ea9 100644
+--- a/audit2allow/sepolgen-ifgen
++++ b/audit2allow/sepolgen-ifgen
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python3 -Es
++#!/usr/bin/python -Es
+ #
+ # Authors: Karl MacMillan <kmacmillan@mentalrootkit.com>
+ #
+diff --git a/chcat/chcat b/chcat/chcat
+index ba398684..63e91635 100755
+--- a/chcat/chcat
++++ b/chcat/chcat
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python3 -Es
++#!/usr/bin/python -Es
+ # Copyright (C) 2005 Red Hat
+ # see file 'COPYING' for use and warranty information
+ #
+diff --git a/semanage/semanage b/semanage/semanage
+index 144cc000..552ace6a 100644
+--- a/semanage/semanage
++++ b/semanage/semanage
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python3 -Es
++#!/usr/bin/python -Es
+ # Copyright (C) 2012-2013 Red Hat
+ # AUTHOR: Miroslav Grepl <mgrepl@redhat.com>
+ # AUTHOR: David Quigley <selinux@davequigley.com>
+diff --git a/sepolicy/sepolicy.py b/sepolicy/sepolicy.py
+index 1934cd86..af606857 100755
+--- a/sepolicy/sepolicy.py
++++ b/sepolicy/sepolicy.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python3 -Es
++#!/usr/bin/python -Es
+ # Copyright (C) 2012 Red Hat
+ # AUTHOR: Dan Walsh <dwalsh@redhat.com>
+ # see file 'COPYING' for use and warranty information
+--
+2.21.0

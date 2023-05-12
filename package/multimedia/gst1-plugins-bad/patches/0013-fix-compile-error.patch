@@ -1,0 +1,32 @@
+From 9adcf38cd8bfc371b8743bb86c85805421320461 Mon Sep 17 00:00:00 2001
+From: houxiaoni <houxiaoni@allwinnertech.com>
+Date: Mon, 13 Jul 2020 15:58:14 +0800
+Subject: [PATCH] fix compile error
+
+Change-Id: I8c80fc9868e18d88cbf4160a46dabf07746e984a
+Signed-off-by: houxiaoni <houxiaoni@allwinnertech.com>
+---
+ Makefile.am | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 0783edf..215cf64 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -2,11 +2,11 @@ DISTCHECK_CONFIGURE_FLAGS=--enable-gtk-doc
+ 
+ SUBDIRS = \
+ 	gst-libs gst sys ext pkgconfig \
+-	m4 common docs tests po tools
++	m4 common docs tests tools
+ 
+ DIST_SUBDIRS = \
+ 	gst gst-libs sys ext pkgconfig \
+-	m4 common docs tests po tools
++	m4 common docs tests tools
+ 
+ EXTRA_DIST = \
+ 	depcomp \
+-- 
+1.9.1
+

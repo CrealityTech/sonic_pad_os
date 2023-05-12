@@ -1,0 +1,130 @@
+{   
+    "inputMode": "Latin", 
+    "pageCount": 2,
+    "page1":{
+    "KeyboardRow":[
+     {
+        "keyWeight": 160,
+        "Keys":[
+        { "key": 49, "text": "1"},
+        { "key": 50, "text": "2"},
+        { "key": 51, "text": "3"},
+        { "key": 52, "text": "4"},
+        { "key": 53, "text": "5"},
+        { "key": 54, "text": "6"},
+        { "key": 55, "text": "7"},
+        { "key": 56, "text": "8"},
+        { "key": 57, "text": "9"},
+        { "key": 48, "text": "0"},
+        { "key": 16777219, "text": ""}
+        ]
+    },
+    {
+    "keyWeight": 160,
+    "Keys": [
+        { "key": 0, "text": "", "type": "FillerKey", "weight": 56},
+        { "key": 64, "text": "@"},
+        { "key": 35, "text": "#"},
+        { "key": 37, "text": "%"},
+        { "key": 38, "text": "&"},
+        { "key": 42, "text": "*"},
+        { "key": 45, "text": "-"},
+        { "key": 43, "text": "+"},
+        { "key": 40, "text": "("},
+        { "key": 41, "text": ")"},
+        { "key": 16777221, "text": "", "weight": 283}
+        ]
+    },
+    {
+    "keyWeight": 156,
+    "Keys": [
+        { "key": 0, "text": "1/2","type": "PageKey"},
+        { "key": 33, "text": "!"},
+        { "key": 34, "text": "\""},
+        { "key": 60, "text": "<"},
+        { "key": 62, "text": ">"},
+        { "key": 39, "text": "'"},
+        { "key": 58, "text": ":"},
+        { "key": 59, "text": ";"},
+        { "key": 47, "text": "/"},
+        { "key": 63, "text": "?"},
+        { "key": 0, "text": "", "type": "PageKey","weight": 204}
+        ]
+    },
+    {
+    "keyWeight": 154,
+    "Keys": [
+        { "key": 0, "text": "", "type": "SymbolModeKey","weight": 217},
+        { "key": 0, "text": "", "type": "ChangeLanguageKey","weight": 154},
+        { "key": 32, "text": "", "type": "SpaceKey","weight": 864},
+        { "key": 46, "text": "."},
+        { "key": 57344, "text": ":-)"},
+        { "key": 0, "text": "", "type": "HideKeyboardKey", "weight": 204}
+        ]
+    }
+    ]
+    },
+    "page2":{
+    "KeyboardRow":[
+     {
+        "keyWeight": 160,
+        "Keys":[
+        { "key": 126, "text": "~"},
+        { "key": 192, "text": "`"},
+        { "key": 124, "text": "|"},
+        { "key": 123, "text": "·"},
+        { "key": 8730, "text": "√"},
+        { "key": 247, "text": "÷"},
+        { "key": 215, "text": "×"},
+        { "key": 189, "text": "?"},
+        { "key": 123, "text": "{"},
+        { "key": 125, "text": "}"},
+        { "key": 16777219, "text": ""}
+        ]
+    },
+    {
+    "keyWeight": 160,
+    "Keys": [
+        { "key": 0, "text": "", "type": "FillerKey", "weight": 56},
+        { "key": 8364, "text": "$"},
+        { "key": 83, "text": "€"},
+        { "key": 194, "text": "￡"},
+        { "key": 162, "text": "￠"},
+        { "key": 165, "text": "￥"},
+        { "key": 61, "text": "="},
+        { "key": 167, "text": "§"},
+        { "key": 91, "text": "["},
+        { "key": 93, "text": "]"},
+        { "key": 16777221, "text": "", "weight": 283}
+        ]
+    },
+    {
+    "keyWeight": 156,
+    "Keys": [
+        { "key": 0, "text": "2/2","type": "PageKey"},
+        { "key": 95, "text": "_"},
+        { "key": 8482, "text": "™"},
+        { "key": 174, "text": "®"},
+        { "key": 171, "text": "«"},
+        { "key": 187, "text": "»"},
+        { "key": 8220, "text": "“"},
+        { "key": 8221, "text": "”"},
+        { "key": 92, "text": "\\"},
+        { "key": 94, "text": "^"},
+        { "key": 0, "text": "2/2","type": "PageKey", "weight": 204}
+        ]
+    },
+    {
+    "keyWeight": 154,
+    "Keys": [
+        { "key": 0, "text": "", "type": "SymbolModeKey","weight": 217},
+        { "key": 0, "text": "", "type": "ChangeLanguageKey","weight": 154},
+        { "key": 32, "text": "", "type": "SpaceKey","weight": 864},
+        { "key": 8233, "text": "\u2026"},
+        { "key": 57344, "text": ":-)"},
+        { "key": 0, "text": "", "type": "HideKeyboardKey", "weight": 204}
+        ]
+    }
+    ]
+    }
+}

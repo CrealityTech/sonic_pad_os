@@ -1,0 +1,29 @@
+From d83456a13949dc017349756b4d1c396512a43dcf Mon Sep 17 00:00:00 2001
+From: wangxiwang <wangxiwang@allwinnertech.com>
+Date: Thu, 18 Jul 2019 21:07:18 +0800
+Subject: [PATCH 8/9] gstreamer/gst-omx: support external openmax and HEVC.
+
+Change-Id: I76b5ef382024414178b6931258de4bf2a169530c
+---
+ omx/Makefile.am | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/omx/Makefile.am b/omx/Makefile.am
+index 1447f69..43984a0 100644
+--- a/omx/Makefile.am
++++ b/omx/Makefile.am
+@@ -114,9 +114,9 @@ noinst_HEADERS = \
+ 	gstomxavsdec.h          \
+ 	gstomxmjpegenc.h
+ 
+-#if !HAVE_EXTERNAL_OMX
++if !HAVE_EXTERNAL_OMX
+ OMX_INCLUDEPATH = -I$(abs_srcdir)/openmax
+-#endif
++endif
+ 
+ libgstomx_la_CFLAGS = \
+ 	-DGST_USE_UNSTABLE_API=1 \
+-- 
+1.9.1
+

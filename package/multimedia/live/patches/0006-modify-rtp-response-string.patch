@@ -1,0 +1,20 @@
+--- a/liveMedia/RTSPServer.cpp
++++ b/liveMedia/RTSPServer.cpp
+@@ -1439,7 +1439,7 @@ void RTSPServer::RTSPClientSession
+ 		     "RTSP/1.0 200 OK\r\n"
+ 		     "CSeq: %s\r\n"
+ 		     "%s"
+-		     "Transport: RTP/AVP;multicast;destination=%s;source=%s;port=%d-%d;ttl=%d\r\n"
++		     "Transport: RTP/AVP/UDP;multicast;destination=%s;source=%s;port=%d-%d;ttl=%d\r\n"
+ 		     "Session: %08X%s\r\n\r\n",
+ 		     ourClientConnection->fCurrentCSeq,
+ 		     dateHeader(),
+@@ -1473,7 +1473,7 @@ void RTSPServer::RTSPClientSession
+ 		     "RTSP/1.0 200 OK\r\n"
+ 		     "CSeq: %s\r\n"
+ 		     "%s"
+-		     "Transport: RTP/AVP;unicast;destination=%s;source=%s;client_port=%d-%d;server_port=%d-%d\r\n"
++		     "Transport: RTP/AVP/UDP;unicast;destination=%s;source=%s;client_port=%d-%d;server_port=%d-%d\r\n"
+ 		     "Session: %08X%s\r\n\r\n",
+ 		     ourClientConnection->fCurrentCSeq,
+ 		     dateHeader(),

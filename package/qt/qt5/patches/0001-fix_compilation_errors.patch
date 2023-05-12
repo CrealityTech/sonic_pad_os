@@ -1,0 +1,163 @@
+diff --git a/qtbase/configure.json b/qtbase/configure.json
+index 7279259..3f91f10 100644
+--- a/qtbase/configure.json
++++ b/qtbase/configure.json
+@@ -160,6 +160,7 @@
+             },
+             "headers": "zlib.h",
+             "sources": [
++                { "type": "pkgConfig", "args": "libz" },
+                 { "libs": "-lzdll", "condition": "config.msvc" },
+                 { "libs": "-lzlib", "condition": "config.msvc" },
+                 { "libs": "-lz", "condition": "!config.msvc" },
+diff --git a/qtbase/src/gui/configure.json b/qtbase/src/gui/configure.json
+index 6dd6f5b..20e08e5 100644
+--- a/qtbase/src/gui/configure.json
++++ b/qtbase/src/gui/configure.json
+@@ -419,7 +419,8 @@
+             },
+             "headers": "mtdev.h",
+             "sources": [
+-                { "type": "pkgConfig", "args": "mtdev" }
++                { "type": "pkgConfig", "args": "mtdev" },
++                { "libs": "-lmtdev", "condition": "!config.win32" }
+             ]
+         },
+         "opengl": {
+diff --git a/qtwebengine/src/core/configure.json b/qtwebengine/src/core/configure.json
+index b9c9204..9e4a384 100644
+--- a/qtwebengine/src/core/configure.json
++++ b/qtwebengine/src/core/configure.json
+@@ -44,13 +44,15 @@
+         "webengine-dbus": {
+             "label": "d-bus",
+             "sources": [
+-                { "type": "pkgConfig", "args": "dbus-1" }
++                { "type": "pkgConfig", "args": "dbus-1" },
++                { "libs": "-ldbus-1", "condition": "!config.win32" }
+             ]
+         },
+         "webengine-fontconfig": {
+             "label": "fontconfig",
+             "sources": [
+-                { "type": "pkgConfig", "args": "fontconfig" }
++                { "type": "pkgConfig", "args": "fontconfig" },
++                { "libs": "-lfontconfig", "condition": "!config.win32" }
+             ]
+         },
+         "webengine-libdrm": {
+@@ -170,7 +172,8 @@
+         "webengine-nss": {
+             "label": "nss >= 3.26",
+             "sources": [
+-                { "type": "pkgConfig", "args": "nss >= 3.26" }
++                { "type": "pkgConfig", "args": "nss >= 3.26" },
++                { "libs": "-lnss3", "condition": "!config.win32" }
+             ]
+         },
+         "webengine-png": {
+diff --git a/qtwebengine/src/core/config/linux.pri b/qtwebengine/src/core/config/linux.pri
+index eaecab3..155ee1a 100644
+--- a/qtwebengine/src/core/config/linux.pri
++++ b/qtwebengine/src/core/config/linux.pri
+@@ -149,6 +149,8 @@ host_build {
+         }
+         isEmpty(PKG_CONFIG_HOST): PKG_CONFIG_HOST = $$QMAKE_PKG_CONFIG_HOST
+         gn_args += host_pkg_config=\"$$PKG_CONFIG_HOST\"
++        gn_args += aw_staging_dir=\"$$system_path($$PKG_CONFIG_SYSROOT_DIR)\"
++        gn_args += aw_staging_host_dir=\"$$system_path($$PKG_CONFIG_SYSROOT_DIR)/host\"
+     }
+ 
+     qtConfig(webengine-system-zlib) {
+diff --git a/qtwebengine/src/3rdparty/chromium/build/config/linux/pkg_config.gni b/qtwebengine/src/3rdparty/chromium/build/config/linux/pkg_config.gni
+index ca56bed..574ca20 100644
+--- a/qtwebengine/src/3rdparty/chromium/build/config/linux/pkg_config.gni
++++ b/qtwebengine/src/3rdparty/chromium/build/config/linux/pkg_config.gni
+@@ -34,6 +34,7 @@ declare_args() {
+ 
+   # A optional pkg-config wrapper to use for tools built on the host.
+   host_pkg_config = ""
++  aw_staging_dir = ""
+ 
+   # CrOS systemroots place pkgconfig files at <systemroot>/usr/share/pkgconfig
+   # and one of <systemroot>/usr/lib/pkgconfig or <systemroot>/usr/lib64/pkgconfig
+@@ -106,8 +107,9 @@ template("pkg_config") {
+     # We want the system include paths to use -isystem instead of -I to suppress
+     # warnings in those headers.
+     foreach(include, pkgresult[0]) {
+-      include_relativized = rebase_path(include, root_build_dir)
+-      cflags += [ "-isystem$include_relativized" ]
++      include_relativized = rebase_path(include, aw_staging_dir)
++      cflags += [ "-isystem/$include_relativized" ]
++      cflags += [ "-isystem/$include" ]
+     }
+ 
+     if (!defined(invoker.ignore_libs) || !invoker.ignore_libs) {
+diff --git a/qtwebengine/src/3rdparty/chromium/build/config/gcc/BUILD.gn b/qtwebengine/src/3rdparty/chromium/build/config/gcc/BUILD.gn
+index b6f4f5f..d1d32c3 100644
+--- a/qtwebengine/src/3rdparty/chromium/build/config/gcc/BUILD.gn
++++ b/qtwebengine/src/3rdparty/chromium/build/config/gcc/BUILD.gn
+@@ -18,6 +18,7 @@ declare_args() {
+   # Note: this gn arg is similar to gyp target_rpath generator flag.
+   gcc_target_rpath = ""
+   ldso_path = ""
++  aw_staging_host_dir = ""
+ }
+ 
+ # This config causes functions not to be automatically exported from shared
+@@ -135,6 +136,7 @@ config("executable_ldconfig") {
+       # Newer binutils don't set DT_RPATH unless you disable "new" dtags
+       # and the new DT_RUNPATH doesn't work without --no-as-needed flag.
+       "-Wl,--disable-new-dtags",
++      "-L$aw_staging_host_dir"+"/lib",
+     ]
+   }
+ }
+diff --git a/qtwebengine/src/core/config/functions.pri b/qtwebengine/src/core/config/functions.pri
+index 8c11faa..6621874 100644
+--- a/qtwebengine/src/core/config/functions.pri
++++ b/qtwebengine/src/core/config/functions.pri
+@@ -1,5 +1,6 @@
+ defineReplace(qtwebengine_extractCFlag) {
+     CFLAGS = $$QMAKE_CC $$QMAKE_CFLAGS
++    CFLAGS = $$split(CFLAGS, " ")
+     OPTION = $$find(CFLAGS, $$1)
+     OPTION = $$split(OPTION, =)
+     PARAM = $$member(OPTION, 1)
+diff --git a/qtwebengine/mkspecs/features/gn_generator.prf b/qtwebengine/mkspecs/features/gn_generator.prf
+index c1399a4..45e9ffe 100644
+--- a/qtwebengine/mkspecs/features/gn_generator.prf
++++ b/qtwebengine/mkspecs/features/gn_generator.prf
+@@ -106,6 +106,7 @@ CLEAN_QMAKE_RCC = $$clean_path($$QMAKE_RCC)
+ 
+ GN_CONTENTS += "config(\"$${TARGET}_config\") {"
+ !isEmpty(QMAKE_CFLAGS) {
++    QMAKE_CFLAGS = $$split(QMAKE_CFLAGS, " ")
+     GN_CONTENTS += "  cflags = ["
+     for(flag, QMAKE_CFLAGS): GN_CONTENTS += "    \"$$filter_flag_values($$flag)\","
+     GN_CONTENTS += "  ]"
+@@ -126,6 +127,7 @@ gcc|clang {
+ }
+ 
+ !isEmpty(QMAKE_CXXFLAGS) {
++    QMAKE_CXXFLAGS = $$split(QMAKE_CXXFLAGS, " ")
+     GN_CONTENTS += "  cflags_cc = ["
+     for(flag, QMAKE_CXXFLAGS): GN_CONTENTS += "    \"$$filter_flag_values($$flag)\","
+     GN_CONTENTS += "  ]"
+diff --git a/qtbase/src/gui/Qt5GuiConfigExtras.cmake.in b/qtbase/src/gui/Qt5GuiConfigExtras.cmake.in
+index 84dbbfeb..870f6fc7 100644
+--- a/qtbase/src/gui/Qt5GuiConfigExtras.cmake.in
++++ b/qtbase/src/gui/Qt5GuiConfigExtras.cmake.in
+@@ -171,11 +171,11 @@ endmacro()
+ 
+ 
+ !!IF !isEmpty(CMAKE_EGL_LIBS)
+-_qt5gui_find_extra_libs(EGL \"$$CMAKE_EGL_LIBS\" \"$$CMAKE_EGL_LIBDIR\" \"$$CMAKE_EGL_INCDIRS\")
++_qt5gui_find_extra_libs(EGL \"\$STAGING_DIR/usr/lib/libEGL.so\" \"$$CMAKE_EGL_LIBDIR\" \"$$CMAKE_EGL_INCDIRS\")
+ !!ENDIF
+ 
+ !!IF !isEmpty(CMAKE_OPENGL_LIBS)
+-_qt5gui_find_extra_libs(OPENGL \"$$CMAKE_OPENGL_LIBS\" \"$$CMAKE_OPENGL_LIBDIR\" \"$$CMAKE_OPENGL_INCDIRS\")
++_qt5gui_find_extra_libs(OPENGL \"\$STAGING_DIR/usr/lib/libGLESv2.so\" \"$$CMAKE_OPENGL_LIBDIR\" \"$$CMAKE_OPENGL_INCDIRS\")
+ 
+ !!ENDIF

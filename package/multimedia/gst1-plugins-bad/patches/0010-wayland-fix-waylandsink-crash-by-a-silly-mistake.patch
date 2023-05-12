@@ -1,0 +1,25 @@
+From 4a29bd2611e2372ded217b72517cb740859a4bb9 Mon Sep 17 00:00:00 2001
+From: wangxiwang <wangxiwang@allwinnertech.com>
+Date: Tue, 9 Jul 2019 11:39:15 +0800
+Subject: [PATCH 10/11] wayland: fix waylandsink crash by a silly mistake.
+
+Change-Id: I5632ee1f030c89879d7c7e917a7566823c5fcea1
+---
+ ext/wayland/gstwaylandsink.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/ext/wayland/gstwaylandsink.c b/ext/wayland/gstwaylandsink.c
+index c761106..aa31e8c 100644
+--- a/ext/wayland/gstwaylandsink.c
++++ b/ext/wayland/gstwaylandsink.c
+@@ -327,6 +327,7 @@ gst_wayland_sink_init (GstWaylandSink * sink)
+   sink->out_transform = -1;
+   sink->out_vflip = 0;
+   sink->out_hflip = 0;
++  sink->sBuffer = g_new0(OmxPrivateBuffer, 1);
+ }
+ 
+ static void
+-- 
+1.9.1
+

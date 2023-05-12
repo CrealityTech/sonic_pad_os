@@ -1,0 +1,17 @@
+--- a/conf/nginx.conf
++++ b/conf/nginx.conf
+@@ -287,6 +287,14 @@ index index.html;
+         location /frontlog {                                                                     
+             alias /mnt/UDISK/.crealityprint/logs/front_crealityprint_client.log;                                        
+             autoindex on;                                                                          
++        }
++        location /open_video {
++            alias /mnt/UDISK/.crealityprint/screen_saver;
++            autoindex on;
++        }
++        location /shuffling_figure {
++            alias /mnt/UDISK/.crealityprint/shuffling_figure;
++            autoindex on;
+         }		
+     } 
+     server {                                                                    

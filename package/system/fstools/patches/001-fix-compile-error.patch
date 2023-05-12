@@ -1,0 +1,61 @@
+--- a/block.c
++++ b/block.c
+@@ -45,6 +45,8 @@
+ #include <libubox/utils.h>
+ #include <libubox/vlist.h>
+ #include <libubus.h>
++#include <sys/stat.h>
++#include <sys/types.h>
+ 
+ #include "probe.h"
+ 
+@@ -193,6 +195,18 @@ static const struct mount_flag mount_fla
+ 	{ "user_xattr",		~MS_NOUSER	},
+ };
+ 
++static void mkdir_p(char *dir, mode_t mask)
++{
++    char *l = strrchr(dir, '/');
++
++    if (l) {
++        *l = '\0';
++        mkdir_p(dir, mask);
++        *l = '/';
++        mkdir(dir, mask);
++    }
++}
++
+ static char *blobmsg_get_strdup(struct blob_attr *attr)
+ {
+ 	if (!attr)
+--- a/blockd.c
++++ b/blockd.c
+@@ -19,6 +19,8 @@
+ #include <libubox/ulog.h>
+ #include <libubox/avl-cmp.h>
+ #include <libubus.h>
++#include <sys/stat.h>
++#include <sys/types.h>
+ 
+ #include "libfstools/libfstools.h"
+ 
+@@ -79,6 +81,19 @@ static const struct blobmsg_policy info_
+ 	[INFO_DEVICE] = { .name = "device", .type = BLOBMSG_TYPE_STRING },
+ };
+ 
++static void
++mkdir_p(char *dir, mode_t mask)
++{
++    char *l = strrchr(dir, '/');
++
++    if (l) {
++        *l = '\0';
++        mkdir_p(dir, mask);
++        *l = '/';
++        mkdir(dir, mask);
++    }
++}
++
+ static char*
+ _find_mount_point(char *device)
+ {

@@ -1,0 +1,40 @@
+Commit information:
+img-rgx: update DDK to 1.11@5516664
+
+This can improve opencl performance:
+improve mnn+opencl's 500ms to 180ms;
+
+MD5 Information:
+cf0dfb2b82feed609614554df2370b1f lib/libEGL.so
+32d1bda9839cc6b1365cd82ed552137f lib/libGLES_CM.so
+1c26ce055287d0750e202cd7b7572d70 lib/libGLESv2.so
+edf1d717c662d95fc7c924947b57a90b lib/libglslcompiler.so
+ce3619fcdba4e320d5bc4145828d1107 lib/libIMGegl.so
+5092cbd71b0f3cda5fcdc41ffd7ac26d lib/libpvrNULL_WSEGL.so
+25294f18347740495275a88e67e622fe lib/libPVROCL.so
+8f17e85c9457fc538233627f6cc368a0 lib/libPVRScopeServices.so
+da79057533f50f83cdf68cdd416f5cf5 lib/libsrv_um.so
+7bc1dc84885bece8b560b5b213ca8176 lib/libtqvalidate.so
+c0884144002eb25a86379191401eb6a1 lib/libufwriter.so
+436b157dd787705f981453275ab57e61 lib/libusc.so
+7cf4bb11277c6d8f37e481914e0ef195 lib/firmware/rgx.fw.22.102.54.38
+775e7dec72e24c04261d61656a79fb9d bin/pvrsrvctl
+d7e0a6c6b8e74a2fc2ad464b010a1ac0 bin/ocl_unit_test
+
+Toolchain information:
+Reading specs from /home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../lib/gcc/aarch64-openwrt-linux-gnu/6.4.1/specs
+COLLECT_GCC=aarch64-openwrt-linux-gnu-gcc.bin
+COLLECT_LTO_WRAPPER=/home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../libexec/gcc/aarch64-openwrt-linux-gnu/6.4.1/lto-wrapper
+Target: aarch64-openwrt-linux-gnu
+Configured with: /home/caiyongheng/tina/out/tulip-noma/compile_dir/toolchain/gcc-linaro-6.4-2017.11/configure --with-bugurl=https://dev.openwrt.org/ --with-pkgversion='OpenWrt/Linaro GCC 6.4-2017.11 2017-11' --prefix=/home/caiyongheng/tina/out/tulip-noma/staging_dir/toolchain --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=aarch64-openwrt-linux-gnu --with-gnu-ld --enable-target-optspace --enable-libgomp --disable-libmudflap --disable-multilib --disable-nls --without-isl --without-cloog --with-host-libstdcxx=-lstdc++ --with-gmp=/home/caiyongheng/tina/out/host --with-mpfr=/home/caiyongheng/tina/out/host --with-mpc=/home/caiyongheng/tina/out/host --disable-decimal-float --with-diagnostics-color=auto-if-env --enable-libssp --enable-fix-cortex-a53-835769 --enable-fix-cortex-a53-843419 --enable-__cxa_atexit --with-headers=/home/caiyongheng/tina/out/tulip-noma/staging_dir/toolchain/include --disable-libsanitizer --enable-languages=c,c++ --enable-shared --enable-threads --with-slibdir=/home/caiyongheng/tina/out/tulip-noma/staging_dir/toolchain/lib --enable-lto --with-libelf=/home/caiyongheng/tina/out/host
+Thread model: posix
+gcc version 6.4.1 (OpenWrt/Linaro GCC 6.4-2017.11 2017-11) 
+COMPILER_PATH=/home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../libexec/gcc/aarch64-openwrt-linux-gnu/6.4.1/:/home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../libexec/gcc/:/home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../lib/gcc/aarch64-openwrt-linux-gnu/6.4.1/../../../../aarch64-openwrt-linux-gnu/bin/
+LIBRARY_PATH=/home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../lib/gcc/aarch64-openwrt-linux-gnu/6.4.1/:/home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../lib/gcc/:/home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../lib/gcc/aarch64-openwrt-linux-gnu/6.4.1/../../../../aarch64-openwrt-linux-gnu/lib/
+aarch64-openwrt-linux-gnu-gcc.bin: warning: environment variable 'STAGING_DIR' not defined
+aarch64-openwrt-linux-gnu-gcc.bin: warning: environment variable 'STAGING_DIR' not defined
+COLLECT_GCC_OPTIONS='-v' '-mlittle-endian' '-mabi=lp64'
+ /home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../libexec/gcc/aarch64-openwrt-linux-gnu/6.4.1/collect2 -plugin /home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../libexec/gcc/aarch64-openwrt-linux-gnu/6.4.1/liblto_plugin.so -plugin-opt=/home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../libexec/gcc/aarch64-openwrt-linux-gnu/6.4.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccRCGpKs.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s --sysroot=/home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin//../.. --eh-frame-hdr -dynamic-linker /lib/ld-linux-aarch64.so.1 -X -EL -maarch64linux --fix-cortex-a53-835769 --fix-cortex-a53-843419 /home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../lib/gcc/aarch64-openwrt-linux-gnu/6.4.1/../../../../aarch64-openwrt-linux-gnu/lib/crt1.o /home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../lib/gcc/aarch64-openwrt-linux-gnu/6.4.1/../../../../aarch64-openwrt-linux-gnu/lib/crti.o /home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../lib/gcc/aarch64-openwrt-linux-gnu/6.4.1/crtbegin.o -L /usr/lib -rpath-link /usr/lib -L/home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../lib/gcc/aarch64-openwrt-linux-gnu/6.4.1 -L/home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../lib/gcc -L/home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../lib/gcc/aarch64-openwrt-linux-gnu/6.4.1/../../../../aarch64-openwrt-linux-gnu/lib -rpath=/home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin//../../lib:/home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin//../../usr/lib -lgcc_s -lc -lgcc_s /home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../lib/gcc/aarch64-openwrt-linux-gnu/6.4.1/crtend.o /home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../lib/gcc/aarch64-openwrt-linux-gnu/6.4.1/../../../../aarch64-openwrt-linux-gnu/lib/crtn.o
+/home/yuxyun/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin/../lib/gcc/aarch64-openwrt-linux-gnu/6.4.1/../../../../aarch64-openwrt-linux-gnu/lib/crt1.o: In function `_start':
+init.c:(.text+0x30): undefined reference to `main'
+collect2: error: ld returned 1 exit status

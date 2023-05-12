@@ -1,0 +1,36 @@
+From f85e7fe34dcbac7ded7fe53dc5d339ee9d289ed5 Mon Sep 17 00:00:00 2001
+From: wangxiwang <wangxiwang@allwinnertech.com>
+Date: Tue, 23 Jul 2019 21:28:59 +0800
+Subject: [PATCH] alsa: NOT let alsa select params automaticaly, thus fix error
+ of setting alsa hw params.
+
+Change-Id: Ia7a37c4ef7e007d2bbeae90f17ed8718d1e3573e
+---
+ ext/alsa/gstalsasink.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/ext/alsa/gstalsasink.c b/ext/alsa/gstalsasink.c
+index e1bb7d7..8057132 100644
+--- a/ext/alsa/gstalsasink.c
++++ b/ext/alsa/gstalsasink.c
+@@ -839,13 +839,16 @@ gst_alsasink_open (GstAudioSink * asink)
+ {
+   GstAlsaSink *alsa;
+   gint err;
++  int pcm_open_mode = 0;
+ 
+   alsa = GST_ALSA_SINK (asink);
+ 
+   /* open in non-blocking mode, we'll use snd_pcm_wait() for space to become
+    * available. */
++  pcm_open_mode = SND_PCM_NO_AUTO_RESAMPLE | SND_PCM_NO_AUTO_FORMAT;
++  pcm_open_mode |= SND_PCM_NO_AUTO_CHANNELS | SND_PCM_NONBLOCK;
+   CHECK (snd_pcm_open (&alsa->handle, alsa->device, SND_PCM_STREAM_PLAYBACK,
+-          SND_PCM_NONBLOCK), open_error);
++          pcm_open_mode), open_error);
+   GST_LOG_OBJECT (alsa, "Opened device %s", alsa->device);
+ 
+   return TRUE;
+-- 
+1.9.1
+

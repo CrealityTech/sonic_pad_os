@@ -1,0 +1,49 @@
+From 85a124b7b12ccba8e8c2b30c4a445ec5e6f7eed5 Mon Sep 17 00:00:00 2001
+From: houxiaoni <houxiaoni@allwinnertech.com>
+Date: Tue, 14 Jul 2020 14:00:51 +0800
+Subject: [PATCH 3/5] mssdemux support playready decrypt
+
+Change-Id: I050bc6d0a19ad843246beaef19df7dc21a57bc7f
+Signed-off-by: houxiaoni <houxiaoni@allwinnertech.com>
+---
+ ext/smoothstreaming/gstmssdemux.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/ext/smoothstreaming/gstmssdemux.c b/ext/smoothstreaming/gstmssdemux.c
+index 85f0ec8..4295edb 100644
+--- a/ext/smoothstreaming/gstmssdemux.c
++++ b/ext/smoothstreaming/gstmssdemux.c
+@@ -385,20 +385,22 @@ _create_pad (GstMssDemux * mssdemux, GstMssStream * manifeststream)
+   return srcpad;
+ }
+ 
++#define PLAYREADY_SYSTEM_ID "9A04F079-9840-4286-AB92-E65BE0885F95"
+ static void
+ gst_mss_demux_apply_protection_system (GstCaps * caps,
+     const gchar * selected_system)
+ {
+   GstStructure *s;
+ 
+-  g_return_if_fail (selected_system);
+-  s = gst_caps_get_structure (caps, 0);
+-  gst_structure_set (s,
+-      "original-media-type", G_TYPE_STRING, gst_structure_get_name (s),
+-      GST_PROTECTION_SYSTEM_ID_CAPS_FIELD, G_TYPE_STRING, selected_system,
+-      NULL);
+-  gst_structure_set_name (s, "application/x-cenc");
+-
++  /*  if playready is encrypted, application/x-cenc is not set */
++  if (g_ascii_strcasecmp (selected_system, PLAYREADY_SYSTEM_ID) != 0) {
++    s = gst_caps_get_structure (caps, 0);
++    gst_structure_set (s,
++        "original-media-type", G_TYPE_STRING, gst_structure_get_name (s),
++         GST_PROTECTION_SYSTEM_ID_CAPS_FIELD, G_TYPE_STRING, selected_system,
++         NULL);
++    gst_structure_set_name (s, "application/x-cenc");
++  } 
+ }
+ 
+ static gboolean
+-- 
+1.9.1
+

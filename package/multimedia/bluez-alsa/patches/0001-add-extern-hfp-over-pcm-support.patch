@@ -1,0 +1,759 @@
+From c931437a56e04cff1015366c68824a0332fb582c Mon Sep 17 00:00:00 2001
+From: liumingyuan <liumingyuan@allwinnertech.com>
+Date: Tue, 21 Apr 2020 14:20:24 +0800
+Subject: [PATCH] add extern hfp over pcm support.
+
+Signed-off-by: liumingyuan <liumingyuan@allwinnertech.com>
+---
+ src/ctl.c               | 132 ++++++++++++++++++++++++++++++++-
+ src/io.c                | 191 ++++++++++++++++++++++++++++++++++++++++++++----
+ src/rfcomm.c            |  64 +++++++++++++++-
+ src/shared/ctl-client.c |  40 ++++++++++
+ src/shared/ctl-client.h |   1 +
+ src/shared/ctl-proto.h  |   6 ++
+ src/transport.c         |  37 ++++++++++
+ src/transport.h         |   7 ++
+ 8 files changed, 458 insertions(+), 20 deletions(-)
+
+diff --git a/src/ctl.c b/src/ctl.c
+index acee21b..a1a61e5 100644
+--- a/src/ctl.c
++++ b/src/ctl.c
+@@ -94,6 +94,8 @@ static int _transport_lookup(GHashTable *devices, const bdaddr_t *addr,
+				if ((*t)->codec == HFP_CODEC_UNDEFINED)
+					continue;
+				break;
++			case BA_PCM_TYPE_RFCOMM:
++				break;
+			}
+
+			return 0;
+@@ -174,6 +176,12 @@ static void _transport_release(struct ba_transport *t, int client) {
+		t->a2dp.pcm.client = -1;
+		break;
+	case TRANSPORT_TYPE_RFCOMM:
++		/* XXX: Consider pthread cancellation */
++		if (t->rfcomm.fd != -1) {
++			debug("Closing RFCOMM tunnel: %d", t->rfcomm.fd);
++			close(t->rfcomm.fd);
++			t->rfcomm.fd = -1;
++		}
+		break;
+	case TRANSPORT_TYPE_SCO:
+		if (t->sco.spk_pcm.client == client) {
+@@ -204,7 +212,7 @@ static void _ctl_transport(const struct ba_transport *t, struct ba_msg_transport
+		transport->delay = t->a2dp.delay;
+		break;
+	case TRANSPORT_TYPE_RFCOMM:
+-		transport->type = BA_PCM_TYPE_NULL;
++		transport->type = BA_PCM_TYPE_RFCOMM;
+		break;
+	case TRANSPORT_TYPE_SCO:
+		transport->type = BA_PCM_TYPE_SCO;
+@@ -550,6 +558,125 @@ fail:
+	send(fd, &status, sizeof(status), MSG_NOSIGNAL);
+ }
+
++static void ctl_thread_cmd_rfcomm_open(const struct ba_request *req, int fd) {
++
++	struct ba_msg_status status = { BA_STATUS_CODE_SUCCESS };
++	struct ba_transport *t;
++	struct ba_pcm *t_pcm;
++	int pipefd[2] = { -1, -1 };
++
++	debug("RFCOMM requested for %s", batostr_(&req->addr));
++
++	pthread_mutex_lock(&config.devices_mutex);
++
++	if (_transport_lookup_rfcomm(config.devices, &req->addr, &t) != 0) {
++		status.code = BA_STATUS_CODE_DEVICE_NOT_FOUND;
++		goto fail;
++	}
++
++	if (t->rfcomm.fd != -1) {
++		debug("RFCOMM already requested: %d", t->rfcomm.fd);
++		status.code = BA_STATUS_CODE_DEVICE_BUSY;
++		goto final;
++	}
++
++	if (pipe(pipefd) == -1) {
++		error("Couldn't create FIFO: %s", strerror(errno));
++		status.code = BA_STATUS_CODE_ERROR_UNKNOWN;
++		goto final;
++	}
++
++	union {
++		char buf[CMSG_SPACE(sizeof(int))];
++		struct cmsghdr _align;
++	} control_un;
++	struct iovec io = { .iov_base = "", .iov_len = 1 };
++	struct msghdr msg = {
++		.msg_iov = &io,
++		.msg_iovlen = 1,
++		.msg_control = control_un.buf,
++		.msg_controllen = sizeof(control_un.buf),
++	};
++
++	struct cmsghdr *cmsg = CMSG_FIRSTHDR(&msg);
++	cmsg->cmsg_level = SOL_SOCKET;
++	cmsg->cmsg_type = SCM_RIGHTS;
++	cmsg->cmsg_len = CMSG_LEN(sizeof(int));
++	int *fdptr = (int *)CMSG_DATA(cmsg);
++
++	t->rfcomm.fd = pipefd[1];
++	*fdptr = pipefd[0];
++
++	transport_send_signal(t, TRANSPORT_PCM_OPEN);
++
++	if (sendmsg(fd, &msg, 0) == -1)
++		goto fail;
++
++	close(*fdptr);
++	goto final;
++
++fail:
++	close(pipefd[0]);
++	close(pipefd[1]);
++	t->rfcomm.fd = -1;
++
++final:
++	pthread_mutex_unlock(&config.devices_mutex);
++	send(fd, &status, sizeof(status), MSG_NOSIGNAL);
++}
++
++static void ctl_thread_cmd_rfcomm_close(const struct ba_request *req, int fd) {
++
++	struct ba_msg_status status = { BA_STATUS_CODE_SUCCESS };
++	struct ba_transport *t;
++	struct ba_pcm *t_pcm;
++
++	debug("RFCOMM close for %s", batostr_(&req->addr));
++
++	pthread_mutex_lock(&config.devices_mutex);
++	if (_transport_lookup_rfcomm(config.devices, &req->addr, &t) != 0) {
++		status.code = BA_STATUS_CODE_DEVICE_NOT_FOUND;
++		goto fail;
++	}
++
++	_transport_release(t, fd);
++	transport_send_signal(t, TRANSPORT_PCM_CLOSE);
++
++fail:
++	pthread_mutex_unlock(&config.devices_mutex);
++	send(fd, &status, sizeof(status), MSG_NOSIGNAL);
++}
++
++static void ctl_thread_cmd_rfcomm_get_indv(const struct ba_request *req, int fd)
++{
++	struct ba_msg_status status = { BA_STATUS_CODE_SUCCESS };
++	struct ba_transport *t;
++	uint8_t ind_val[8];
++
++	pthread_mutex_lock(&config.devices_mutex);
++
++	if (_transport_lookup_rfcomm(config.devices, &req->addr, &t) != 0) {
++		status.code = BA_STATUS_CODE_DEVICE_NOT_FOUND;
++		goto fail;
++	}
++
++	ind_val[0] = t->rfcomm.hfp_inds[HFP_IND_SERVICE];
++	ind_val[1] = t->rfcomm.hfp_inds[HFP_IND_CALL];
++	ind_val[2] = t->rfcomm.hfp_inds[HFP_IND_CALLSETUP];
++	ind_val[3] = t->rfcomm.hfp_inds[HFP_IND_CALLHELD];
++	ind_val[4] = t->rfcomm.hfp_inds[HFP_IND_SIGNAL];
++	ind_val[5] = t->rfcomm.hfp_inds[HFP_IND_ROAM];
++	ind_val[6] = t->rfcomm.hfp_inds[HFP_IND_BATTCHG];
++	ind_val[7] = 0; /* XXX: callwait */
++
++	send(fd, ind_val, sizeof(ind_val), MSG_NOSIGNAL);
++
++fail:
++	pthread_mutex_unlock(&config.devices_mutex);
++	send(fd, &status, sizeof(status), MSG_NOSIGNAL);
++}
++
++
+ static void *ctl_thread(void *arg) {
+	(void)arg;
+
+@@ -566,6 +693,9 @@ static void *ctl_thread(void *arg) {
+		[BA_COMMAND_PCM_RESUME] = ctl_thread_cmd_pcm_control,
+		[BA_COMMAND_PCM_DRAIN] = ctl_thread_cmd_pcm_control,
+		[BA_COMMAND_RFCOMM_SEND] = ctl_thread_cmd_rfcomm_send,
++		[BA_COMMAND_RFCOMM_OPEN] = ctl_thread_cmd_rfcomm_open,
++		[BA_COMMAND_RFCOMM_CLOSE] = ctl_thread_cmd_rfcomm_close,
++		[BA_COMMAND_RFCOMM_GET_INDV] = ctl_thread_cmd_rfcomm_get_indv,
+	};
+
+	debug("Starting controller loop");
+diff --git a/src/io.c b/src/io.c
+index 806ea95..c54832c 100644
+--- a/src/io.c
++++ b/src/io.c
+@@ -23,6 +23,12 @@
+ #include <sys/socket.h>
+ #include <sys/types.h>
+
++#include <sys/timerfd.h>
++#include <bluetooth/bluetooth.h>
++#include <bluetooth/hci.h>
++#include <bluetooth/hci_lib.h>
++#include <bluetooth/sco.h>
++
+ #include <sbc/sbc.h>
+ #if ENABLE_AAC
+ # include <fdk-aac/aacdecoder_lib.h>
+@@ -1161,8 +1167,62 @@ fail_init:
+ }
+ #endif
+
++static void close_lsocket(struct ba_transport *t)
++{
++	if (t->sco.listen_fd > 0) {
++		close(t->sco.listen_fd);
++		t->sco.listen_fd = -1;
++	}
++}
++
++static int bind_sco(struct ba_transport *t, int sock)
++{
++	struct sockaddr_sco addr;
++	struct hci_dev_info di;
++
++	if (hci_devinfo(t->device->hci_dev_id, &di) == -1) {
++		error("Couldn't get HCI device info: %s", strerror(errno));
++		return -1;
++	}
++
++	memset(&addr, 0, sizeof(addr));
++	addr.sco_family = AF_BLUETOOTH;
++	bacpy(&addr.sco_bdaddr, &di.bdaddr);
++
++	if (bind(sock, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
++		error("Couldn't bind sco socket");
++		return -1;
++	}
++
++	return 0;
++}
++
++static int timeout_set(int fd, unsigned int msec)
++{
++	struct itimerspec itimer;
++	unsigned int sec = msec / 1000;
++
++	memset(&itimer, 0, sizeof(itimer));
++	itimer.it_interval.tv_sec = 0;
++	itimer.it_interval.tv_nsec = 0;
++	itimer.it_value.tv_sec = sec;
++	itimer.it_value.tv_nsec = (msec - (sec * 1000)) * 1000 * 1000;
++
++	return timerfd_settime(fd, 0, &itimer, NULL);
++}
++
++static void close_timerfd(void *data)
++{
++	int fd = (int)data;
++
++	close(fd);
++}
++
+ void *io_thread_sco(void *arg) {
+	struct ba_transport *t = (struct ba_transport *)arg;
++	int defer = 1;
++	int sco_timer;
++	int timer_added = 0;
+
+	pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, NULL);
+	pthread_cleanup_push(PTHREAD_CLEANUP(transport_pthread_cleanup), t);
+@@ -1180,6 +1240,33 @@ void *io_thread_sco(void *arg) {
+		goto fail;
+	}
+
++	t->sco.listen_fd = socket(PF_BLUETOOTH, SOCK_SEQPACKET, BTPROTO_SCO);
++	if (t->sco.listen_fd == -1) {
++		error("Couldn't open sco socket: %s", strerror(errno));
++		goto fail_ffb;
++	}
++	pthread_cleanup_push(PTHREAD_CLEANUP(close_lsocket), t);
++	if (bind_sco(t, t->sco.listen_fd) < 0) {
++		error("Couldn't bind sco socket");
++		goto fail_sock;
++	}
++	if (setsockopt(t->sco.listen_fd, SOL_BLUETOOTH, BT_DEFER_SETUP,
++		       &defer, sizeof(defer)) < 0) {
++		error("Couldn't set defer for sco");
++		/* Ignore this error */
++	}
++	if (listen(t->sco.listen_fd, 1) < 0) {
++		error("Couldn't listen %s", strerror(errno));
++		goto fail_sock;
++	}
++
++	sco_timer = timerfd_create(CLOCK_REALTIME, 0);
++	if (sco_timer == -1) {
++		error("Couldn't create sco timer %s", strerror(errno));
++		goto fail_sock;
++	}
++	pthread_cleanup_push(PTHREAD_CLEANUP(close_timerfd), (void *)sco_timer);
++
+	int poll_timeout = -1;
+	struct asrsync asrs = { .frames = 0 };
+	struct pollfd pfds[] = {
+@@ -1190,6 +1277,8 @@ void *io_thread_sco(void *arg) {
+		/* PCM FIFO */
+		{ -1, POLLIN, 0 },
+		{ -1, POLLOUT, 0 },
++		{ t->sco.listen_fd, POLLIN, 0 },
++		{ sco_timer, POLLIN, 0 }, /* [6] for sco timer */
+	};
+
+	debug("Starting IO loop: %s",
+@@ -1247,28 +1336,29 @@ void *io_thread_sco(void *arg) {
+			if (sig == TRANSPORT_PCM_SYNC)
+				pthread_cond_signal(&t->sco.spk_pcm.drained);
+
++			/* Received TRANSPORT_PCM_OPEN from client or rfcomm
++			 * thread (callsetup=0/1, call=1).
++			 * So at least three open events will be received when
++			 * answer a call
++			 */
+			const enum hfp_ind *inds = t->sco.rfcomm->rfcomm.hfp_inds;
+-			bool release = false;
+
+-			/* It is required to release SCO if we are not transferring audio,
+-			 * because it will free Bluetooth bandwidth - microphone signal is
+-			 * transfered even though we are not reading from it! */
+-			if (t->sco.spk_pcm.fd == -1 && t->sco.mic_pcm.fd == -1)
+-				release = true;
+-			/* For HFP HF we have to check if we are in the call stage or in the
+-			 * call setup stage. Otherwise, it might be not possible to acquire
+-			 * SCO connection. */
+-			if (t->profile == BLUETOOTH_PROFILE_HFP_HF &&
+-					inds[HFP_IND_CALL] == HFP_IND_CALL_NONE &&
+-					inds[HFP_IND_CALLSETUP] == HFP_IND_CALLSETUP_NONE)
+-				release = true;
++			if (sig == TRANSPORT_PCM_OPEN) {
++				info("Received transport pcm open event");
++				/* Start a timer to wait for sco connection from
++				 * AG. If timer is expired, connect to AG
++				 */
++				if (t->profile == BLUETOOTH_PROFILE_HFP_HF &&
++				    inds[HFP_IND_CALL] == HFP_IND_CALL_ACTIVE &&
++				    t->bt_fd == -1)
++					timeout_set(sco_timer, 3000);
++			}
+
+-			if (release) {
++			if (sig == TRANSPORT_PCM_CLOSE) {
++				info("Received transport pcm close event");
+				transport_release_bt_sco(t);
+				asrs.frames = 0;
+			}
+-			else
+-				transport_acquire_bt_sco(t);
+
+			continue;
+		}
+@@ -1419,6 +1509,71 @@ retry_sco_write:
+
+		}
+
++		/* sco_timer */
++		if (pfds[6].revents & POLLIN) {
++			bool release = false;
++			const enum hfp_ind *inds = t->sco.rfcomm->rfcomm.hfp_inds;
++
++			info("SCO timer expired");
++
++			timeout_set(sco_timer, 0);
++			if (t->bt_fd != -1) {
++				warn("Timer expired but sco link was created");
++				continue;
++			}
++
++			/* TODO: Should  we need to check client */
++			/* if (t->sco.spk_pcm.fd == -1 && t->sco.mic_pcm.fd == -1)
++			 *	release = true;
++			 */
++
++			if (t->profile == BLUETOOTH_PROFILE_HFP_HF &&
++			    inds[HFP_IND_CALL] == HFP_IND_CALL_NONE &&
++			    inds[HFP_IND_CALLSETUP] == HFP_IND_CALLSETUP_NONE)
++				release = true;
++			if (release) {
++				transport_release_bt_sco(t);
++				asrs.frames = 0;
++			} else {
++				transport_acquire_bt_sco(t);
++			}
++			continue;
++		}
++
++		/* t->sco.listen_fd */
++		if (pfds[5].revents & POLLIN) {
++			int sock;
++			struct sockaddr_sco addr;
++			socklen_t len = sizeof(addr);
++			const enum hfp_ind *inds = t->sco.rfcomm->rfcomm.hfp_inds;
++			bool release = false;
++
++			info("SCO connection created by peer");
++			sock = accept(pfds[5].fd, (struct sockaddr *)&addr,
++				      &len);
++			if (sock < 0) {
++				error("Couldn't accept sco connection");
++				continue;
++			}
++			/* Kill timer that is used to create sco link */
++			timeout_set(sco_timer, 0);
++			/* For HFP HF we have to check if we are in the call
++			 * stage or in the call setup stage. Otherwise, it might
++			 * be not possible to acquire SCO connection. */
++			if (t->profile == BLUETOOTH_PROFILE_HFP_HF &&
++			    inds[HFP_IND_CALL] == HFP_IND_CALL_NONE &&
++			    inds[HFP_IND_CALLSETUP] == HFP_IND_CALLSETUP_NONE)
++				release = true;
++
++			if (release) {
++				transport_release_bt_sco(t);
++				asrs.frames = 0;
++			} else {
++				transport_acquire_bt_sco2(t, sock);
++			}
++			continue;
++		}
++
+		/* keep data transfer at a constant bit rate */
+		asrsync_sync(&asrs, 48 / 2);
+		t->delay = asrs.ts_busy.tv_nsec / 100000;
+@@ -1427,6 +1582,10 @@ retry_sco_write:
+
+ fail:
+	pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, NULL);
++	pthread_cleanup_pop(1); /* for sco timer */
++fail_sock:
++	pthread_cleanup_pop(1); /* for sco listen sock */
++fail_ffb:
+	pthread_cleanup_pop(1);
+	pthread_cleanup_pop(1);
+	pthread_cleanup_pop(1);
+diff --git a/src/rfcomm.c b/src/rfcomm.c
+index 6d5eae6..2a852aa 100644
+--- a/src/rfcomm.c
++++ b/src/rfcomm.c
+@@ -92,8 +92,9 @@ static int rfcomm_write_at(int fd, enum bt_at_type type, const char *command,
+	char msg[256];
+	size_t len;
+
+-	debug("Sending AT message: %s: command:%s, value:%s",
+-			at_type2str(type), command, value);
++	/* debug("Sending AT message: %s: command:%s, value:%s",
++	 *		at_type2str(type), command, value);
++	 */
+
+	at_build(msg, type, command, value);
+	len = strlen(msg);
+@@ -237,8 +238,14 @@ static int rfcomm_handler_ciev_resp_cb(struct rfcomm_conn *c, const struct bt_at
+		t->rfcomm.hfp_inds[c->hfp_ind_map[index - 1]] = value;
+		switch (c->hfp_ind_map[index - 1]) {
+		case HFP_IND_CALL:
++			if (value == 1)
++				transport_send_signal(t->rfcomm.sco,
++						      TRANSPORT_PCM_OPEN);
++			else if (value == 0)
++				transport_send_signal(t->rfcomm.sco,
++						      TRANSPORT_PCM_CLOSE);
++			break;
+		case HFP_IND_CALLSETUP:
+-			transport_send_signal(t->rfcomm.sco, TRANSPORT_PCM_OPEN);
+			break;
+		case HFP_IND_BATTCHG:
+			device_set_battery_level(t->device, value * 100 / 5);
+@@ -369,8 +376,26 @@ static int rfcomm_handler_bcs_set_cb(struct rfcomm_conn *c, const struct bt_at *
+ }
+
+ static int rfcomm_handler_resp_bcs_ok_cb(struct rfcomm_conn *c, const struct bt_at *at) {
++	struct ba_transport * const t = c->t;
++	struct ba_transport *t_sco;
++	struct bt_voice voice = {
++		.setting = BT_VOICE_CVSD_16BIT,
++	};
++
+	if (rfcomm_handler_resp_ok_cb(c, at) != 0)
+		return -1;
++
++	/* Change voice setting according to codec */
++	if (t->rfcomm.sco->codec == HFP_CODEC_MSBC)
++		voice.setting = BT_VOICE_TRANSPARENT;
++	t_sco = t->rfcomm.sco;
++	if (setsockopt(t_sco->sco.listen_fd, SOL_BLUETOOTH, BT_VOICE,
++		       &voice, sizeof(voice)) == -1) {
++		error("setsockopt BT_VOICE error %d, %s", errno,
++		      strerror(errno));
++		return 0;
++	}
++
+	/* When codec selection is completed, notify connected clients, that
+	 * transport has been changed. Note, that this event might be emitted
+	 * for an active transport - codec switching. */
+@@ -548,6 +573,26 @@ static rfcomm_callback *rfcomm_get_callback(const struct bt_at *at) {
+	return NULL;
+ }
+
++static int rfcomm_send_to_client(struct ba_transport *t, enum bt_at_type type,
++				 char *command, char *value)
++{
++	static char at_tbuf[512];
++	ssize_t r;
++
++	if(t->rfcomm.fd == -1)
++		return 0;
++
++	at_build(at_tbuf, type, command, value);
++
++	r = write(t->rfcomm.fd, at_tbuf, strlen(at_tbuf));
++	if (r != strlen(at_tbuf)) {
++		error("Write rfcomm client err");
++		return -1;
++	}
++
++	return 0;
++}
++
+ void *rfcomm_thread(void *arg) {
+	struct ba_transport *t = (struct ba_transport *)arg;
+
+@@ -642,6 +687,9 @@ void *rfcomm_thread(void *arg) {
+					conn.handler = &rfcomm_handler_resp_ok;
+					break;
+				case HFP_SLC_CMER_SET_OK:
++					snprintf(tmp, sizeof(tmp), "%u", t->rfcomm.hfp_features);
++					rfcomm_send_to_client(t, AT_TYPE_RESP,
++							"+RFCOMMSLC", tmp);
+					rfcomm_set_hfp_state(&conn, HFP_SLC_CONNECTED);
+				case HFP_SLC_CONNECTED:
+					if (t->rfcomm.hfp_features & HFP_AG_FEAT_CODEC)
+@@ -763,6 +811,16 @@ read:
+					goto ioerror;
+				}
+
++			if (conn.state >= HFP_SLC_CONNECTED ||
++			    (conn.state + 1 == HFP_SLC_CIND_TEST &&
++			     !strncasecmp(reader.at.command, "+CIND", 5))) {
++				if (t->rfcomm.fd != -1) {
++					rfcomm_send_to_client(t, reader.at.type,
++							reader.at.command,
++							reader.at.value);
++				}
++			}
++
+			/* use predefined callback, otherwise get generic one */
+			if (conn.handler != NULL && conn.handler->type == reader.at.type &&
+					strcmp(conn.handler->command, reader.at.command) == 0) {
+diff --git a/src/shared/ctl-client.c b/src/shared/ctl-client.c
+index 121689d..a3cd7b5 100644
+--- a/src/shared/ctl-client.c
++++ b/src/shared/ctl-client.c
+@@ -375,6 +375,11 @@ int bluealsa_open_transport(int fd, const struct ba_msg_transport *transport) {
+	debug("Requesting PCM open for %s", addr_);
+ #endif
+
++	if (transport->type == BA_PCM_TYPE_RFCOMM) {
++		debug("Requesting RFCOMM tunnel");
++		req.command = BA_COMMAND_RFCOMM_OPEN;
++	}
++
+	if (send(fd, &req, sizeof(req), MSG_NOSIGNAL) == -1)
+		return -1;
+	if ((len = recvmsg(fd, &msg, MSG_CMSG_CLOEXEC)) == -1)
+@@ -417,6 +422,11 @@ int bluealsa_close_transport(int fd, const struct ba_msg_transport *transport) {
+	debug("Closing PCM for %s", addr_);
+ #endif
+
++	if (transport->type == BA_PCM_TYPE_RFCOMM) {
++		debug("Closing RFCOMM tunnel");
++		req.command = BA_COMMAND_RFCOMM_CLOSE;
++	}
++
+	return bluealsa_send_request(fd, &req);
+ }
+
+@@ -496,3 +506,33 @@ int bluealsa_send_rfcomm_command(int fd, bdaddr_t addr, const char *command) {
+
+	return bluealsa_send_request(fd, &req);
+ }
++
++#define IND_VAL_LEN	8
++ssize_t bluealsa_get_ind_vals(int fd, bdaddr_t addr, uint8_t *ind_vals)
++{
++	size_t i = 0;
++	uint8_t tmp[IND_VAL_LEN];
++	struct ba_request req = {
++		.command = BA_COMMAND_RFCOMM_GET_INDV,
++		.addr = addr,
++	};
++
++	if (send(fd, &req, sizeof(req), MSG_NOSIGNAL) == -1)
++		return -1;
++
++	memset(tmp, 0, sizeof(tmp));
++	i = recv(fd, tmp, IND_VAL_LEN, 0);
++	if (i == -1)
++		return -1;
++
++	if (i != IND_VAL_LEN)
++		warn("indicator length (%d) is not right", i);
++
++	memcpy(ind_vals, tmp, i);
++
++	(void *)recv(fd, tmp, 1, 0);
++
++	return i;
++}
++
++
+diff --git a/src/shared/ctl-client.h b/src/shared/ctl-client.h
+index 18f724d..46c7f43 100644
+--- a/src/shared/ctl-client.h
++++ b/src/shared/ctl-client.h
+@@ -40,5 +40,6 @@ int bluealsa_pause_transport(int fd, const struct ba_msg_transport *transport, b
+ int bluealsa_drain_transport(int fd, const struct ba_msg_transport *transport);
+
+ int bluealsa_send_rfcomm_command(int fd, bdaddr_t addr, const char *command);
++ssize_t bluealsa_get_ind_vals(int fd, bdaddr_t addr, uint8_t *ind_vals);
+
+ #endif
+diff --git a/src/shared/ctl-proto.h b/src/shared/ctl-proto.h
+index c0cbb60..f3ab81f 100644
+--- a/src/shared/ctl-proto.h
++++ b/src/shared/ctl-proto.h
+@@ -37,6 +37,9 @@ enum ba_command {
+	BA_COMMAND_PCM_RESUME,
+	BA_COMMAND_PCM_DRAIN,
+	BA_COMMAND_RFCOMM_SEND,
++	BA_COMMAND_RFCOMM_OPEN,
++	BA_COMMAND_RFCOMM_CLOSE,
++	BA_COMMAND_RFCOMM_GET_INDV,
+	__BA_COMMAND_MAX
+ };
+
+@@ -56,12 +59,15 @@ enum ba_event {
+	BA_EVENT_TRANSPORT_REMOVED = 1 << 2,
+	BA_EVENT_UPDATE_BATTERY    = 1 << 3,
+	BA_EVENT_UPDATE_VOLUME     = 1 << 4,
++	BA_EVENT_TRANSPORT_SCO_OPEN  = 1 << 5,
++	BA_EVENT_TRANSPORT_SCO_CLOSE = 1 << 6,
+ };
+
+ enum ba_pcm_type {
+	BA_PCM_TYPE_NULL = 0,
+	BA_PCM_TYPE_A2DP,
+	BA_PCM_TYPE_SCO,
++	BA_PCM_TYPE_RFCOMM,
+ };
+
+ enum ba_pcm_stream {
+diff --git a/src/transport.c b/src/transport.c
+index ce80d18..ea757c5 100644
+--- a/src/transport.c
++++ b/src/transport.c
+@@ -312,6 +312,7 @@ struct ba_transport *transport_new_rfcomm(
+		goto fail;
+
+	t->rfcomm.sco = t_sco;
++	t->rfcomm.fd = -1;
+	t_sco->sco.rfcomm = t;
+
+	t_sco->sco.spk_gain = 15;
+@@ -378,6 +379,8 @@ void transport_free(struct ba_transport *t) {
+		memset(&t->device->battery, 0, sizeof(t->device->battery));
+		memset(&t->device->xapl, 0, sizeof(t->device->xapl));
+		transport_free(t->rfcomm.sco);
++		if (t->rfcomm.fd != -1)
++			close(t->rfcomm.fd);
+		break;
+	case TRANSPORT_TYPE_SCO:
+		transport_release_pcm(&t->sco.spk_pcm);
+@@ -947,6 +950,39 @@ int transport_acquire_bt_sco(struct ba_transport *t) {
+
+	debug("New SCO link: %d (MTU: R:%zu W:%zu)", t->bt_fd, t->mtu_read, t->mtu_write);
+
++	bluealsa_ctl_event(BA_EVENT_TRANSPORT_SCO_OPEN);
++
++	return t->bt_fd;
++}
++
++int transport_acquire_bt_sco2(struct ba_transport *t, int asock)
++{
++
++	struct hci_dev_info di;
++
++	if (t->bt_fd != -1)
++		return t->bt_fd;
++
++	t->bt_fd = asock;
++
++	if (hci_devinfo(t->device->hci_dev_id, &di) == -1) {
++		error("Couldn't get HCI device info: %s", strerror(errno));
++		return -1;
++	}
++
++	t->mtu_read = di.sco_mtu;
++	t->mtu_write = di.sco_mtu;
++	t->release = transport_release_bt_sco;
++
++	/* XXX: It seems, that the MTU values returned by the HCI interface
++	 *      are incorrect (or our interpretation of them is incorrect). */
++	t->mtu_read = 48;
++	t->mtu_write = 48;
++
++	debug("New SCO link: %d (MTU: R:%zu W:%zu)", t->bt_fd, t->mtu_read, t->mtu_write);
++
++	bluealsa_ctl_event(BA_EVENT_TRANSPORT_SCO_OPEN);
++
+	return t->bt_fd;
+ }
+
+@@ -961,6 +997,7 @@ int transport_release_bt_sco(struct ba_transport *t) {
+	shutdown(t->bt_fd, SHUT_RDWR);
+	close(t->bt_fd);
+	t->bt_fd = -1;
++	bluealsa_ctl_event(BA_EVENT_TRANSPORT_SCO_CLOSE);
+
+	return 0;
+ }
+diff --git a/src/transport.h b/src/transport.h
+index 26c2e96..6861da0 100644
+--- a/src/transport.h
++++ b/src/transport.h
+@@ -168,6 +168,9 @@ struct ba_transport {
+			/* received AG indicator values */
+			unsigned char hfp_inds[__HFP_IND_MAX];
+
++			/* transfer response to client */
++			int fd;
++
+		} rfcomm;
+
+		struct {
+@@ -188,6 +191,9 @@ struct ba_transport {
+			struct ba_pcm spk_pcm;
+			struct ba_pcm mic_pcm;
+
++			int listen_fd;
++
++
+		} sco;
+
+	};
+@@ -252,6 +258,7 @@ int transport_release_bt_a2dp(struct ba_transport *t);
+ int transport_release_bt_rfcomm(struct ba_transport *t);
+
+ int transport_acquire_bt_sco(struct ba_transport *t);
++int transport_acquire_bt_sco2(struct ba_transport *t, int asock);
+ int transport_release_bt_sco(struct ba_transport *t);
+
+ int transport_release_pcm(struct ba_pcm *pcm);
+--
+1.9.1

@@ -1,0 +1,64 @@
+{   
+    "inputMode": "Pinyin", 
+    "KeyboardRow":[
+     {
+        "keyWeight": 160,
+        "Keys":[
+        { "key": 81, "text": "q"},
+        { "key": 87, "text": "w"},
+        { "key": 69, "text": "e"},
+        { "key": 82, "text": "r"},
+        { "key": 84, "text": "t"},
+        { "key": 89, "text": "y"},
+        { "key": 85, "text": "u"},
+        { "key": 73, "text": "i"},
+        { "key": 79, "text": "o"},
+        { "key": 80, "text": "p"},
+        { "key": 16777219, "text": ""}
+        ]
+    },
+    {
+    "keyWeight": 160,
+    "Keys": [
+        { "key": 0, "text": "", "type": "FillerKey", "weight": 56},
+        { "key": 65, "text": "a"},
+        { "key": 83, "text": "s"},
+        { "key": 68, "text": "d"},
+        { "key": 70, "text": "f"},
+        { "key": 71, "text": "g"},
+        { "key": 72, "text": "h"},
+        { "key": 74, "text": "j"},
+        { "key": 75, "text": "k"},
+        { "key": 76, "text": "l"},
+        { "key": 16777221, "text": "", "weight": 283}
+        ]
+    },
+    {
+    "keyWeight": 156,
+    "Keys": [
+        { "key": 16777248, "text": ""},
+        { "key": 90, "text": "z"},
+        { "key": 88, "text": "x"},
+        { "key": 67, "text": "c"},
+        { "key": 86, "text": "v"},
+        { "key": 66, "text": "b"},
+        { "key": 78, "text": "n"},
+        { "key": 77, "text": "m"},
+        { "key": 64, "text": "@"},
+        { "key": 46, "text": "."},
+        { "key": 16777248, "text": "", "weight": 204}
+        ]
+    },
+    {
+    "keyWeight": 154,
+    "Keys": [
+        { "key": 0, "text": "", "type": "SymbolModeKey","weight": 217},
+        { "key": 0, "text": "", "type": "ChangeLanguageKey","weight": 154},
+        { "key": 32, "text": "", "type": "SpaceKey","weight": 864},
+        { "key": 39, "text": "'"},
+        { "key": 45, "text": "-"},
+        { "key": 0, "text": "", "type": "HideKeyboardKey", "weight": 204}
+        ]
+    }
+    ]
+}

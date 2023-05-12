@@ -1,0 +1,13 @@
+diff -Naur procd-2016-02-08/initd/init.c procd-2016-02-08-new/initd/init.c
+--- procd-2016-02-08/initd/init.c	2020-03-05 19:33:24.467161576 +0800
++++ procd-2016-02-08-new/initd/init.c	2020-03-05 19:35:30.831166961 +0800
+@@ -11,6 +11,9 @@
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  */
++#if SELINUX_ENABLED
++#define _GNU_SOURCE
++#endif
+
+ #include <sys/wait.h>
+ #include <sys/types.h>

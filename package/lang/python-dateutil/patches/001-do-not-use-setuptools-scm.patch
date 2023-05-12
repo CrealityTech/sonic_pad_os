@@ -1,0 +1,21 @@
+--- a/setup.py
++++ b/setup.py
+@@ -46,9 +46,7 @@ def README():
+ README = README()
+ 
+ setup(name="python-dateutil",
+-      use_scm_version={
+-          'write_to': 'dateutil/_version.py',
+-      },
++      version=os.getenv('PKG_VERSION'),
+       description="Extensions to the standard Python datetime module",
+       author="Gustavo Niemeyer",
+       author_email="gustavo@niemeyer.net",
+@@ -63,7 +61,6 @@ setup(name="python-dateutil",
+       package_data={"dateutil.zoneinfo": ["dateutil-zoneinfo.tar.gz"]},
+       zip_safe=True,
+       requires=["six"],
+-      setup_requires=['setuptools_scm'],
+       install_requires=["six >=1.5"],  # XXX fix when packaging is sane again
+       classifiers=[
+           'Development Status :: 5 - Production/Stable',

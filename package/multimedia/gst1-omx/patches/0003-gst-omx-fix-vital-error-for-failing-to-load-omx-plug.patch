@@ -1,0 +1,27 @@
+From 9fd70b484ffc2ea85ee772a6a7fc798efbfad313 Mon Sep 17 00:00:00 2001
+From: junsenhuang <junsenhuang@allwinnertech.com>
+Date: Fri, 17 May 2019 17:02:31 +0800
+Subject: [PATCH 4/9] gst-omx: fix vital error for failing to load omx plugin.
+ comment: this patch should be merged with last second commit together next
+ time. Change-Id: If3bb7c2ad3e7b0f52d372d5b2bfa8b1cee099be9
+
+---
+ omx/gstomx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/omx/gstomx.c b/omx/gstomx.c
+index ceeadfe..0cba89c 100644
+--- a/omx/gstomx.c
++++ b/omx/gstomx.c
+@@ -2593,7 +2593,7 @@ static const GGetTypeFunction types[] = {
+   gst_omx_msmpeg4v2_dec_get_type, gst_omx_msmpeg4v1_dec_get_type,
+   gst_omx_mpeg1_dec_get_type, gst_omx_wmv1_dec_get_type,
+   gst_omx_wmv2_dec_get_type, gst_omx_vp6_dec_get_type,
+-  gst_omx_vp9_dec_get_type, gst_omx_h265_dec_get_type,
++  gst_omx_vp9_dec_get_type,
+   gst_omx_flv1_dec_get_type, gst_omx_rv20_dec_get_type,
+   gst_omx_rx_dec_get_type, gst_omx_divx4_dec_get_type,
+   gst_omx_avs_dec_get_type, gst_omx_mjpeg_enc_get_type
+-- 
+1.9.1
+

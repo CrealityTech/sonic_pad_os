@@ -1,0 +1,2 @@
+menuconfig TESTUNIT_NETWORK_BT
+    bool "bt"

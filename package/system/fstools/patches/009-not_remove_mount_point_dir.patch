@@ -1,0 +1,11 @@
+--- a/block.c
++++ b/block.c
+@@ -1167,7 +1167,7 @@ static int umount_device(char *path, int
+ 			 errno);
+ 	} else {
+ 		ULOG_INFO("unmounted %s (%s)\n", path, mp);
+-		rmdir(mp);
++		//rmdir(mp);
+ 	}
+ 
+ 	free(mp);

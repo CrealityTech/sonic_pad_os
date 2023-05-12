@@ -1,0 +1,178 @@
+Index: alsa-utils-1.1.0/aplay/aplay.c
+===================================================================
+--- alsa-utils-1.1.0.orig/aplay/aplay.c	2015-10-28 00:34:26.000000000 +0800
++++ alsa-utils-1.1.0/aplay/aplay.c	2020-04-30 16:12:38.000000000 +0800
+@@ -121,6 +121,7 @@
+ static int interactive = 0;
+ static int can_pause = 0;
+ static int fatal_errors = 0;
++static int loop_play = 0;
+ static int verbose = 0;
+ static int vumeter = VUMETER_NONE;
+ static int buffer_pos = 0;
+@@ -154,6 +155,8 @@
+ 
+ static void done_stdin(void);
+ 
++static void playback_loop(char *name);
++static void capture_loop(char *orig_name);
+ static void playback(char *filename);
+ static void capture(char *filename);
+ static void playbackv(char **filenames, unsigned int count);
+@@ -175,7 +178,7 @@
+ 	{	NULL,		NULL,		N_("raw data"),		LLONG_MAX },
+ 	{	begin_voc,	end_voc,	N_("VOC"),		16000000LL },
+ 	/* FIXME: can WAV handle exactly 2GB or less than it? */
+-	{	begin_wave,	end_wave,	N_("WAVE"),		2147483648LL },
++	{	begin_wave,	end_wave,	N_("WAVE"),		LLONG_MAX },
+ 	{	begin_au,	end_au,		N_("Sparc Audio"),	LLONG_MAX }
+ };
+ 
+@@ -425,6 +428,7 @@
+ 	OPT_USE_STRFTIME,
+ 	OPT_DUMP_HWPARAMS,
+ 	OPT_FATAL_ERRORS,
++	OPT_LOOP_PLAY,
+ };
+ 
+ int main(int argc, char *argv[])
+@@ -475,6 +479,7 @@
+ 		{"interactive", 0, 0, 'i'},
+ 		{"dump-hw-params", 0, 0, OPT_DUMP_HWPARAMS},
+ 		{"fatal-errors", 0, 0, OPT_FATAL_ERRORS},
++		{"loop-play", 0, 0, OPT_LOOP_PLAY},
+ #ifdef CONFIG_SUPPORT_CHMAP
+ 		{"chmap", 1, 0, 'm'},
+ #endif
+@@ -693,6 +698,9 @@
+ 		case OPT_FATAL_ERRORS:
+ 			fatal_errors = 1;
+ 			break;
++		case OPT_LOOP_PLAY:
++			loop_play = 1;
++			break;
+ #ifdef CONFIG_SUPPORT_CHMAP
+ 		case 'm':
+ 			channel_map = snd_pcm_chmap_parse_string(optarg);
+@@ -779,14 +787,25 @@
+ 		if (optind > argc - 1) {
+ 			if (stream == SND_PCM_STREAM_PLAYBACK)
+ 				playback(NULL);
+-			else
+-				capture(NULL);
++			else {
++				if (loop_play)
++					capture_loop(NULL);
++				else
++					capture(NULL);
++			}
+ 		} else {
+ 			while (optind <= argc - 1) {
+-				if (stream == SND_PCM_STREAM_PLAYBACK)
+-					playback(argv[optind++]);
+-				else
+-					capture(argv[optind++]);
++				if (stream == SND_PCM_STREAM_PLAYBACK) {
++					if (loop_play)
++						playback_loop(argv[optind++]);
++					else
++						playback(argv[optind++]);
++				} else {
++					if (loop_play)
++						capture_loop(argv[optind++]);
++					else
++						capture(argv[optind++]);
++				}
+ 			}
+ 		}
+ 	} else {
+@@ -1936,6 +1955,9 @@
+ 			xrun();
+ 		} else if (r == -ESTRPIPE) {
+ 			suspend();
++		} else if (r == -EBADFD) {
++			snd_pcm_prepare(handle);
++			printf("write return BADFD...\n");	
+ 		} else if (r < 0) {
+ 			error(_("write error: %s"), snd_strerror(r));
+ 			prg_exit(EXIT_FAILURE);
+@@ -2643,7 +2665,8 @@
+ 	off64_t c;
+ 
+ 	header(rtype, name);
+-	set_params();
++	if (!loop_play)
++		set_params();
+ 
+ 	while (loaded > chunk_bytes && written < count && !in_aborting) {
+ 		if (pcm_write(audiobuf + written, chunk_size) <= 0)
+@@ -2682,9 +2705,48 @@
+ 		written += r;
+ 		l = 0;
+ 	}
+-	snd_pcm_nonblock(handle, 0);
+-	snd_pcm_drain(handle);
+-	snd_pcm_nonblock(handle, nonblock);
++	if (!loop_play) {
++		snd_pcm_nonblock(handle, 0);
++		snd_pcm_drain(handle);
++		snd_pcm_nonblock(handle, nonblock);
++	}
++}
++
++static void playback_loop(char *name)
++{
++	int ofs;
++	size_t dta;
++	ssize_t dtawave;
++
++	pbrec_count = LLONG_MAX;
++	fdcount = 0;
++	if ((fd = open(name, O_RDONLY, 0)) == -1) {
++		perror(name);
++		prg_exit(EXIT_FAILURE);
++	}
++
++	dta = 44;
++	if ((size_t)safe_read(fd, audiobuf, dta) != dta) {
++		error(_("read error"));
++		prg_exit(EXIT_FAILURE);
++	}
++	
++	/* read bytes for WAVE-header */
++	if ((dtawave = test_wavefile(fd, audiobuf, dta)) != 0) {
++		printf("[%s] line:%d test_wavfile return %d\n", __func__, __LINE__, dtawave);
++		prg_exit(EXIT_FAILURE);
++	}
++
++	pbrec_count = calc_count();
++	set_params();
++	dta = 0;
++	while (1) {
++		lseek(fd, 44, SEEK_SET);
++		playback_go(fd, dta, pbrec_count, FORMAT_RAW, name);
++	}
++
++	if (fd != 0)
++		close(fd);
+ }
+ 
+ 
+@@ -2923,6 +2985,17 @@
+ 	return fd;
+ }
+ 
++static void capture_loop(char *orig_name)
++{
++	set_params();
++
++	while (1) {
++		size_t f = chunk_bytes * 8 / bits_per_frame;
++		if (pcm_read(audiobuf, f) != f)
++			break;
++	}
++}
++
+ static void capture(char *orig_name)
+ {
+ 	int tostdout=0;		/* boolean which describes output stream */

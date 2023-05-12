@@ -1,0 +1,4 @@
+menuconfig TESTUNIT_AUDIO
+    bool "audio"
+	select PACKAGE_alsa-utils
+	select PACKAGE_tinymp3

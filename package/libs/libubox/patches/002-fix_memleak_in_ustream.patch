@@ -1,0 +1,38 @@
+实际内存泄露案例：系统运行logd以及logread保存log，同时有大量的syslog信息输出(实测同时运行两个demo往syslog写入信息即可复现问题)
+
+原因：
+logd中会检测syslog信息，并把信息写入管道中，而logread通过ubus去读另一端管道获取信息。如果并发大量syslog信息,logd写管道的时候就会出错返回-1,errno=11
+
+ustream_write_pending中s->write返回0时，如果直接break跳出循环，会导致部分write buffer已经写入，但不会经过ustream_free_buf去释放buffer。另外，write buffer的最大值(max_buffers)为-1,也就是无限制，导致ustream_write一直会申请buffer去暂存数据，导致内存泄露。
+(s->write返回0一般是对描述符write操作是返回-1,errno=11(EAGAIN),例如管道FIFO满的时候write)
+
+解决办法：
+增加适当延时(等待管道FIFO被消耗),然后再次write
+并限制write buffer个数最多4096个
+
+--- a/ustream.c
++++ b/ustream.c
+@@ -384,8 +384,10 @@ bool ustream_write_pending(struct ustrea
+ 			break;
+ 		}
+ 
+-		if (len == 0)
+-			break;
++		if (len == 0) {
++			usleep(5000);
++			continue;
++		}
+ 
+ 		wr += len;
+ 		s->w.data_bytes -= len;
+--- a/ustream.c
++++ b/ustream.c
+@@ -122,7 +122,7 @@ void ustream_init_defaults(struct ustrea
+ 	DEFAULT_SET(s->r.buffer_len, 4096);
+ 
+ 	DEFAULT_SET(s->w.min_buffers, 2);
+-	DEFAULT_SET(s->w.max_buffers, -1);
++	DEFAULT_SET(s->w.max_buffers, 4096);
+ 	DEFAULT_SET(s->w.buffer_len, 256);
+ 
+ #undef DEFAULT_SET

@@ -1,0 +1,11 @@
+diff -Nuar procd-2016-02-08/initd/init.c procd-2016-02-08-new/initd/init.c
+--- procd-2016-02-08/initd/init.c	2020-03-14 13:57:18.938357204 +0800
++++ procd-2016-02-08-new/initd/init.c	2020-03-26 09:44:05.863945957 +0800
+@@ -140,6 +140,8 @@
+		// set init process security context to u:r:init:s0
+		if (setcon("u:r:init:s0") == 0)
+			fprintf(stdout, "set init context success!\n");
++		else if (setcon("system_u:system_r:init_t") == 0)
++			fprintf(stdout, "set init context success!\n");
+		else
+			fprintf(stderr, "set init context error!");

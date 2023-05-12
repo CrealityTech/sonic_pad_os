@@ -1,0 +1,20 @@
+--- a/conf/nginx.conf
++++ b/conf/nginx.conf
+@@ -366,6 +366,17 @@ index index.html;
+             autoindex on;                                                                   
+         }
+ 
++        location /ai_snapshot {
++            alias /mnt/UDISK/.crealityprint/ai_snapshot;
++            autoindex on;
++        }
++
++        location /ai_test {
++            alias /mnt/UDISK/.crealityprint/ai_test_error_png;
++            autoindex on;
++        }
++
++
+         location /passwd {
+             alias /mnt/UDISK/.crealityprint/password.png;
+             autoindex on;

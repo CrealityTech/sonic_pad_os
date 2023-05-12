@@ -1,0 +1,658 @@
+{
+    "lvgl": {
+        "name": "movie.lvgl",
+        "resolution": {
+            "height": 480,
+            "width": 800
+        },
+        "screen color": "#ff557f",
+        "widgets": [
+            {
+                "accessible": true,
+                "class": "lv_list",
+                "drag": false,
+                "edge flash": true,
+                "geometry": {
+                    "height": 417,
+                    "width": 418,
+                    "x": 382,
+                    "y": 5
+                },
+                "items": [
+                    {
+                        "img": "movie_item.png",
+                        "name": "1"
+                    },
+                    {
+                        "img": "movie_item.png",
+                        "name": "2"
+                    },
+                    {
+                        "img": "movie_item.png",
+                        "name": "3"
+                    },
+                    {
+                        "img": "movie_item.png",
+                        "name": "4"
+                    },
+                    {
+                        "img": "movie_item.png",
+                        "name": "5"
+                    },
+                    {
+                        "img": "movie_item.png",
+                        "name": "6"
+                    }
+                ],
+                "locked": false,
+                "name": "media_list",
+                "scroll propagation": false,
+                "single mode": true,
+                "styles": [
+                    {
+                        "base": "lv_style_btn_tgl_rel",
+                        "body": {
+                            "grad_color": "#55aaff",
+                            "main_color": "#55aaff",
+                            "radius": 20
+                        },
+                        "type": "LV_LIST_STYLE_BTN_TGL_REL"
+                    },
+                    {
+                        "base": "lv_style_btn_tgl_pr",
+                        "body": {
+                            "grad_color": "#55aaff",
+                            "main_color": "#55aaff",
+                            "radius": 20
+                        },
+                        "type": "LV_LIST_STYLE_BTN_TGL_PR"
+                    },
+                    {
+                        "base": "lv_style_btn_rel",
+                        "body": {
+                            "grad_color": "#ff55ff",
+                            "main_color": "#ffaaff",
+                            "radius": 20
+                        },
+                        "type": "LV_LIST_STYLE_BTN_REL"
+                    },
+                    {
+                        "base": "lv_style_btn_pr",
+                        "body": {
+                            "grad_color": "#55aaff",
+                            "main_color": "#55aaff",
+                            "radius": 20
+                        },
+                        "type": "LV_LIST_STYLE_BTN_PR"
+                    },
+                    {
+                        "base": "lv_style_pretty_color",
+                        "body": {
+                            "main_color": "#ff557f"
+                        },
+                        "type": "LV_LIST_STYLE_SB"
+                    },
+                    {
+                        "base": "lv_style_transp_fit",
+                        "body": {
+                            "main_color": "#ff55ff"
+                        },
+                        "type": "LV_LIST_STYLE_BG"
+                    },
+                    {
+                        "base": "lv_style_pretty",
+                        "body": {
+                            "border": {
+                                "width": 0
+                            },
+                            "grad_color": "#ff557f",
+                            "main_color": "#ff557f"
+                        },
+                        "type": "LV_LIST_STYLE_SCRL"
+                    }
+                ],
+                "visible": true,
+                "widget": "List"
+            },
+            {
+                "accessible": true,
+                "auto size": true,
+                "class": "lv_img",
+                "drag": false,
+                "geometry": {
+                    "height": 128,
+                    "width": 128,
+                    "x": 125,
+                    "y": 166
+                },
+                "locked": false,
+                "name": "image_4",
+                "offset": {
+                    "X": 0,
+                    "Y": 0
+                },
+                "source": "movie_big.png",
+                "visible": true,
+                "widget": "Image"
+            },
+            {
+                "accessible": true,
+                "children": [
+                    {
+                        "accessible": true,
+                        "class": "lv_imgbtn",
+                        "drag": false,
+                        "geometry": {
+                            "height": 48,
+                            "width": 48,
+                            "x": 70,
+                            "y": 3
+                        },
+                        "locked": false,
+                        "name": "play",
+                        "source inactive": "",
+                        "source pressed": "music_play.png",
+                        "source released": "music_play.png",
+                        "source toggled pressed": "music_pause.png",
+                        "source toggled released": "music_pause.png",
+                        "state": "Released",
+                        "toggle": true,
+                        "visible": true,
+                        "widget": "Image button"
+                    },
+                    {
+                        "accessible": true,
+                        "anim time": 0,
+                        "class": "lv_slider",
+                        "drag": false,
+                        "geometry": {
+                            "height": 20,
+                            "width": 331,
+                            "x": 211,
+                            "y": 14
+                        },
+                        "knob inside": false,
+                        "locked": false,
+                        "name": "progressbar",
+                        "range": {
+                            "max": 1024,
+                            "min": 0
+                        },
+                        "styles": [
+                            {
+                                "base": "lv_style_pretty",
+                                "body": {
+                                    "radius": 15
+                                },
+                                "type": "LV_SLIDER_STYLE_KNOB"
+                            },
+                            {
+                                "base": "lv_style_pretty_color",
+                                "body": {
+                                    "padding": {
+                                        "bottom": 0,
+                                        "inner": 0,
+                                        "left": 0,
+                                        "right": 0,
+                                        "top": 0
+                                    }
+                                },
+                                "type": "LV_SLIDER_STYLE_INDIC"
+                            }
+                        ],
+                        "value": 0,
+                        "visible": true,
+                        "widget": "Slider"
+                    },
+                    {
+                        "accessible": true,
+                        "anim time": 0,
+                        "class": "lv_slider",
+                        "drag": false,
+                        "geometry": {
+                            "height": 20,
+                            "width": 136,
+                            "x": 652,
+                            "y": 16
+                        },
+                        "knob inside": false,
+                        "locked": false,
+                        "name": "volume_bar",
+                        "range": {
+                            "max": 40,
+                            "min": 0
+                        },
+                        "styles": [
+                            {
+                                "base": "lv_style_pretty",
+                                "body": {
+                                    "radius": 15
+                                },
+                                "type": "LV_SLIDER_STYLE_KNOB"
+                            },
+                            {
+                                "base": "lv_style_pretty_color",
+                                "body": {
+                                    "padding": {
+                                        "bottom": 0,
+                                        "inner": 0,
+                                        "left": 0,
+                                        "right": 0,
+                                        "top": 0
+                                    }
+                                },
+                                "type": "LV_SLIDER_STYLE_INDIC"
+                            }
+                        ],
+                        "value": 30,
+                        "visible": true,
+                        "widget": "Slider"
+                    },
+                    {
+                        "accessible": true,
+                        "align": "Left",
+                        "anim speed": 25,
+                        "body draw": false,
+                        "class": "lv_label",
+                        "drag": false,
+                        "geometry": {
+                            "height": 19,
+                            "width": 62,
+                            "x": 177,
+                            "y": 35
+                        },
+                        "locked": false,
+                        "long mode": "Expand",
+                        "name": "curr_time",
+                        "recolor": false,
+                        "styles": [
+                            {
+                                "base": "lv_style_transp",
+                                "text": {
+                                    "color": "#000000"
+                                },
+                                "type": "LV_LABEL_STYLE_MAIN"
+                            }
+                        ],
+                        "text": "00:00:00",
+                        "visible": true,
+                        "widget": "Label"
+                    },
+                    {
+                        "accessible": true,
+                        "align": "Left",
+                        "anim speed": 25,
+                        "body draw": false,
+                        "class": "lv_label",
+                        "drag": false,
+                        "geometry": {
+                            "height": 19,
+                            "width": 62,
+                            "x": 499,
+                            "y": 32
+                        },
+                        "locked": false,
+                        "long mode": "Expand",
+                        "name": "total_time",
+                        "recolor": false,
+                        "styles": [
+                            {
+                                "base": "lv_style_transp",
+                                "text": {
+                                    "color": "#000000"
+                                },
+                                "type": "LV_LABEL_STYLE_MAIN"
+                            }
+                        ],
+                        "text": "00:00:00",
+                        "visible": true,
+                        "widget": "Label"
+                    },
+                    {
+                        "accessible": true,
+                        "class": "lv_imgbtn",
+                        "drag": false,
+                        "geometry": {
+                            "height": 48,
+                            "width": 48,
+                            "x": 128,
+                            "y": 3
+                        },
+                        "locked": false,
+                        "name": "next",
+                        "source inactive": "",
+                        "source pressed": "music_next.png",
+                        "source released": "music_next.png",
+                        "source toggled pressed": "",
+                        "source toggled released": "",
+                        "state": "Released",
+                        "toggle": false,
+                        "visible": true,
+                        "widget": "Image button"
+                    },
+                    {
+                        "accessible": true,
+                        "class": "lv_imgbtn",
+                        "drag": false,
+                        "geometry": {
+                            "height": 48,
+                            "width": 48,
+                            "x": 14,
+                            "y": 4
+                        },
+                        "locked": false,
+                        "name": "last",
+                        "source inactive": "",
+                        "source pressed": "music_prev.png",
+                        "source released": "music_prev.png",
+                        "source toggled pressed": "",
+                        "source toggled released": "",
+                        "state": "Released",
+                        "toggle": false,
+                        "visible": true,
+                        "widget": "Image button"
+                    },
+                    {
+                        "accessible": true,
+                        "class": "lv_imgbtn",
+                        "drag": false,
+                        "geometry": {
+                            "height": 32,
+                            "width": 32,
+                            "x": 567,
+                            "y": 11
+                        },
+                        "locked": false,
+                        "name": "loop",
+                        "source inactive": "",
+                        "source pressed": "music_cycle.png",
+                        "source released": "music_cycle.png",
+                        "source toggled pressed": "music_loop.png",
+                        "source toggled released": "music_loop.png",
+                        "state": "Released",
+                        "toggle": true,
+                        "visible": true,
+                        "widget": "Image button"
+                    },
+                    {
+                        "accessible": true,
+                        "class": "lv_imgbtn",
+                        "drag": false,
+                        "geometry": {
+                            "height": 32,
+                            "width": 32,
+                            "x": 610,
+                            "y": 11
+                        },
+                        "locked": false,
+                        "name": "volume",
+                        "source inactive": "",
+                        "source pressed": "",
+                        "source released": "music_vol.png",
+                        "source toggled pressed": "",
+                        "source toggled released": "music_vol.png",
+                        "state": "Released",
+                        "toggle": true,
+                        "visible": true,
+                        "widget": "Image button"
+                    }
+                ],
+                "class": "lv_cont",
+                "drag": false,
+                "fit": {
+                    "cont_bottom_fit": 0,
+                    "cont_left_fit": 0,
+                    "cont_right_fit": 0,
+                    "cont_top_fit": 0
+                },
+                "geometry": {
+                    "height": 55,
+                    "width": 800,
+                    "x": 0,
+                    "y": 425
+                },
+                "layout": "Off",
+                "locked": false,
+                "name": "container_1",
+                "styles": [
+                    {
+                        "base": "lv_style_pretty",
+                        "body": {
+                            "radius": 0
+                        },
+                        "type": "LV_CONT_STYLE_MAIN"
+                    }
+                ],
+                "visible": true,
+                "widget": "Container"
+            },
+            {
+                "accessible": true,
+                "align": "Left",
+                "anim speed": 25,
+                "body draw": false,
+                "class": "lv_label",
+                "drag": false,
+                "geometry": {
+                    "height": 43,
+                    "width": 161,
+                    "x": 275,
+                    "y": 9
+                },
+                "locked": false,
+                "long mode": "Corp",
+                "name": "file_name",
+                "recolor": false,
+                "text": "",
+                "visible": true,
+                "widget": "Label"
+            },
+            {
+                "accessible": true,
+                "align": "Left",
+                "anim speed": 25,
+                "body draw": false,
+                "children": [
+                    {
+                        "accessible": true,
+                        "align": "Left",
+                        "anim speed": 25,
+                        "body draw": false,
+                        "children": [
+                            {
+                                "accessible": true,
+                                "align": "Left",
+                                "anim speed": 25,
+                                "body draw": false,
+                                "class": "lv_label",
+                                "drag": false,
+                                "geometry": {
+                                    "height": 38,
+                                    "width": 153,
+                                    "x": 287,
+                                    "y": 209
+                                },
+                                "locked": false,
+                                "long mode": "Corp",
+                                "name": "label_2",
+                                "recolor": false,
+                                "styles": [
+                                    {
+                                        "base": "lv_style_transp",
+                                        "text": {
+                                            "color": "#ffff7f",
+                                            "font": "Roboto 28"
+                                        },
+                                        "type": "LV_LABEL_STYLE_MAIN"
+                                    }
+                                ],
+                                "text": "download...",
+                                "visible": true,
+                                "widget": "Label"
+                            }
+                        ],
+                        "class": "lv_label",
+                        "drag": false,
+                        "geometry": {
+                            "height": 38,
+                            "width": 153,
+                            "x": 287,
+                            "y": 209
+                        },
+                        "locked": false,
+                        "long mode": "Corp",
+                        "name": "label_1",
+                        "recolor": false,
+                        "styles": [
+                            {
+                                "base": "lv_style_transp",
+                                "text": {
+                                    "color": "#ffff7f",
+                                    "font": "Roboto 28"
+                                },
+                                "type": "LV_LABEL_STYLE_MAIN"
+                            }
+                        ],
+                        "text": "download...",
+                        "visible": true,
+                        "widget": "Label"
+                    }
+                ],
+                "class": "lv_label",
+                "drag": false,
+                "geometry": {
+                    "height": 38,
+                    "width": 223,
+                    "x": 127,
+                    "y": 211
+                },
+                "locked": false,
+                "long mode": "Corp",
+                "name": "download",
+                "recolor": false,
+                "styles": [
+                    {
+                        "base": "lv_style_transp",
+                        "text": {
+                            "color": "#ffff7f",
+                            "font": "Roboto 28"
+                        },
+                        "type": "LV_LABEL_STYLE_MAIN"
+                    }
+                ],
+                "text": "downloading...",
+                "visible": false,
+                "widget": "Label"
+            },
+            {
+                "accessible": true,
+                "class": "lv_imgbtn",
+                "drag": false,
+                "geometry": {
+                    "height": 32,
+                    "width": 32,
+                    "x": 768,
+                    "y": 206
+                },
+                "locked": false,
+                "name": "order",
+                "source inactive": "",
+                "source pressed": "music_order.png",
+                "source released": "music_order.png",
+                "source toggled pressed": "",
+                "source toggled released": "",
+                "state": "Released",
+                "toggle": false,
+                "visible": false,
+                "widget": "Image button"
+            },
+            {
+                "accessible": true,
+                "class": "lv_btn",
+                "drag": false,
+                "geometry": {
+                    "height": 346,
+                    "width": 387,
+                    "x": 1,
+                    "y": 73
+                },
+                "ink in time": 0,
+                "ink out time": 0,
+                "ink wait time": 0,
+                "layout": "Center",
+                "locked": false,
+                "name": "full_button",
+                "state": "Released",
+                "styles": [
+                    {
+                        "base": "lv_style_btn_tgl_rel",
+                        "body": {
+                            "border": {
+                                "opa": 0
+                            },
+                            "opa": 0
+                        },
+                        "type": "LV_BTN_STYLE_TGL_REL"
+                    },
+                    {
+                        "base": "lv_style_btn_tgl_pr",
+                        "body": {
+                            "border": {
+                                "opa": 0
+                            },
+                            "opa": 0
+                        },
+                        "type": "LV_BTN_STYLE_TGL_PR"
+                    },
+                    {
+                        "base": "lv_style_btn_rel",
+                        "body": {
+                            "border": {
+                                "opa": 0
+                            },
+                            "grad_color": "#000000",
+                            "main_color": "#000000",
+                            "opa": 0
+                        },
+                        "type": "LV_BTN_STYLE_REL"
+                    },
+                    {
+                        "base": "lv_style_btn_pr",
+                        "body": {
+                            "border": {
+                                "opa": 0
+                            },
+                            "opa": 0
+                        },
+                        "type": "LV_BTN_STYLE_PR"
+                    }
+                ],
+                "toggle": false,
+                "visible": true,
+                "widget": "Button"
+            },
+            {
+                "accessible": true,
+                "class": "lv_imgbtn",
+                "drag": false,
+                "geometry": {
+                    "height": 32,
+                    "width": 32,
+                    "x": 9,
+                    "y": 7
+                },
+                "locked": false,
+                "name": "back",
+                "source inactive": "",
+                "source pressed": "",
+                "source released": "home_return.png",
+                "source toggled pressed": "home_return.png",
+                "source toggled released": "",
+                "state": "Released",
+                "toggle": false,
+                "visible": true,
+                "widget": "Image button"
+            }
+        ]
+    }
+}

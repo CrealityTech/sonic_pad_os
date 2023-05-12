@@ -1,0 +1,35 @@
+--- a/block.c
++++ b/block.c
+@@ -1460,8 +1460,8 @@ static int check_extroot(char *path)
+ 
+ 	fp = fopen(tag, "r");
+ 	if (!fp) {
+-		ULOG_ERR("extroot: failed to read UUID from %s: %d (%m)\n", tag,
+-			 errno);
++		ULOG_ERR("extroot: failed to open %s: %d (%s), umount %s\n",
++			 tag, errno, strerror(errno), path);
+ 		return -1;
+ 	}
+ 
+@@ -1470,12 +1470,16 @@ static int check_extroot(char *path)
+ 			 errno);
+ 	fclose(fp);
+ 
+-	if (*uuid && !strcasecmp(uuid, pr->uuid))
+-		return 0;
++	if (*uuid && !strcasecmp(uuid, pr->uuid)) {
++		ULOG_ERR("extroot: UUID match (root: %s, %s: %s)\n",
++				pr->uuid, basename(path), uuid);
++	} else {
++		ULOG_ERR("extroot: UUID mismatch (root: %s, %s: %s), but continue\n",
++				pr->uuid, basename(path), uuid);
++	}
++
++	return 0;
+ 
+-	ULOG_ERR("extroot: UUID mismatch (root: %s, %s: %s)\n", pr->uuid,
+-		 basename(path), uuid);
+-	return -1;
+ }
+ 
+ /*

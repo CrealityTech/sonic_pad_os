@@ -1,0 +1,17 @@
+--- a/qtwebengine/src/3rdparty/gn/tools/gn/ninja_action_target_writer.cc
++++ b/qtwebengine/src/3rdparty/gn/tools/gn/ninja_action_target_writer.cc
+@@ -118,6 +118,14 @@ std::string NinjaActionTargetWriter::Wri
+     // strictly necessary for regular one-shot actions, but it's easier to
+     // just always define unique_name.
+     std::string rspfile = custom_rule_name;
++
++    //quick workaround if filename length > 255 - ".rsp", just cut the dirs starting from the end
++    //please note ".$unique_name" is not used at the moment
++    int pos = 0;
++    std::string delimiter("_");
++    while (rspfile.length() > 250 && (pos = rspfile.find_last_of(delimiter)) != std::string::npos)
++        rspfile = rspfile.substr(0,pos);
++
+     if (!target_->sources().empty())
+       rspfile += ".$unique_name";
+     rspfile += ".rsp";

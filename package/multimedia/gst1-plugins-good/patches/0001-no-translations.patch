@@ -1,0 +1,39 @@
+From 5e023ed4ffd6ffcc6519327286dc84b985fbba8a Mon Sep 17 00:00:00 2001
+From: houxiaoni <houxiaoni@allwinnertech.com>
+Date: Mon, 13 Jul 2020 15:02:38 +0800
+Subject: [PATCH] no translations
+
+Change-Id: I3f3e311efc350dd0ad56ae1db0f234bad227a033
+Signed-off-by: houxiaoni <houxiaoni@allwinnertech.com>
+---
+ Makefile.am  | 1 -
+ configure.ac | 1 -
+ 2 files changed, 2 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 12cb59a..6db3d2c 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -4,7 +4,6 @@ ALWAYS_SUBDIRS =		\
+ 	gst sys ext 		\
+ 	tests			\
+ 	docs			\
+-	po			\
+ 	common			\
+ 	m4			\
+ 	pkgconfig
+diff --git a/configure.ac b/configure.ac
+index deb74f1..ad2de77 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1292,7 +1292,6 @@ sys/osxvideo/Makefile
+ sys/v4l2/Makefile
+ sys/waveform/Makefile
+ sys/ximage/Makefile
+-po/Makefile.in
+ tests/Makefile
+ tests/check/Makefile
+ tests/examples/Makefile
+-- 
+1.9.1
+

@@ -1,0 +1,16 @@
+--- a/conf/nginx.conf
++++ b/conf/nginx.conf
+@@ -410,7 +410,12 @@ index index.html;
+         location /shuffling_figure {
+             alias /mnt/UDISK/.crealityprint/shuffling_figure;
+             autoindex on;
+-        }		
++        }
++        location /klipper-brain_printer_config {
++            alias /usr/share/klipper-brain/printer_config;
++            autoindex on;
++        }
++		
+     } 
+     server {                                                                    
+         charset utf-8;                                                      

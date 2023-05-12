@@ -1,0 +1,15 @@
+menuconfig TESTUNIT_NETWORK_WIFI
+    bool "wifi"
+    default y
+    select PACKAGE_wifimanager
+    select PACKAGE_wifimanager-demo
+    select PACKAGE_wpa-cli
+    select PACKAGE_wpa-supplicant
+    select PACKAGE_iperf
+    select PACKAGE_softap
+    select PACKAGE_softap-demo
+    select PACKAGE_smartlinkd-demo
+    select PACKAGE_smartlinkd-lib
+    select XRADIO_SMARTCONFIG
+    select SOFT_AP
+    select SOUND_WAVE

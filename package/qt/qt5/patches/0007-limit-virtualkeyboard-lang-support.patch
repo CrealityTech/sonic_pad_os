@@ -1,0 +1,19 @@
+--- a/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro
++++ b/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro
+@@ -7,6 +7,16 @@ include(doc/doc.pri)
+ 
+ QT += qml quick gui gui-private core-private
+ CONFIG += qtquickcompiler
++CONFIG += lang-zh_CN
++CONFIG += lang-en_GB
++CONFIG += lang-de_DE
++CONFIG += lang-es_ES
++CONFIG += lang-fr_FR
++CONFIG += lang-it_IT
++CONFIG += lang-pt_PT
++CONFIG += lang-ru_RU
++CONFIG += lang-tr_TR
++CONFIG += lang-ja_JP
+
+ DEFINES += QVIRTUALKEYBOARD_LIBRARY
+ 

@@ -1,0 +1,27 @@
+From a13f5ccefb31efe08c37020d74e5a6ae28db5bb0 Mon Sep 17 00:00:00 2001
+From: houxiaoni <houxiaoni@allwinnertech.com>
+Date: Tue, 14 Jul 2020 14:05:20 +0800
+Subject: [PATCH 5/5] fix maybe-uninitialized warnings when compiling with -Os
+
+Change-Id: I752f94c2020f3224d18b61dfbbb32fa7c11fd3fd
+Signed-off-by: houxiaoni <houxiaoni@allwinnertech.com>
+---
+ gst-libs/gst/codecparsers/gstvc1parser.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gst-libs/gst/codecparsers/gstvc1parser.c b/gst-libs/gst/codecparsers/gstvc1parser.c
+index ac57971..1686f60 100644
+--- a/gst-libs/gst/codecparsers/gstvc1parser.c
++++ b/gst-libs/gst/codecparsers/gstvc1parser.c
+@@ -1730,7 +1730,7 @@ gst_vc1_parse_sequence_layer (const guint8 * data, gsize size,
+     GstVC1SeqLayer * seqlayer)
+ {
+   guint32 tmp;
+-  guint8 tmp8;
++  guint8 tmp8 = 0;
+   guint8 structA[8] = { 0, };
+   guint8 structB[12] = { 0, };
+   GstBitReader br;
+-- 
+1.9.1
+

@@ -1,0 +1,59 @@
+From dbafb7b5decb822847efee67a3da24e9fc13b527 Mon Sep 17 00:00:00 2001
+From: houxiaoni <houxiaoni@allwinnertech.com>
+Date: Mon, 13 Jul 2020 18:47:48 +0800
+Subject: [PATCH 2/4] gstrtpmp4gpay: set dafault value for MPEG4 without codec
+ data in caps.
+
+Change-Id: I9577ee6014dfe61c88368ecd55f44cf09d84b5c6
+Signed-off-by: houxiaoni <houxiaoni@allwinnertech.com>
+---
+ gst/rtp/gstrtpmp4gpay.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/gst/rtp/gstrtpmp4gpay.c b/gst/rtp/gstrtpmp4gpay.c
+index 7333b49..eede602 100644
+--- a/gst/rtp/gstrtpmp4gpay.c
++++ b/gst/rtp/gstrtpmp4gpay.c
+@@ -390,6 +390,7 @@ gst_rtp_mp4g_pay_setcaps (GstRTPBasePayload * payload, GstCaps * caps)
+   const GValue *codec_data;
+   const gchar *media_type = NULL;
+   gboolean res;
++  const gchar *name;
+ 
+   rtpmp4gpay = GST_RTP_MP4G_PAY (payload);
+ 
+@@ -400,7 +401,6 @@ gst_rtp_mp4g_pay_setcaps (GstRTPBasePayload * payload, GstCaps * caps)
+     GST_LOG_OBJECT (rtpmp4gpay, "got codec_data");
+     if (G_VALUE_TYPE (codec_data) == GST_TYPE_BUFFER) {
+       GstBuffer *buffer;
+-      const gchar *name;
+ 
+       buffer = gst_value_get_buffer (codec_data);
+       GST_LOG_OBJECT (rtpmp4gpay, "configuring codec_data");
+@@ -426,6 +426,23 @@ gst_rtp_mp4g_pay_setcaps (GstRTPBasePayload * payload, GstCaps * caps)
+ 
+       rtpmp4gpay->config = gst_buffer_copy (buffer);
+     }
++  } else {
++    name = gst_structure_get_name (structure);
++
++    if (!strcmp (name, "video/mpeg")) {
++      rtpmp4gpay->profile = g_strdup ("1");
++
++      /*  fixed rate */
++      rtpmp4gpay->rate = 90000;
++      /*  video stream type */
++      rtpmp4gpay->streamtype = "4";
++      /*  no params for video */
++      rtpmp4gpay->params = NULL;
++      /*  mode */
++      rtpmp4gpay->mode = "generic";
++
++      media_type = "video";
++    }
+   }
+   if (media_type == NULL)
+     goto config_failed;
+-- 
+1.9.1
+

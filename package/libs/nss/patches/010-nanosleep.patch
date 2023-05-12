@@ -1,0 +1,37 @@
+diff --git a/nss/lib/freebl/stubs.c b/nss/lib/freebl/stubs.c
+index 4ff3aa8..c13d2c0 100644
+--- a/nss/lib/freebl/stubs.c
++++ b/nss/lib/freebl/stubs.c
+@@ -421,7 +421,8 @@ extern PRStatus
+ PR_Sleep_stub(PRIntervalTime ticks)
+ {
+     STUB_SAFE_CALL1(PR_Sleep, ticks);
+-    usleep(ticks*1000); 
++    const struct timespec req = {0, ticks * 1000 * 1000};
++	nanosleep(&req, NULL);
+     return PR_SUCCESS;
+ }
+ 
+diff --git a/nss/lib/sqlite/sqlite3.c b/nss/lib/sqlite/sqlite3.c
+index c0ab233..14863d9 100644
+--- a/nss/lib/sqlite/sqlite3.c
++++ b/nss/lib/sqlite/sqlite3.c
+@@ -33747,7 +33747,8 @@ static int proxyConchLock(unixFile *pFile, uuid_t myHostID, int lockType){
+       
+       if( nTries==1 ){
+         conchModTime = buf.st_mtimespec;
+-        usleep(500000); /* wait 0.5 sec and try the lock again*/
++        const struct timespec req = {0, 500 * 1000 * 1000};
++		nanosleep(&req, NULL); /* wait 0.5 sec and try the lock again*/
+         continue;  
+       }
+ 
+@@ -33773,7 +33774,7 @@ static int proxyConchLock(unixFile *pFile, uuid_t myHostID, int lockType){
+           /* don't break the lock on short read or a version mismatch */
+           return SQLITE_BUSY;
+         }
+-        usleep(10000000); /* wait 10 sec and try the lock again */
++        sleep(10); /* wait 10 sec and try the lock again */
+         continue; 
+       }
+       

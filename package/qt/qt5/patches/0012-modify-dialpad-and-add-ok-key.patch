@@ -1,0 +1,295 @@
+--- a/qtvirtualkeyboard/src/import/plugins.qmltypes
++++ b/qtvirtualkeyboard/src/import/plugins.qmltypes
+@@ -2017,6 +2017,64 @@ Module {
+         Signal { name: "clicked" }
+     }
+     Component {
++        prototype: "QQuickItem"
++        name: "QtQuick.VirtualKeyboard/OkKey 2.0"
++        exports: ["QtQuick.VirtualKeyboard/OkKey 2.0"]
++        exportMetaObjectRevisions: [0]
++        isComposite: true
++        defaultProperty: "data"
++        Property { name: "weight"; type: "double" }
++        Property { name: "text"; type: "string" }
++        Property { name: "displayText"; type: "string" }
++        Property { name: "smallText"; type: "string" }
++        Property { name: "smallTextVisible"; type: "bool" }
++        Property { name: "alternativeKeys"; type: "QVariant" }
++        Property { name: "effectiveAlternativeKeys"; type: "QVariant"; isReadonly: true }
++        Property { name: "effectiveAlternativeKeysHighlightIndex"; type: "int"; isReadonly: true }
++        Property { name: "key"; type: "int" }
++        Property { name: "noKeyEvent"; type: "bool" }
++        Property { name: "active"; type: "bool" }
++        Property { name: "noModifier"; type: "bool" }
++        Property { name: "repeat"; type: "bool" }
++        Property { name: "highlighted"; type: "bool" }
++        Property { name: "functionKey"; type: "bool" }
++        Property { name: "showPreview"; type: "bool" }
++        Property { name: "pressed"; type: "bool" }
++        Property { name: "uppercased"; type: "bool" }
++        Property { name: "soundEffect"; type: "QUrl"; isReadonly: true }
++        Property { name: "keyPanelDelegate"; type: "QQmlComponent"; isPointer: true }
++        Signal { name: "clicked" }
++    }
++    Component {
++        prototype: "QQuickItem"
++        name: "QtQuick.VirtualKeyboard/OkKey 1.0"
++        exports: ["QtQuick.VirtualKeyboard/OkKey 1.0"]
++        exportMetaObjectRevisions: [0]
++        isComposite: true
++        defaultProperty: "data"
++        Property { name: "weight"; type: "double" }
++        Property { name: "text"; type: "string" }
++        Property { name: "displayText"; type: "string" }
++        Property { name: "smallText"; type: "string" }
++        Property { name: "smallTextVisible"; type: "bool" }
++        Property { name: "alternativeKeys"; type: "QVariant" }
++        Property { name: "effectiveAlternativeKeys"; type: "QVariant"; isReadonly: true }
++        Property { name: "effectiveAlternativeKeysHighlightIndex"; type: "int"; isReadonly: true }
++        Property { name: "key"; type: "int" }
++        Property { name: "noKeyEvent"; type: "bool" }
++        Property { name: "active"; type: "bool" }
++        Property { name: "noModifier"; type: "bool" }
++        Property { name: "repeat"; type: "bool" }
++        Property { name: "highlighted"; type: "bool" }
++        Property { name: "functionKey"; type: "bool" }
++        Property { name: "showPreview"; type: "bool" }
++        Property { name: "pressed"; type: "bool" }
++        Property { name: "uppercased"; type: "bool" }
++        Property { name: "soundEffect"; type: "QUrl"; isReadonly: true }
++        Property { name: "keyPanelDelegate"; type: "QQmlComponent"; isPointer: true }
++        Signal { name: "clicked" }
++    }
++    Component {
+         prototype: "QQuickMultiPointTouchArea"
+         name: "QtQuick.VirtualKeyboard/TraceInputArea 2.0"
+         exports: ["QtQuick.VirtualKeyboard/TraceInputArea 2.0"]
+--- a/qtvirtualkeyboard/src/import/qtquickvirtualkeyboardplugin.cpp
++++ b/qtvirtualkeyboard/src/import/qtquickvirtualkeyboardplugin.cpp
+@@ -137,6 +137,8 @@ void QtQuickVirtualKeyboardPlugin::regis
+     qmlRegisterType(QUrl(componentsPath + QLatin1String("SpaceKey.qml")), uri, 2, 0, "SpaceKey");
+     qmlRegisterType(QUrl(componentsPath + QLatin1String("SymbolModeKey.qml")), uri, 1, 0, "SymbolModeKey");
+     qmlRegisterType(QUrl(componentsPath + QLatin1String("SymbolModeKey.qml")), uri, 2, 0, "SymbolModeKey");
++    qmlRegisterType(QUrl(componentsPath + QLatin1String("OkKey.qml")), uri, 1, 0, "OkKey");
++    qmlRegisterType(QUrl(componentsPath + QLatin1String("OkKey.qml")), uri, 2, 0, "OkKey");
+     qmlRegisterType(QUrl(componentsPath + QLatin1String("HandwritingModeKey.qml")), uri, 2, 0, "HandwritingModeKey");
+     qmlRegisterType(QUrl(componentsPath + QLatin1String("TraceInputArea.qml")), uri, 2, 0, "TraceInputArea");
+     qmlRegisterType(QUrl(componentsPath + QLatin1String("TraceInputKey.qml")), uri, 2, 0, "TraceInputKey");
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/components/OkKey.qml
+@@ -0,0 +1,50 @@
++/****************************************************************************
++**
++** Copyright (C) 2016 The Qt Company Ltd.
++** Contact: https://www.qt.io/licensing/
++**
++** This file is part of the Qt Virtual Keyboard module of the Qt Toolkit.
++**
++** $QT_BEGIN_LICENSE:GPL$
++** Commercial License Usage
++** Licensees holding valid commercial Qt licenses may use this file in
++** accordance with the commercial license agreement provided with the
++** Software or, alternatively, in accordance with the terms contained in
++** a written agreement between you and The Qt Company. For licensing terms
++** and conditions see https://www.qt.io/terms-conditions. For further
++** information use the contact form at https://www.qt.io/contact-us.
++**
++** GNU General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU
++** General Public License version 3 or (at your option) any later version
++** approved by the KDE Free Qt Foundation. The licenses are as published by
++** the Free Software Foundation and appearing in the file LICENSE.GPL3
++** included in the packaging of this file. Please review the following
++** information to ensure the GNU General Public License requirements will
++** be met: https://www.gnu.org/licenses/gpl-3.0.html.
++**
++** $QT_END_LICENSE$
++**
++****************************************************************************/
++
++import QtQuick 2.0
++import QtQuick.VirtualKeyboard 2.1
++
++/*!
++    \qmltype OkKey
++    \inqmlmodule QtQuick.VirtualKeyboard
++    \ingroup qtvirtualkeyboard-qml
++    \inherits Key
++
++    \brief Ok key for keyboard layouts.
++
++    This key send Key_Return and hide keyboard.
++*/
++
++Key {
++    key: Qt.Key_Return
++    displayText: "OK"
++    functionKey: true
++    onClicked: InputContext.priv.hideInputPanel()
++    keyPanelDelegate: keyboard.style ? keyboard.style.symbolKeyPanel : undefined
++}
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/fallback/dialpad.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/fallback/dialpad.qml
+@@ -36,78 +36,87 @@ KeyboardLayout {
+     inputMethod: PlainInputMethod {}
+     inputMode: InputEngine.InputMode.Numeric
+ 
+-    KeyboardColumn {
+-        Layout.fillWidth: false
++    KeyboardRow {
++        Layout.fillWidth: true
+         Layout.fillHeight: true
+         Layout.alignment: Qt.AlignHCenter
+-        Layout.preferredWidth: height
+-        KeyboardRow {
+-            Key {
+-                key: Qt.Key_1
+-                text: "1"
+-            }
+-            Key {
+-                key: Qt.Key_2
+-                text: "2"
+-            }
+-            Key {
+-                key: Qt.Key_3
+-                text: "3"
++        KeyboardColumn {
++            Layout.fillWidth: true
++            Layout.fillHeight: true
++            Layout.preferredWidth: parent.height / 4 * 8
++            KeyboardRow {
++                Key {
++                    key: Qt.Key_1
++                    text: "1"
++                }
++                Key {
++                    key: Qt.Key_2
++                    text: "2"
++                }
++                Key {
++                    key: Qt.Key_3
++                    text: "3"
++                }
++            }
++            KeyboardRow {
++                Key {
++                    key: Qt.Key_4
++                    text: "4"
++                }
++                Key {
++                    key: Qt.Key_5
++                    text: "5"
++                }
++                Key {
++                    key: Qt.Key_6
++                    text: "6"
++                }
++            }
++            KeyboardRow {
++                Key {
++                    key: Qt.Key_7
++                    text: "7"
++                }
++                Key {
++                    key: Qt.Key_8
++                    text: "8"
++                }
++                Key {
++                    key: Qt.Key_9
++                    text: "9"
++                }
++            }
++            KeyboardRow {
++                Key {
++                    key: Qt.Key_0
++                    text: "0"
++                    weight: 100
++                }
++                Key {
++                    key: Qt.Key_Period
++                    text: "."
++                    weight: 50
++                }
+             }
+-            BackspaceKey {}
+         }
+-        KeyboardRow {
+-            Key {
+-                key: Qt.Key_4
+-                text: "4"
+-            }
+-            Key {
+-                key: Qt.Key_5
+-                text: "5"
+-            }
+-            Key {
+-                key: Qt.Key_6
+-                text: "6"
+-            }
+-            Key {
+-                text: " "
+-                displayText: "\u2423"
+-                repeat: true
+-                showPreview: false
+-                key: Qt.Key_Space
++        KeyboardColumn {
++            Layout.fillWidth: false
++            Layout.fillHeight: true
++            Layout.preferredWidth: parent.height / 100
++            KeyboardRow {
++                FillerKey {}
+             }
+         }
+-        KeyboardRow {
+-            Key {
+-                key: Qt.Key_7
+-                text: "7"
+-            }
+-            Key {
+-                key: Qt.Key_8
+-                text: "8"
+-            }
+-            Key {
+-                key: Qt.Key_9
+-                text: "9"
++        KeyboardColumn {
++            Layout.fillWidth: false
++            Layout.fillHeight: true
++            Layout.preferredWidth: parent.height / 4 * 2
++            KeyboardRow {
++                BackspaceKey {}
+             }
+-            HideKeyboardKey {}
+-        }
+-        KeyboardRow {
+-            Key {
+-                key: Qt.Key_Asterisk
+-                displayText: "*+"
+-                text: "*"
+-                alternativeKeys: "*+"
+-            }
+-            Key {
+-                key: Qt.Key_0
+-                text: "0"
+-            }
+-            Key {
+-                text: "#"
+-                key: Qt.Key_NumberSign
++            KeyboardRow {
++                OkKey {}
+             }
+-            EnterKey {}
+         }
+     }
+ }
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/virtualkeyboard_content.qrc
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/virtualkeyboard_content.qrc
+@@ -23,6 +23,7 @@
+         <file>components/ShiftKey.qml</file>
+         <file>components/SpaceKey.qml</file>
+         <file>components/SymbolModeKey.qml</file>
++        <file>components/OkKey.qml</file>
+         <file>components/TraceInputKey.qml</file>
+         <file>components/TraceInputArea.qml</file>
+         <file>components/HandwritingModeKey.qml</file>

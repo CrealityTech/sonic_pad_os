@@ -1,0 +1,3068 @@
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/backspace-868482.svg
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-420 107 159 88" enable-background="new -420 107 159 88" xml:space="preserve">
++<g>
++	<rect x="-420" y="107" fill="none" width="159" height="88"/>
++	<g>
++		<g>
++			<path fill="#868482" d="M-261.2,195H-376l-44-44l44-44h114.8V195z M-371.3,183.7h98.8v-65.4h-98.8L-404,151L-371.3,183.7z"/>
++		</g>
++		<g>
++			<g>
++				
++					<rect x="-332.7" y="123.2" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 -665.0558 26.5252)" fill="#868482" width="11.3" height="55.7"/>
++			</g>
++			<g>
++				
++					<rect x="-354.9" y="145.4" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 -665.0499 26.5255)" fill="#868482" width="55.7" height="11.3"/>
++			</g>
++		</g>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/check-868482.svg
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-414 91 170 119" enable-background="new -414 91 170 119" xml:space="preserve">
++<g>
++	<polygon fill="#868482" points="-351.7,210 -414,147.7 -402.7,136.3 -351.7,187.3 -255.3,91 -244,102.3 	"/>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/enter-868482.svg
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-394 111 211 80" enable-background="new -394 111 211 80" xml:space="preserve">
++<g>
++	<rect x="-394" y="111" fill="none" width="211" height="80"/>
++	<g>
++		<rect x="-384.8" y="144.8" fill="#868482" width="201.8" height="12.3"/>
++		<rect x="-195.3" y="121.7" fill="#868482" width="12.3" height="35.3"/>
++		<polygon fill="#868482" points="-349.5,111 -349.5,190.8 -394,151.7 		"/>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/globe-868482.svg
+@@ -0,0 +1,28 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-427 79 144 144" enable-background="new -427 79 144 144" xml:space="preserve">
++<g>
++	<rect x="-427" y="79" fill="none" width="144" height="144"/>
++	<g>
++		<path fill="#868482" d="M-355,223c-39.5,0-71.8-32.1-72-71.6c-0.2-39.7,31.9-72.2,71.6-72.4h0.7c19.1,0.1,37.1,7.6,50.6,21.1
++			s21,31.5,21.1,50.5c0.1,19.2-7.3,37.4-20.8,51c-13.5,13.7-31.6,21.3-50.8,21.4C-354.8,223-354.9,223-355,223z M-350.7,180.3v32.3
++			c9-8.1,16-17.9,20.6-28.7C-336.8,181.9-343.7,180.7-350.7,180.3z M-380,183.9c3.2,7.4,7.5,14.3,12.8,20.6c2.4,2.9,5.1,5.6,7.9,8.1
++			v-32.3C-366.3,180.7-373.2,181.9-380,183.9z M-321.8,186.9c-3.9,9.1-9.2,17.6-15.9,25.1c10.4-2.9,19.9-8.5,27.8-16.4
++			c0.5-0.5,1-1.1,1.6-1.6C-312.7,191.1-317.2,188.8-321.8,186.9z M-401.5,193.9c7.8,8.5,17.9,14.8,29.3,18c-0.5-0.6-1.1-1.2-1.6-1.8
++			c-6-7.1-10.8-14.9-14.3-23.3C-392.8,188.8-397.2,191.1-401.5,193.9z M-318.9,178.7c5.5,2.3,10.8,5.1,15.9,8.4
++			c6.5-9.4,10.4-20.3,11.2-31.8h-22.9c-0.1,1.2-0.1,2.4-0.2,3.7C-315.6,165.8-316.9,172.4-318.9,178.7z M-418.2,155.3
++			c0.8,11.8,4.8,22.6,11.2,31.8c5.1-3.3,10.4-6.1,15.8-8.4c-2.4-7.5-3.7-15.4-4.1-23.4L-418.2,155.3L-418.2,155.3z M-386.6,155.3
++			c0.3,7,1.5,13.8,3.6,20.4c7.7-2.4,15.7-3.8,23.7-4.1v-16.3H-386.6z M-350.7,171.6c8,0.4,15.9,1.7,23.6,4.1
++			c1.7-5.6,2.9-11.5,3.4-17.5c0.1-1,0.1-2,0.2-2.9h-27.2V171.6z M-314.8,146.7h23c-0.8-11.5-4.6-22.4-11.2-31.8
++			c-5.1,3.4-10.5,6.2-16.1,8.5C-316.6,130.9-315.2,138.7-314.8,146.7z M-350.7,146.7h27.2c-0.4-7-1.6-13.8-3.7-20.4
++			c-7.7,2.4-15.5,3.7-23.5,4.1V146.7z M-386.5,146.7h27.2v-16.3c-7.9-0.4-15.8-1.7-23.4-4.1c-1.8,5.8-3,11.9-3.6,18.1
++			C-386.4,145.2-386.5,145.9-386.5,146.7z M-418.2,146.7h23c0.1-1,0.1-2,0.2-3c0.6-7,2-13.8,4-20.3c-5.5-2.3-10.9-5.1-16-8.5
++			C-413.4,124-417.4,134.9-418.2,146.7z M-350.7,90.1v31.6c6.9-0.3,13.7-1.5,20.4-3.5c-3.1-7.1-7.3-13.9-12.5-20
++			C-345.2,95.3-347.9,92.6-350.7,90.1z M-379.7,118.2c6.7,2,13.5,3.2,20.4,3.5V90.1C-368.2,98-375.1,107.6-379.7,118.2z
++			 M-338.6,89.8c0.8,0.9,1.6,1.8,2.4,2.8c5.9,6.9,10.6,14.6,14.1,22.7c4.7-2,9.3-4.3,13.7-7.2c-0.6-0.6-1.2-1.2-1.8-1.9
++			C-318.2,98.2-328,92.6-338.6,89.8z M-401.5,108.1c4.4,2.8,8.9,5.2,13.6,7.1c4-9.3,9.5-17.9,16.5-25.4
++			C-383.2,93-393.5,99.4-401.5,108.1z"/>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/handwriting-868482.svg
+@@ -0,0 +1,18 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="0 0 156 104" enable-background="new 0 0 156 104" xml:space="preserve">
++<g>
++	<g>
++		<path fill="#868482" d="M37.6,103.3c-10.1,0-18.9-5-23.1-13.6C4.4,68.7,19.9,52.3,36.2,35c1.2-1.2,2.4-2.5,3.6-3.8
++			c5.3-5.7,5.2-11.5,3.5-14.8c-1.8-3.4-5.5-4.9-10.2-4.2c-16.5,2.6-21.2,26.4-21.2,26.6L0,36.6C0.3,35.3,6.4,4.3,31.2,0.3
++			c9.8-1.6,18.5,2.4,22.7,10.4c4.7,8.9,2.6,20.1-5.3,28.6c-1.2,1.3-2.4,2.6-3.6,3.8C28.3,60.9,19.1,71.6,25.4,84.5
++			c3.3,6.8,11.1,7.6,16.9,6.3c9.2-2.1,19.8-11.1,19.7-29.5c-0.2-28.1,16.2-41.8,30.2-44.9c14.5-3.2,28.4,3.6,34.7,17
++			c1.3,2.8,2.3,5.4,3.1,8.1c13.3,0.7,25.5,4.3,26,4.4l-3.4,11.5c-0.1,0-9.7-2.8-20.6-3.8c0.5,16.5-8.6,28.9-20.1,34.7
++			c-11.9,6-24,3.8-28.9-5.2c-3.1-5.6-1.9-14.7,2.9-22.5c7.9-13,21.3-17.4,31.5-18.8c-0.4-1.2-0.9-2.4-1.4-3.4
++			c-3.9-8.3-12.2-12.4-21.1-10.4c-9.7,2.2-21,12.1-20.8,33.1c0.2,25.5-15.6,38.1-29,41.3C42.5,103,40,103.3,37.6,103.3z M119.8,53.7
++			c-14,1.5-20.6,8.5-23.4,12.9c-3.3,5.2-3.4,9.8-2.9,10.9c1.6,2.9,7.3,3,13,0.2C117.3,72.2,120.3,62.6,119.8,53.7z"/>
++	</g>
++	<rect fill="none" width="156" height="104"/>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/hidekeyboard-868482.svg
+@@ -0,0 +1,55 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-427 87 144 127" enable-background="new -427 87 144 127" xml:space="preserve">
++<g>
++	<rect x="-427" y="87" fill="none" width="144" height="127"/>
++	<g>
++		<g>
++			<path fill="#868482" d="M-283,177.3h-144V87h144V177.3z M-416.1,166.4h122.2V97.9h-122.2V166.4z"/>
++		</g>
++		<g>
++			<rect x="-407.5" y="107.2" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-388.9" y="107.2" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-370.2" y="107.2" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-351.5" y="107.2" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-332.8" y="107.2" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-314.1" y="107.2" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-407.5" y="126.7" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-388.9" y="126.7" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-370.2" y="126.7" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-351.5" y="126.7" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-332.8" y="126.7" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-314.1" y="126.7" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-388.9" y="146.2" fill="#868482" width="67.7" height="11.7"/>
++		</g>
++		<g>
++			<polygon fill="#868482" points="-355,202.2 -364.8,195.2 -381.1,195.2 -355,213.9 -328.9,195.2 -345.2,195.2 			"/>
++		</g>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/search-868482.svg
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-425 77 148 148" enable-background="new -425 77 148 148" xml:space="preserve">
++<g>
++	<rect x="-425" y="77" fill="none" width="148" height="148"/>
++	<g>
++		<path fill="#868482" d="M-278.2,209.7c1.6,1.6,1.6,4.1,0,5.7l-8.5,8.5c-1.6,1.6-4.1,1.6-5.7,0l-44.6-44.6c-1.6-1.6-1.6-4.1,0-5.7
++			l8.5-8.5c1.6-1.6,4.1-1.6,5.7,0L-278.2,209.7z"/>
++		<path fill="#868482" d="M-367,89c25.4,0,46,20.6,46,46s-20.6,46-46,46c-25.4,0-46-20.6-46-46S-392.4,89-367,89 M-367,77
++			c-32,0-58,26-58,58s26,58,58,58c32,0,58-26,58-58S-335,77-367,77L-367,77z"/>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/selectionhandle-bottom.svg
+@@ -0,0 +1,201 @@
++<?xml version="1.0" encoding="UTF-8" standalone="no"?>
++<!-- Created with Inkscape (http://www.inkscape.org/) -->
++
++<svg
++   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
++   xmlns:dc="http://purl.org/dc/elements/1.1/"
++   xmlns:cc="http://creativecommons.org/ns#"
++   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
++   xmlns:svg="http://www.w3.org/2000/svg"
++   xmlns="http://www.w3.org/2000/svg"
++   xmlns:xlink="http://www.w3.org/1999/xlink"
++   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
++   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
++   width="405.39487"
++   height="603.25201"
++   id="svg2"
++   version="1.1"
++   inkscape:version="0.48.4 r9939"
++   sodipodi:docname="selectionhandle-bottom.svg">
++  <defs
++     id="defs4">
++    <linearGradient
++       inkscape:collect="always"
++       id="linearGradient3964">
++      <stop
++         style="stop-color:#000000;stop-opacity:1;"
++         offset="0"
++         id="stop3966" />
++      <stop
++         style="stop-color:#000000;stop-opacity:0;"
++         offset="1"
++         id="stop3968" />
++    </linearGradient>
++    <linearGradient
++       id="linearGradient3825"
++       osb:paint="solid">
++      <stop
++         style="stop-color:#000000;stop-opacity:1;"
++         offset="0"
++         id="stop3827" />
++    </linearGradient>
++    <linearGradient
++       id="linearGradient3797">
++      <stop
++         style="stop-color:#a7a7a7;stop-opacity:1;"
++         offset="0"
++         id="stop3799" />
++      <stop
++         style="stop-color:#959595;stop-opacity:1;"
++         offset="1"
++         id="stop3801" />
++    </linearGradient>
++    <filter
++       id="filter3991"
++       inkscape:label="Drop Shadow"
++       color-interpolation-filters="sRGB">
++      <feFlood
++         id="feFlood3993"
++         flood-opacity="0.9"
++         flood-color="rgb(0,0,0)"
++         result="flood" />
++      <feComposite
++         id="feComposite3995"
++         in2="SourceGraphic"
++         in="flood"
++         operator="in"
++         result="composite1" />
++      <feGaussianBlur
++         id="feGaussianBlur3997"
++         stdDeviation="9"
++         result="blur" />
++      <feOffset
++         id="feOffset3999"
++         dx="-4"
++         dy="-4"
++         result="offset" />
++      <feComposite
++         id="feComposite4001"
++         in2="offset"
++         in="SourceGraphic"
++         operator="over"
++         result="fbSourceGraphic" />
++      <feColorMatrix
++         result="fbSourceGraphicAlpha"
++         in="fbSourceGraphic"
++         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
++         id="feColorMatrix4003" />
++      <feFlood
++         id="feFlood4005"
++         flood-opacity="0.9"
++         flood-color="rgb(0,0,0)"
++         result="flood"
++         in="fbSourceGraphic" />
++      <feComposite
++         id="feComposite4007"
++         in2="fbSourceGraphic"
++         in="flood"
++         operator="in"
++         result="composite1" />
++      <feGaussianBlur
++         id="feGaussianBlur4009"
++         stdDeviation="9"
++         result="blur" />
++      <feOffset
++         id="feOffset4011"
++         dx="-4"
++         dy="-4"
++         result="offset" />
++      <feComposite
++         id="feComposite4013"
++         in2="offset"
++         in="fbSourceGraphic"
++         operator="over"
++         result="composite2" />
++    </filter>
++    <filter
++       inkscape:collect="always"
++       id="filter3941"
++       x="-0.31598809"
++       width="1.6319762"
++       y="-0.21141379"
++       height="1.4228276"
++       color-interpolation-filters="sRGB">
++      <feGaussianBlur
++         inkscape:collect="always"
++         stdDeviation="52.664682"
++         id="feGaussianBlur3943" />
++    </filter>
++    <linearGradient
++       inkscape:collect="always"
++       xlink:href="#linearGradient3964"
++       id="linearGradient3970"
++       x1="77.14286"
++       y1="559.86218"
++       x2="477.14285"
++       y2="559.86218"
++       gradientUnits="userSpaceOnUse" />
++    <filter
++       inkscape:collect="always"
++       id="filter4040"
++       color-interpolation-filters="sRGB">
++      <feGaussianBlur
++         inkscape:collect="always"
++         stdDeviation="0.49892857"
++         id="feGaussianBlur4042" />
++    </filter>
++  </defs>
++  <sodipodi:namedview
++     id="base"
++     pagecolor="#ffffff"
++     bordercolor="#666666"
++     borderopacity="1.0"
++     inkscape:pageopacity="0.0"
++     inkscape:pageshadow="2"
++     inkscape:zoom="0.83834513"
++     inkscape:cx="219.23008"
++     inkscape:cy="314.00438"
++     inkscape:document-units="px"
++     inkscape:current-layer="layer1"
++     showgrid="false"
++     inkscape:window-width="1176"
++     inkscape:window-height="719"
++     inkscape:window-x="188"
++     inkscape:window-y="121"
++     inkscape:window-maximized="0"
++     fit-margin-top="1"
++     fit-margin-left="1"
++     fit-margin-right="1"
++     fit-margin-bottom="1" />
++  <metadata
++     id="metadata7">
++    <rdf:RDF>
++      <cc:Work
++         rdf:about="">
++        <dc:format>image/svg+xml</dc:format>
++        <dc:type
++           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
++        <dc:title></dc:title>
++      </cc:Work>
++    </rdf:RDF>
++  </metadata>
++  <g
++     inkscape:groupmode="layer"
++     id="layer2"
++     inkscape:label="Lag"
++     style="display:inline"
++     transform="translate(-125.874,-261.09332)" />
++  <g
++     inkscape:label="Layer 1"
++     inkscape:groupmode="layer"
++     id="layer1"
++     transform="translate(-125.874,-261.09332)">
++    <path
++       style="fill:#bfbfbf;fill-opacity:1;stroke:url(#linearGradient3970);filter:url(#filter4040)"
++       d="m 477.14286,660.93361 0,-400 -400.000003,0 0,400 200.714283,197.85714 z"
++       id="path2987"
++       inkscape:connector-curvature="0"
++       sodipodi:nodetypes="cccccc"
++       transform="matrix(-1,0,0,-1,605.71429,1122.5815)" />
++  </g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/shift-80c342.svg
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-427 84 144 134" enable-background="new -427 84 144 134" xml:space="preserve">
++<g>
++	<rect x="-427" y="84" fill="none" width="144" height="134"/>
++	<g>
++		<path fill="#80C342" d="M-323.4,218h-63.4v-56.5H-427l71.9-77.5l71.9,77.5h-40.2L-323.4,218L-323.4,218z M-375.3,206.5h40.5v-56.5
++			h25.4l-45.7-49.2l-45.7,49.2h25.4L-375.3,206.5L-375.3,206.5z"/>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/shift-868482.svg
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-427 84 144 134" enable-background="new -427 84 144 134" xml:space="preserve">
++<g>
++	<rect x="-427" y="84" fill="none" width="144" height="134"/>
++	<g>
++		<path fill="#868482" d="M-323.4,218h-63.4v-56.5H-427l71.9-77.5l71.9,77.5h-40.2L-323.4,218L-323.4,218z M-375.3,206.5h40.5v-56.5
++			h25.4l-45.7-49.2l-45.7,49.2h25.4L-375.3,206.5L-375.3,206.5z"/>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/shift-c5d6b6.svg
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-427 84 144 134" enable-background="new -427 84 144 134" xml:space="preserve">
++<g>
++	<rect x="-427" y="84" fill="none" width="144" height="134"/>
++	<g>
++		<path fill="#C5D6B6" d="M-323.4,218h-63.4v-56.5H-427l71.9-77.5l71.9,77.5h-40.2L-323.4,218L-323.4,218z M-375.3,206.5h40.5v-56.5
++			h25.4l-45.7-49.2l-45.7,49.2h25.4L-375.3,206.5L-375.3,206.5z"/>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/textmode-868482.svg
+@@ -0,0 +1,33 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 width="124px" height="96px" viewBox="0 0 124 96" enable-background="new 0 0 124 96" xml:space="preserve">
++<g>
++	<g>
++		<g>
++			<path fill="#868482" d="M55.4,70.8L46.9,49H19.4L11,70.8H2.9L30,2h6.7l27,68.8H55.4z M44.4,41.8l-8-21.2c-1-2.7-2.1-6-3.2-9.9
++				c-0.7,3-1.7,6.3-3,9.9l-8.1,21.2H44.4z"/>
++			<path fill="#868482" d="M66.6,72.8H54.1L45.5,51H20.8l-8.4,21.8H0L28.7,0h9.4L66.6,72.8z M56.8,68.8h4L35.4,4h-1.9l1.7,6.2
++				c1.1,3.8,2.1,7.1,3.1,9.7l9,24h-28l9.1-23.9c1.2-3.5,2.2-6.7,2.9-9.6L32.8,4h-1.4L5.9,68.8h3.8L18.1,47h30.2L56.8,68.8z
++				 M25.1,39.8h16.4l-7-18.5c-0.4-1.1-0.8-2.2-1.2-3.4c-0.4,1.1-0.7,2.2-1.2,3.4L25.1,39.8z"/>
++		</g>
++		<g>
++			<path fill="#868482" d="M116.2,70.8l-1.5-7.3h-0.4c-2.6,3.2-5.1,5.4-7.7,6.5s-5.7,1.7-9.5,1.7c-5.1,0-9.1-1.3-12-3.9
++				s-4.3-6.4-4.3-11.2c0-10.4,8.3-15.8,24.9-16.3l8.7-0.3v-3.2c0-4-0.9-7-2.6-8.9s-4.5-2.9-8.3-2.9c-4.3,0-9.1,1.3-14.5,3.9l-2.4-6
++				c2.5-1.4,5.3-2.5,8.3-3.2s6-1.2,9.1-1.2c6.1,0,10.7,1.4,13.6,4.1s4.4,7.1,4.4,13.1v35.1H116.2z M98.7,65.3c4.8,0,8.6-1.3,11.4-4
++				s4.1-6.4,4.1-11.2v-4.6l-7.8,0.3c-6.2,0.2-10.6,1.2-13.4,2.9S89,53.1,89,56.7c0,2.8,0.9,5,2.6,6.4S95.6,65.3,98.7,65.3z"/>
++			<path fill="#868482" d="M97.1,73.8c-5.6,0-10.1-1.5-13.3-4.5c-3.3-3-5-7.3-5-12.7c0-11.6,9-17.8,26.8-18.3l6.8-0.2v-1.3
++				c0-3.5-0.7-6.1-2.1-7.6c-1.3-1.5-3.6-2.2-6.8-2.2c-4,0-8.6,1.3-13.7,3.7l-1.9,0.9L84,22.1l1.6-0.8c2.7-1.4,5.6-2.6,8.8-3.4
++				c3.2-0.8,6.4-1.2,9.6-1.2c6.6,0,11.7,1.6,15,4.6c3.4,3.1,5.1,8,5.1,14.5v37.1h-9.4l-1.1-5.3c-2,2-4,3.5-6,4.4
++				C104.7,73.1,101.2,73.8,97.1,73.8z M103.5,23c4.4,0,7.7,1.2,9.8,3.5c2.1,2.3,3.1,5.7,3.1,10.3V42l-10.7,0.3
++				c-23,0.7-23,10.9-23,14.3c0,4.3,1.2,7.5,3.7,9.7c2.5,2.3,6.1,3.4,10.6,3.4c3.5,0,6.4-0.5,8.7-1.5c2.2-1,4.6-3,6.9-6l0.6-0.8h2.6
++				l0.7,1.6l1.2,5.7h2.1V35.8c0-5.4-1.3-9.3-3.8-11.6c-2.6-2.4-6.7-3.5-12.3-3.5c-2.8,0-5.7,0.4-8.6,1.1c-2.2,0.6-4.3,1.3-6.3,2.3
++				l0.9,2.3C94.9,24.1,99.4,23,103.5,23z M98.7,67.3c-3.5,0-6.4-0.9-8.5-2.7C88,62.8,87,60.1,87,56.7c0-4.3,1.7-7.6,5-9.6
++				c3.1-1.9,7.8-3,14.4-3.2l9.9-0.4v6.7c0,5.3-1.6,9.6-4.8,12.6C108.3,65.8,104,67.3,98.7,67.3z M112.2,47.6l-5.7,0.2
++				c-5.8,0.2-10,1.1-12.4,2.6C92,51.8,91,53.8,91,56.7c0,2.2,0.6,3.8,1.9,4.9c1.3,1.1,3.3,1.7,5.8,1.7c4.3,0,7.6-1.1,10-3.4
++				c2.4-2.3,3.5-5.5,3.5-9.7V47.6z"/>
++		</g>
++	</g>
++	<rect y="88" fill="#868482" width="124" height="8"/>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/style.qml
+@@ -0,0 +1,1036 @@
++/****************************************************************************
++**
++** Copyright (C) 2016 The Qt Company Ltd.
++** Contact: https://www.qt.io/licensing/
++**
++** This file is part of the Qt Virtual Keyboard module of the Qt Toolkit.
++**
++** $QT_BEGIN_LICENSE:GPL$
++** Commercial License Usage
++** Licensees holding valid commercial Qt licenses may use this file in
++** accordance with the commercial license agreement provided with the
++** Software or, alternatively, in accordance with the terms contained in
++** a written agreement between you and The Qt Company. For licensing terms
++** and conditions see https://www.qt.io/terms-conditions. For further
++** information use the contact form at https://www.qt.io/contact-us.
++**
++** GNU General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU
++** General Public License version 3 or (at your option) any later version
++** approved by the KDE Free Qt Foundation. The licenses are as published by
++** the Free Software Foundation and appearing in the file LICENSE.GPL3
++** included in the packaging of this file. Please review the following
++** information to ensure the GNU General Public License requirements will
++** be met: https://www.gnu.org/licenses/gpl-3.0.html.
++**
++** $QT_END_LICENSE$
++**
++****************************************************************************/
++
++import QtQuick 2.7
++import QtQuick.VirtualKeyboard 2.1
++import QtQuick.VirtualKeyboard.Styles 2.1
++
++KeyboardStyle {
++    id: currentStyle
++    readonly property bool compactSelectionList: [InputEngine.InputMode.Pinyin, InputEngine.InputMode.Cangjie, InputEngine.InputMode.Zhuyin].indexOf(InputContext.inputEngine.inputMode) !== -1
++    readonly property string fontFamily: "Sans"
++    readonly property real keyBackgroundMargin: Math.round(13 * scaleHint)
++    readonly property real keyContentMargin: Math.round(45 * scaleHint)
++    readonly property real keyIconScale: scaleHint * 0.5
++    readonly property string resourcePrefix: "qrc:/QtQuick/VirtualKeyboard/content/styles/default_landscape/"
++
++    readonly property string inputLocale: InputContext.locale
++    property color inputLocaleIndicatorColor: "white"
++    property Timer inputLocaleIndicatorHighlightTimer: Timer {
++        interval: 1000
++        onTriggered: inputLocaleIndicatorColor = "gray"
++    }
++    onInputLocaleChanged: {
++        inputLocaleIndicatorColor = "white"
++        inputLocaleIndicatorHighlightTimer.restart()
++    }
++
++    keyboardDesignWidth: 2560
++    keyboardDesignHeight: 540
++    keyboardRelativeLeftMargin: 1 / keyboardDesignWidth
++    keyboardRelativeRightMargin: 1 / keyboardDesignWidth
++    keyboardRelativeTopMargin: 13 / keyboardDesignHeight
++    keyboardRelativeBottomMargin: 16 / keyboardDesignHeight
++
++    keyboardBackground: Rectangle {
++        color: "black"
++    }
++
++    keyPanel: KeyPanel {
++        id: keyPanel
++        Rectangle {
++            id: keyBackground
++            radius: 5
++            color: "#383533"
++            anchors.fill: keyPanel
++            anchors.margins: keyBackgroundMargin
++            Text {
++                id: keySmallText
++                text: control.smallText
++                visible: control.smallTextVisible
++                color: "gray"
++                anchors.right: parent.right
++                anchors.top: parent.top
++                anchors.margins: keyContentMargin / 3
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 32 * scaleHint
++                    capitalization: control.uppercased ? Font.AllUppercase : Font.MixedCase
++                }
++            }
++            Text {
++                id: keyText
++                text: control.displayText
++                color: "white"
++                horizontalAlignment: Text.AlignHCenter
++                verticalAlignment: Text.AlignVCenter
++                anchors.fill: parent
++                anchors.leftMargin: keyContentMargin
++                anchors.topMargin: keyContentMargin
++                anchors.rightMargin: keyContentMargin
++                anchors.bottomMargin: keyContentMargin
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 46 * scaleHint
++                    capitalization: control.uppercased ? Font.AllUppercase : Font.MixedCase
++                }
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: keyBackground
++                    opacity: 0.75
++                }
++                PropertyChanges {
++                    target: keyText
++                    opacity: 0.5
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: keyBackground
++                    opacity: 0.75
++                }
++                PropertyChanges {
++                    target: keyText
++                    opacity: 0.05
++                }
++            }
++        ]
++    }
++
++    backspaceKeyPanel: KeyPanel {
++        id: backspaceKeyPanel
++        Rectangle {
++            id: backspaceKeyBackground
++            radius: 5
++            color: "#23211E"
++            anchors.fill: backspaceKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Image {
++                id: backspaceKeyIcon
++                anchors.centerIn: parent
++                sourceSize.width: 159 * keyIconScale
++                sourceSize.height: 88 * keyIconScale
++                smooth: false
++                source: resourcePrefix + "images/backspace-868482.svg"
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: backspaceKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: backspaceKeyIcon
++                    opacity: 0.6
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: backspaceKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: backspaceKeyIcon
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    languageKeyPanel: KeyPanel {
++        id: languageKeyPanel
++        Rectangle {
++            id: languageKeyBackground
++            radius: 5
++            color: "#35322f"
++            anchors.fill: languageKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Image {
++                id: languageKeyIcon
++                anchors.centerIn: parent
++                sourceSize.width: 144 * keyIconScale
++                sourceSize.height: 144 * keyIconScale
++                smooth: false
++                source: resourcePrefix + "images/globe-868482.svg"
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: languageKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: languageKeyIcon
++                    opacity: 0.75
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: languageKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: languageKeyIcon
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    enterKeyPanel: KeyPanel {
++        id: enterKeyPanel
++        Rectangle {
++            id: enterKeyBackground
++            radius: 5
++            color: "#1e1b18"
++            anchors.fill: enterKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Image {
++                id: enterKeyIcon
++                visible: enterKeyText.text.length === 0
++                anchors.centerIn: parent
++                readonly property size enterKeyIconSize: {
++                    switch (control.actionId) {
++                    case EnterKeyAction.Go:
++                    case EnterKeyAction.Send:
++                    case EnterKeyAction.Next:
++                    case EnterKeyAction.Done:
++                        return Qt.size(170, 119)
++                    case EnterKeyAction.Search:
++                        return Qt.size(148, 148)
++                    default:
++                        return Qt.size(211, 80)
++                    }
++                }
++                sourceSize.width: enterKeyIconSize.width * keyIconScale
++                sourceSize.height: enterKeyIconSize.height * keyIconScale
++                smooth: false
++                source: {
++                    switch (control.actionId) {
++                    case EnterKeyAction.Go:
++                    case EnterKeyAction.Send:
++                    case EnterKeyAction.Next:
++                    case EnterKeyAction.Done:
++                        return resourcePrefix + "images/check-868482.svg"
++                    case EnterKeyAction.Search:
++                        return resourcePrefix + "images/search-868482.svg"
++                    default:
++                        return resourcePrefix + "images/enter-868482.svg"
++                    }
++                }
++            }
++            Text {
++                id: enterKeyText
++                visible: text.length !== 0
++                text: control.actionId !== EnterKeyAction.None ? control.displayText : ""
++                clip: true
++                fontSizeMode: Text.HorizontalFit
++                horizontalAlignment: Text.AlignHCenter
++                verticalAlignment: Text.AlignVCenter
++                color: "#80c342"
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 44 * scaleHint
++                    capitalization: Font.AllUppercase
++                }
++                anchors.fill: parent
++                anchors.margins: Math.round(42 * scaleHint)
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: enterKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: enterKeyIcon
++                    opacity: 0.6
++                }
++                PropertyChanges {
++                    target: enterKeyText
++                    opacity: 0.6
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: enterKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: enterKeyIcon
++                    opacity: 0.2
++                }
++                PropertyChanges {
++                    target: enterKeyText
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    hideKeyPanel: KeyPanel {
++        id: hideKeyPanel
++        Rectangle {
++            id: hideKeyBackground
++            radius: 5
++            color: "#1e1b18"
++            anchors.fill: hideKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Image {
++                id: hideKeyIcon
++                anchors.centerIn: parent
++                sourceSize.width: 144 * keyIconScale
++                sourceSize.height: 127 * keyIconScale
++                smooth: false
++                source: resourcePrefix + "images/hidekeyboard-868482.svg"
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: hideKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: hideKeyIcon
++                    opacity: 0.6
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: hideKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: hideKeyIcon
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    shiftKeyPanel: KeyPanel {
++        id: shiftKeyPanel
++        Rectangle {
++            id: shiftKeyBackground
++            radius: 5
++            color: "#1e1b18"
++            anchors.fill: shiftKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Image {
++                id: shiftKeyIcon
++                anchors.centerIn: parent
++                sourceSize.width: 144 * keyIconScale
++                sourceSize.height: 134 * keyIconScale
++                smooth: false
++                source: resourcePrefix + "images/shift-868482.svg"
++            }
++            states: [
++                State {
++                    name: "capsLockActive"
++                    when: InputContext.capsLockActive
++                    PropertyChanges {
++                        target: shiftKeyBackground
++                        color: "#5a892e"
++                    }
++                    PropertyChanges {
++                        target: shiftKeyIcon
++                        source: resourcePrefix + "images/shift-c5d6b6.svg"
++                    }
++                },
++                State {
++                    name: "shiftActive"
++                    when: InputContext.shiftActive
++                    PropertyChanges {
++                        target: shiftKeyIcon
++                        source: resourcePrefix + "images/shift-80c342.svg"
++                    }
++                }
++            ]
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: shiftKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: shiftKeyIcon
++                    opacity: 0.6
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: shiftKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: shiftKeyIcon
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    spaceKeyPanel: KeyPanel {
++        id: spaceKeyPanel
++        Rectangle {
++            id: spaceKeyBackground
++            radius: 5
++            color: "#35322f"
++            anchors.fill: spaceKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Text {
++                id: spaceKeyText
++                text: Qt.locale(InputContext.locale).nativeLanguageName
++                color: currentStyle.inputLocaleIndicatorColor
++                Behavior on color { PropertyAnimation { duration: 250 } }
++                anchors.centerIn: parent
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 48 * scaleHint
++                }
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: spaceKeyBackground
++                    opacity: 0.80
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: spaceKeyBackground
++                    opacity: 0.8
++                }
++            }
++        ]
++    }
++
++    symbolKeyPanel: KeyPanel {
++        id: symbolKeyPanel
++        Rectangle {
++            id: symbolKeyBackground
++            radius: 5
++            color: "#1e1b18"
++            anchors.fill: symbolKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Text {
++                id: symbolKeyText
++                text: control.displayText
++                color: "white"
++                horizontalAlignment: Text.AlignHCenter
++                verticalAlignment: Text.AlignVCenter
++                anchors.fill: parent
++                anchors.margins: keyContentMargin
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 44 * scaleHint
++                    capitalization: Font.AllUppercase
++                }
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: symbolKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: symbolKeyText
++                    opacity: 0.6
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: symbolKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: symbolKeyText
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    modeKeyPanel: KeyPanel {
++        id: modeKeyPanel
++        Rectangle {
++            id: modeKeyBackground
++            radius: 5
++            color: "#1e1b18"
++            anchors.fill: modeKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Text {
++                id: modeKeyText
++                text: control.displayText
++                color: "white"
++                horizontalAlignment: Text.AlignHCenter
++                verticalAlignment: Text.AlignVCenter
++                anchors.fill: parent
++                anchors.margins: keyContentMargin
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 44 * scaleHint
++                    capitalization: Font.AllUppercase
++                }
++            }
++            Rectangle {
++                id: modeKeyIndicator
++                implicitHeight: parent.height * 0.1
++                anchors.left: parent.left
++                anchors.right: parent.right
++                anchors.bottom: parent.bottom
++                anchors.leftMargin: parent.width * 0.4
++                anchors.rightMargin: parent.width * 0.4
++                anchors.bottomMargin: parent.height * 0.12
++                color: "#80c342"
++                radius: 3
++                visible: control.mode
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: modeKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: modeKeyText
++                    opacity: 0.6
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: modeKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: modeKeyText
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    handwritingKeyPanel: KeyPanel {
++        id: handwritingKeyPanel
++        Rectangle {
++            id: hwrKeyBackground
++            radius: 5
++            color: "#35322f"
++            anchors.fill: handwritingKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Image {
++                id: hwrKeyIcon
++                anchors.centerIn: parent
++                readonly property size hwrKeyIconSize: keyboard.handwritingMode ? Qt.size(124, 96) : Qt.size(156, 104)
++                sourceSize.width: hwrKeyIconSize.width * keyIconScale
++                sourceSize.height: hwrKeyIconSize.height * keyIconScale
++                smooth: false
++                source: resourcePrefix + (keyboard.handwritingMode ? "images/textmode-868482.svg" : "images/handwriting-868482.svg")
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: hwrKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: hwrKeyIcon
++                    opacity: 0.6
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: hwrKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: hwrKeyIcon
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    characterPreviewMargin: 0
++    characterPreviewDelegate: Item {
++        property string text
++        id: characterPreview
++        Rectangle {
++            id: characterPreviewBackground
++            anchors.fill: parent
++            color: "#5d5b59"
++            radius: 5
++            Text {
++                id: characterPreviewText
++                color: "white"
++                text: characterPreview.text
++                fontSizeMode: Text.HorizontalFit
++                horizontalAlignment: Text.AlignHCenter
++                verticalAlignment: Text.AlignVCenter
++                anchors.fill: parent
++                anchors.margins: Math.round(48 * scaleHint)
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 82 * scaleHint
++                }
++            }
++        }
++    }
++
++    alternateKeysListItemWidth: 99 * scaleHint
++    alternateKeysListItemHeight: 150 * scaleHint
++    alternateKeysListDelegate: Item {
++        id: alternateKeysListItem
++        width: alternateKeysListItemWidth
++        height: alternateKeysListItemHeight
++        Text {
++            id: listItemText
++            text: model.text
++            color: "#868482"
++            font {
++                family: fontFamily
++                weight: Font.Normal
++                pixelSize: 52 * scaleHint
++            }
++            anchors.centerIn: parent
++        }
++        states: State {
++            name: "current"
++            when: alternateKeysListItem.ListView.isCurrentItem
++            PropertyChanges {
++                target: listItemText
++                color: "white"
++            }
++        }
++    }
++    alternateKeysListHighlight: Rectangle {
++        color: "#5d5b59"
++        radius: 5
++    }
++    alternateKeysListBackground: Rectangle {
++        color: "#1e1b18"
++        radius: 5
++    }
++
++    selectionListHeight: 85 * scaleHint
++    selectionListDelegate: SelectionListItem {
++        id: selectionListItem
++        width: Math.round(selectionListLabel.width + selectionListLabel.anchors.leftMargin * 2)
++        Text {
++            id: selectionListLabel
++            anchors.left: parent.left
++            anchors.leftMargin: Math.round((compactSelectionList ? 50 : 140) * scaleHint)
++            anchors.verticalCenter: parent.verticalCenter
++            text: decorateText(display, wordCompletionLength)
++            color: "#80c342"
++            font {
++                family: fontFamily
++                weight: Font.Normal
++                pixelSize: 44 * scaleHint
++            }
++            function decorateText(text, wordCompletionLength) {
++                if (wordCompletionLength > 0) {
++                    return text.slice(0, -wordCompletionLength) + '<u>' + text.slice(-wordCompletionLength) + '</u>'
++                }
++                return text
++            }
++        }
++        Rectangle {
++            id: selectionListSeparator
++            width: 4 * scaleHint
++            height: 36 * scaleHint
++            radius: 2
++            color: "#35322f"
++            anchors.verticalCenter: parent.verticalCenter
++            anchors.right: parent.left
++        }
++        states: State {
++            name: "current"
++            when: selectionListItem.ListView.isCurrentItem
++            PropertyChanges {
++                target: selectionListLabel
++                color: "white"
++            }
++        }
++    }
++    selectionListBackground: Rectangle {
++        color: "#1e1b18"
++    }
++    selectionListAdd: Transition {
++        NumberAnimation { property: "y"; from: wordCandidateView.height; duration: 200 }
++        NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 200 }
++    }
++    selectionListRemove: Transition {
++        NumberAnimation { property: "y"; to: -wordCandidateView.height; duration: 200 }
++        NumberAnimation { property: "opacity"; to: 0; duration: 200 }
++    }
++
++    navigationHighlight: Rectangle {
++        color: "transparent"
++        border.color: "yellow"
++        border.width: 5
++    }
++
++    traceInputKeyPanelDelegate: TraceInputKeyPanel {
++        id: traceInputKeyPanel
++        traceMargins: keyBackgroundMargin
++        Rectangle {
++            id: traceInputKeyPanelBackground
++            radius: 5
++            color: "#35322f"
++            anchors.fill: traceInputKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Text {
++                id: hwrInputModeIndicator
++                visible: control.patternRecognitionMode === InputEngine.PatternRecognitionMode.Handwriting
++                text: {
++                    switch (InputContext.inputEngine.inputMode) {
++                    case InputEngine.InputMode.Numeric:
++                        if (["ar", "fa"].indexOf(InputContext.locale.substring(0, 2)) !== -1)
++                            return "\u0660\u0661\u0662"
++                        // Fallthrough
++                    case InputEngine.InputMode.Dialable:
++                        return "123"
++                    case InputEngine.InputMode.Greek:
++                        return "ΑΒΓ"
++                    case InputEngine.InputMode.Cyrillic:
++                        return "АБВ"
++                    case InputEngine.InputMode.Arabic:
++                        if (InputContext.locale.substring(0, 2) === "fa")
++                            return "\u0627\u200C\u0628\u200C\u067E"
++                        return "\u0623\u200C\u0628\u200C\u062C"
++                    case InputEngine.InputMode.Hebrew:
++                        return "\u05D0\u05D1\u05D2"
++                    case InputEngine.InputMode.ChineseHandwriting:
++                        return "中文"
++                    case InputEngine.InputMode.JapaneseHandwriting:
++                        return "日本語"
++                    case InputEngine.InputMode.KoreanHandwriting:
++                        return "한국어"
++                    case InputEngine.InputMode.Thai:
++                        return "กขค"
++                    default:
++                        return "Abc"
++                    }
++                }
++                color: "white"
++                anchors.left: parent.left
++                anchors.top: parent.top
++                anchors.margins: keyContentMargin
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 44 * scaleHint
++                    capitalization: {
++                        if (InputContext.capsLockActive)
++                            return Font.AllUppercase
++                        if (InputContext.shiftActive)
++                            return Font.MixedCase
++                        return Font.AllLowercase
++                    }
++                }
++            }
++        }
++        Canvas {
++            id: traceInputKeyGuideLines
++            anchors.fill: traceInputKeyPanelBackground
++            opacity: 0.1
++            onPaint: {
++                var ctx = getContext("2d")
++                ctx.lineWidth = 1
++                ctx.strokeStyle = Qt.rgba(0xFF, 0xFF, 0xFF)
++                ctx.clearRect(0, 0, width, height)
++                var i
++                var margin = Math.round(30 * scaleHint)
++                if (control.horizontalRulers) {
++                    for (i = 0; i < control.horizontalRulers.length; i++) {
++                        ctx.beginPath()
++                        var y = Math.round(control.horizontalRulers[i])
++                        var rightMargin = Math.round(width - margin)
++                        if (i + 1 === control.horizontalRulers.length) {
++                            ctx.moveTo(margin, y)
++                            ctx.lineTo(rightMargin, y)
++                        } else {
++                            var dashLen = Math.round(20 * scaleHint)
++                            for (var dash = margin, dashCount = 0;
++                                 dash < rightMargin; dash += dashLen, dashCount++) {
++                                if ((dashCount & 1) === 0) {
++                                    ctx.moveTo(dash, y)
++                                    ctx.lineTo(Math.min(dash + dashLen, rightMargin), y)
++                                }
++                            }
++                        }
++                        ctx.stroke()
++                    }
++                }
++                if (control.verticalRulers) {
++                    for (i = 0; i < control.verticalRulers.length; i++) {
++                        ctx.beginPath()
++                        ctx.moveTo(control.verticalRulers[i], margin)
++                        ctx.lineTo(control.verticalRulers[i], Math.round(height - margin))
++                        ctx.stroke()
++                    }
++                }
++            }
++            Connections {
++                target: control
++                onHorizontalRulersChanged: traceInputKeyGuideLines.requestPaint()
++                onVerticalRulersChanged: traceInputKeyGuideLines.requestPaint()
++            }
++        }
++    }
++
++    traceCanvasDelegate: TraceCanvas {
++        id: traceCanvas
++        onAvailableChanged: {
++            if (!available)
++                return
++            var ctx = getContext("2d")
++            if (parent.canvasType === "fullscreen") {
++                ctx.lineWidth = 10
++                ctx.strokeStyle = Qt.rgba(0, 0, 0)
++            } else {
++                ctx.lineWidth = 10 * scaleHint
++                ctx.strokeStyle = Qt.rgba(0xFF, 0xFF, 0xFF)
++            }
++            ctx.lineCap = "round"
++            ctx.fillStyle = ctx.strokeStyle
++        }
++        autoDestroyDelay: 800
++        onTraceChanged: if (trace === null) opacity = 0
++        Behavior on opacity { PropertyAnimation { easing.type: Easing.OutCubic; duration: 150 } }
++    }
++
++    popupListDelegate: SelectionListItem {
++        property real cursorAnchor: popupListLabel.x + popupListLabel.width
++        id: popupListItem
++        width: popupListLabel.width + popupListLabel.anchors.leftMargin * 2
++        height: popupListLabel.height + popupListLabel.anchors.topMargin * 2
++        Text {
++            id: popupListLabel
++            anchors.left: parent.left
++            anchors.top: parent.top
++            anchors.leftMargin: popupListLabel.height / 2
++            anchors.topMargin: popupListLabel.height / 3
++            text: decorateText(display, wordCompletionLength)
++            color: "#5CAA15"
++            font {
++                family: fontFamily
++                weight: Font.Normal
++                pixelSize: Qt.inputMethod.cursorRectangle.height * 0.8
++            }
++            function decorateText(text, wordCompletionLength) {
++                if (wordCompletionLength > 0) {
++                    return text.slice(0, -wordCompletionLength) + '<u>' + text.slice(-wordCompletionLength) + '</u>'
++                }
++                return text
++            }
++        }
++        states: State {
++            name: "current"
++            when: popupListItem.ListView.isCurrentItem
++            PropertyChanges {
++                target: popupListLabel
++                color: "black"
++            }
++        }
++    }
++
++    popupListBackground: Item {
++        Rectangle {
++            width: parent.width
++            height: parent.height
++            color: "white"
++            border {
++                width: 1
++                color: "#929495"
++            }
++        }
++    }
++
++    popupListAdd: Transition {
++        NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 200 }
++    }
++
++    popupListRemove: Transition {
++        NumberAnimation { property: "opacity"; to: 0; duration: 200 }
++    }
++
++    languagePopupListEnabled: true
++
++    languageListDelegate: SelectionListItem {
++        id: languageListItem
++        width: languageNameTextMetrics.width * 17
++        height: languageNameTextMetrics.height + languageListLabel.anchors.topMargin + languageListLabel.anchors.bottomMargin
++        Text {
++            id: languageListLabel
++            anchors.left: parent.left
++            anchors.top: parent.top
++            anchors.leftMargin: languageNameTextMetrics.height / 2
++            anchors.rightMargin: anchors.leftMargin
++            anchors.topMargin: languageNameTextMetrics.height / 3
++            anchors.bottomMargin: anchors.topMargin
++            text: languageNameFormatter.elidedText
++            color: "#5CAA15"
++            font {
++                family: fontFamily
++                weight: Font.Normal
++                pixelSize: 44 * scaleHint
++            }
++        }
++        TextMetrics {
++            id: languageNameTextMetrics
++            font {
++                family: fontFamily
++                weight: Font.Normal
++                pixelSize: 44 * scaleHint
++            }
++            text: "X"
++        }
++        TextMetrics {
++            id: languageNameFormatter
++            font {
++                family: fontFamily
++                weight: Font.Normal
++                pixelSize: 44 * scaleHint
++            }
++            elide: Text.ElideRight
++            elideWidth: languageListItem.width - languageListLabel.anchors.leftMargin - languageListLabel.anchors.rightMargin
++            text: displayName
++        }
++        states: State {
++            name: "current"
++            when: languageListItem.ListView.isCurrentItem
++            PropertyChanges {
++                target: languageListLabel
++                color: "black"
++            }
++        }
++    }
++
++    languageListBackground: Rectangle {
++        color: "white"
++        border {
++            width: 1
++            color: "#929495"
++        }
++    }
++
++    languageListAdd: Transition {
++        NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 200 }
++    }
++
++    languageListRemove: Transition {
++        NumberAnimation { property: "opacity"; to: 0; duration: 200 }
++    }
++
++    selectionHandle: Image {
++        sourceSize.width: 20
++        source: resourcePrefix + "images/selectionhandle-bottom.svg"
++    }
++
++    fullScreenInputContainerBackground: Rectangle {
++        color: "#FFF"
++    }
++
++    fullScreenInputBackground: Rectangle {
++        color: "#FFF"
++    }
++
++    fullScreenInputMargins: Math.round(15 * scaleHint)
++
++    fullScreenInputPadding: Math.round(30 * scaleHint)
++
++    fullScreenInputCursor: Rectangle {
++        width: 1
++        color: "#000"
++        visible: parent.blinkStatus
++    }
++
++    fullScreenInputFont.pixelSize: 58 * scaleHint
++}
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/virtualkeyboard_default_landscape_style.qrc
+@@ -0,0 +1,17 @@
++<RCC>
++    <qresource prefix="/QtQuick/VirtualKeyboard/content/styles/default_landscape">
++        <file>style.qml</file>
++        <file>images/backspace-868482.svg</file>
++        <file>images/check-868482.svg</file>
++        <file>images/enter-868482.svg</file>
++        <file>images/globe-868482.svg</file>
++        <file>images/handwriting-868482.svg</file>
++        <file>images/hidekeyboard-868482.svg</file>
++        <file>images/search-868482.svg</file>
++        <file>images/shift-80c342.svg</file>
++        <file>images/shift-868482.svg</file>
++        <file>images/shift-c5d6b6.svg</file>
++        <file>images/textmode-868482.svg</file>
++        <file>images/selectionhandle-bottom.svg</file>
++    </qresource>
++</RCC>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/backspace-868482.svg
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-420 107 159 88" enable-background="new -420 107 159 88" xml:space="preserve">
++<g>
++	<rect x="-420" y="107" fill="none" width="159" height="88"/>
++	<g>
++		<g>
++			<path fill="#868482" d="M-261.2,195H-376l-44-44l44-44h114.8V195z M-371.3,183.7h98.8v-65.4h-98.8L-404,151L-371.3,183.7z"/>
++		</g>
++		<g>
++			<g>
++				
++					<rect x="-332.7" y="123.2" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 -665.0558 26.5252)" fill="#868482" width="11.3" height="55.7"/>
++			</g>
++			<g>
++				
++					<rect x="-354.9" y="145.4" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 -665.0499 26.5255)" fill="#868482" width="55.7" height="11.3"/>
++			</g>
++		</g>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/check-868482.svg
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-414 91 170 119" enable-background="new -414 91 170 119" xml:space="preserve">
++<g>
++	<polygon fill="#868482" points="-351.7,210 -414,147.7 -402.7,136.3 -351.7,187.3 -255.3,91 -244,102.3 	"/>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/enter-868482.svg
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-394 111 211 80" enable-background="new -394 111 211 80" xml:space="preserve">
++<g>
++	<rect x="-394" y="111" fill="none" width="211" height="80"/>
++	<g>
++		<rect x="-384.8" y="144.8" fill="#868482" width="201.8" height="12.3"/>
++		<rect x="-195.3" y="121.7" fill="#868482" width="12.3" height="35.3"/>
++		<polygon fill="#868482" points="-349.5,111 -349.5,190.8 -394,151.7 		"/>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/globe-868482.svg
+@@ -0,0 +1,28 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-427 79 144 144" enable-background="new -427 79 144 144" xml:space="preserve">
++<g>
++	<rect x="-427" y="79" fill="none" width="144" height="144"/>
++	<g>
++		<path fill="#868482" d="M-355,223c-39.5,0-71.8-32.1-72-71.6c-0.2-39.7,31.9-72.2,71.6-72.4h0.7c19.1,0.1,37.1,7.6,50.6,21.1
++			s21,31.5,21.1,50.5c0.1,19.2-7.3,37.4-20.8,51c-13.5,13.7-31.6,21.3-50.8,21.4C-354.8,223-354.9,223-355,223z M-350.7,180.3v32.3
++			c9-8.1,16-17.9,20.6-28.7C-336.8,181.9-343.7,180.7-350.7,180.3z M-380,183.9c3.2,7.4,7.5,14.3,12.8,20.6c2.4,2.9,5.1,5.6,7.9,8.1
++			v-32.3C-366.3,180.7-373.2,181.9-380,183.9z M-321.8,186.9c-3.9,9.1-9.2,17.6-15.9,25.1c10.4-2.9,19.9-8.5,27.8-16.4
++			c0.5-0.5,1-1.1,1.6-1.6C-312.7,191.1-317.2,188.8-321.8,186.9z M-401.5,193.9c7.8,8.5,17.9,14.8,29.3,18c-0.5-0.6-1.1-1.2-1.6-1.8
++			c-6-7.1-10.8-14.9-14.3-23.3C-392.8,188.8-397.2,191.1-401.5,193.9z M-318.9,178.7c5.5,2.3,10.8,5.1,15.9,8.4
++			c6.5-9.4,10.4-20.3,11.2-31.8h-22.9c-0.1,1.2-0.1,2.4-0.2,3.7C-315.6,165.8-316.9,172.4-318.9,178.7z M-418.2,155.3
++			c0.8,11.8,4.8,22.6,11.2,31.8c5.1-3.3,10.4-6.1,15.8-8.4c-2.4-7.5-3.7-15.4-4.1-23.4L-418.2,155.3L-418.2,155.3z M-386.6,155.3
++			c0.3,7,1.5,13.8,3.6,20.4c7.7-2.4,15.7-3.8,23.7-4.1v-16.3H-386.6z M-350.7,171.6c8,0.4,15.9,1.7,23.6,4.1
++			c1.7-5.6,2.9-11.5,3.4-17.5c0.1-1,0.1-2,0.2-2.9h-27.2V171.6z M-314.8,146.7h23c-0.8-11.5-4.6-22.4-11.2-31.8
++			c-5.1,3.4-10.5,6.2-16.1,8.5C-316.6,130.9-315.2,138.7-314.8,146.7z M-350.7,146.7h27.2c-0.4-7-1.6-13.8-3.7-20.4
++			c-7.7,2.4-15.5,3.7-23.5,4.1V146.7z M-386.5,146.7h27.2v-16.3c-7.9-0.4-15.8-1.7-23.4-4.1c-1.8,5.8-3,11.9-3.6,18.1
++			C-386.4,145.2-386.5,145.9-386.5,146.7z M-418.2,146.7h23c0.1-1,0.1-2,0.2-3c0.6-7,2-13.8,4-20.3c-5.5-2.3-10.9-5.1-16-8.5
++			C-413.4,124-417.4,134.9-418.2,146.7z M-350.7,90.1v31.6c6.9-0.3,13.7-1.5,20.4-3.5c-3.1-7.1-7.3-13.9-12.5-20
++			C-345.2,95.3-347.9,92.6-350.7,90.1z M-379.7,118.2c6.7,2,13.5,3.2,20.4,3.5V90.1C-368.2,98-375.1,107.6-379.7,118.2z
++			 M-338.6,89.8c0.8,0.9,1.6,1.8,2.4,2.8c5.9,6.9,10.6,14.6,14.1,22.7c4.7-2,9.3-4.3,13.7-7.2c-0.6-0.6-1.2-1.2-1.8-1.9
++			C-318.2,98.2-328,92.6-338.6,89.8z M-401.5,108.1c4.4,2.8,8.9,5.2,13.6,7.1c4-9.3,9.5-17.9,16.5-25.4
++			C-383.2,93-393.5,99.4-401.5,108.1z"/>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/handwriting-868482.svg
+@@ -0,0 +1,18 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="0 0 156 104" enable-background="new 0 0 156 104" xml:space="preserve">
++<g>
++	<g>
++		<path fill="#868482" d="M37.6,103.3c-10.1,0-18.9-5-23.1-13.6C4.4,68.7,19.9,52.3,36.2,35c1.2-1.2,2.4-2.5,3.6-3.8
++			c5.3-5.7,5.2-11.5,3.5-14.8c-1.8-3.4-5.5-4.9-10.2-4.2c-16.5,2.6-21.2,26.4-21.2,26.6L0,36.6C0.3,35.3,6.4,4.3,31.2,0.3
++			c9.8-1.6,18.5,2.4,22.7,10.4c4.7,8.9,2.6,20.1-5.3,28.6c-1.2,1.3-2.4,2.6-3.6,3.8C28.3,60.9,19.1,71.6,25.4,84.5
++			c3.3,6.8,11.1,7.6,16.9,6.3c9.2-2.1,19.8-11.1,19.7-29.5c-0.2-28.1,16.2-41.8,30.2-44.9c14.5-3.2,28.4,3.6,34.7,17
++			c1.3,2.8,2.3,5.4,3.1,8.1c13.3,0.7,25.5,4.3,26,4.4l-3.4,11.5c-0.1,0-9.7-2.8-20.6-3.8c0.5,16.5-8.6,28.9-20.1,34.7
++			c-11.9,6-24,3.8-28.9-5.2c-3.1-5.6-1.9-14.7,2.9-22.5c7.9-13,21.3-17.4,31.5-18.8c-0.4-1.2-0.9-2.4-1.4-3.4
++			c-3.9-8.3-12.2-12.4-21.1-10.4c-9.7,2.2-21,12.1-20.8,33.1c0.2,25.5-15.6,38.1-29,41.3C42.5,103,40,103.3,37.6,103.3z M119.8,53.7
++			c-14,1.5-20.6,8.5-23.4,12.9c-3.3,5.2-3.4,9.8-2.9,10.9c1.6,2.9,7.3,3,13,0.2C117.3,72.2,120.3,62.6,119.8,53.7z"/>
++	</g>
++	<rect fill="none" width="156" height="104"/>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/hidekeyboard-868482.svg
+@@ -0,0 +1,55 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-427 87 144 127" enable-background="new -427 87 144 127" xml:space="preserve">
++<g>
++	<rect x="-427" y="87" fill="none" width="144" height="127"/>
++	<g>
++		<g>
++			<path fill="#868482" d="M-283,177.3h-144V87h144V177.3z M-416.1,166.4h122.2V97.9h-122.2V166.4z"/>
++		</g>
++		<g>
++			<rect x="-407.5" y="107.2" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-388.9" y="107.2" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-370.2" y="107.2" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-351.5" y="107.2" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-332.8" y="107.2" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-314.1" y="107.2" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-407.5" y="126.7" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-388.9" y="126.7" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-370.2" y="126.7" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-351.5" y="126.7" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-332.8" y="126.7" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-314.1" y="126.7" fill="#868482" width="11.7" height="11.7"/>
++		</g>
++		<g>
++			<rect x="-388.9" y="146.2" fill="#868482" width="67.7" height="11.7"/>
++		</g>
++		<g>
++			<polygon fill="#868482" points="-355,202.2 -364.8,195.2 -381.1,195.2 -355,213.9 -328.9,195.2 -345.2,195.2 			"/>
++		</g>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/search-868482.svg
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-425 77 148 148" enable-background="new -425 77 148 148" xml:space="preserve">
++<g>
++	<rect x="-425" y="77" fill="none" width="148" height="148"/>
++	<g>
++		<path fill="#868482" d="M-278.2,209.7c1.6,1.6,1.6,4.1,0,5.7l-8.5,8.5c-1.6,1.6-4.1,1.6-5.7,0l-44.6-44.6c-1.6-1.6-1.6-4.1,0-5.7
++			l8.5-8.5c1.6-1.6,4.1-1.6,5.7,0L-278.2,209.7z"/>
++		<path fill="#868482" d="M-367,89c25.4,0,46,20.6,46,46s-20.6,46-46,46c-25.4,0-46-20.6-46-46S-392.4,89-367,89 M-367,77
++			c-32,0-58,26-58,58s26,58,58,58c32,0,58-26,58-58S-335,77-367,77L-367,77z"/>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/selectionhandle-bottom.svg
+@@ -0,0 +1,201 @@
++<?xml version="1.0" encoding="UTF-8" standalone="no"?>
++<!-- Created with Inkscape (http://www.inkscape.org/) -->
++
++<svg
++   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
++   xmlns:dc="http://purl.org/dc/elements/1.1/"
++   xmlns:cc="http://creativecommons.org/ns#"
++   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
++   xmlns:svg="http://www.w3.org/2000/svg"
++   xmlns="http://www.w3.org/2000/svg"
++   xmlns:xlink="http://www.w3.org/1999/xlink"
++   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
++   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
++   width="405.39487"
++   height="603.25201"
++   id="svg2"
++   version="1.1"
++   inkscape:version="0.48.4 r9939"
++   sodipodi:docname="selectionhandle-bottom.svg">
++  <defs
++     id="defs4">
++    <linearGradient
++       inkscape:collect="always"
++       id="linearGradient3964">
++      <stop
++         style="stop-color:#000000;stop-opacity:1;"
++         offset="0"
++         id="stop3966" />
++      <stop
++         style="stop-color:#000000;stop-opacity:0;"
++         offset="1"
++         id="stop3968" />
++    </linearGradient>
++    <linearGradient
++       id="linearGradient3825"
++       osb:paint="solid">
++      <stop
++         style="stop-color:#000000;stop-opacity:1;"
++         offset="0"
++         id="stop3827" />
++    </linearGradient>
++    <linearGradient
++       id="linearGradient3797">
++      <stop
++         style="stop-color:#a7a7a7;stop-opacity:1;"
++         offset="0"
++         id="stop3799" />
++      <stop
++         style="stop-color:#959595;stop-opacity:1;"
++         offset="1"
++         id="stop3801" />
++    </linearGradient>
++    <filter
++       id="filter3991"
++       inkscape:label="Drop Shadow"
++       color-interpolation-filters="sRGB">
++      <feFlood
++         id="feFlood3993"
++         flood-opacity="0.9"
++         flood-color="rgb(0,0,0)"
++         result="flood" />
++      <feComposite
++         id="feComposite3995"
++         in2="SourceGraphic"
++         in="flood"
++         operator="in"
++         result="composite1" />
++      <feGaussianBlur
++         id="feGaussianBlur3997"
++         stdDeviation="9"
++         result="blur" />
++      <feOffset
++         id="feOffset3999"
++         dx="-4"
++         dy="-4"
++         result="offset" />
++      <feComposite
++         id="feComposite4001"
++         in2="offset"
++         in="SourceGraphic"
++         operator="over"
++         result="fbSourceGraphic" />
++      <feColorMatrix
++         result="fbSourceGraphicAlpha"
++         in="fbSourceGraphic"
++         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
++         id="feColorMatrix4003" />
++      <feFlood
++         id="feFlood4005"
++         flood-opacity="0.9"
++         flood-color="rgb(0,0,0)"
++         result="flood"
++         in="fbSourceGraphic" />
++      <feComposite
++         id="feComposite4007"
++         in2="fbSourceGraphic"
++         in="flood"
++         operator="in"
++         result="composite1" />
++      <feGaussianBlur
++         id="feGaussianBlur4009"
++         stdDeviation="9"
++         result="blur" />
++      <feOffset
++         id="feOffset4011"
++         dx="-4"
++         dy="-4"
++         result="offset" />
++      <feComposite
++         id="feComposite4013"
++         in2="offset"
++         in="fbSourceGraphic"
++         operator="over"
++         result="composite2" />
++    </filter>
++    <filter
++       inkscape:collect="always"
++       id="filter3941"
++       x="-0.31598809"
++       width="1.6319762"
++       y="-0.21141379"
++       height="1.4228276"
++       color-interpolation-filters="sRGB">
++      <feGaussianBlur
++         inkscape:collect="always"
++         stdDeviation="52.664682"
++         id="feGaussianBlur3943" />
++    </filter>
++    <linearGradient
++       inkscape:collect="always"
++       xlink:href="#linearGradient3964"
++       id="linearGradient3970"
++       x1="77.14286"
++       y1="559.86218"
++       x2="477.14285"
++       y2="559.86218"
++       gradientUnits="userSpaceOnUse" />
++    <filter
++       inkscape:collect="always"
++       id="filter4040"
++       color-interpolation-filters="sRGB">
++      <feGaussianBlur
++         inkscape:collect="always"
++         stdDeviation="0.49892857"
++         id="feGaussianBlur4042" />
++    </filter>
++  </defs>
++  <sodipodi:namedview
++     id="base"
++     pagecolor="#ffffff"
++     bordercolor="#666666"
++     borderopacity="1.0"
++     inkscape:pageopacity="0.0"
++     inkscape:pageshadow="2"
++     inkscape:zoom="0.83834513"
++     inkscape:cx="219.23008"
++     inkscape:cy="314.00438"
++     inkscape:document-units="px"
++     inkscape:current-layer="layer1"
++     showgrid="false"
++     inkscape:window-width="1176"
++     inkscape:window-height="719"
++     inkscape:window-x="188"
++     inkscape:window-y="121"
++     inkscape:window-maximized="0"
++     fit-margin-top="1"
++     fit-margin-left="1"
++     fit-margin-right="1"
++     fit-margin-bottom="1" />
++  <metadata
++     id="metadata7">
++    <rdf:RDF>
++      <cc:Work
++         rdf:about="">
++        <dc:format>image/svg+xml</dc:format>
++        <dc:type
++           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
++        <dc:title></dc:title>
++      </cc:Work>
++    </rdf:RDF>
++  </metadata>
++  <g
++     inkscape:groupmode="layer"
++     id="layer2"
++     inkscape:label="Lag"
++     style="display:inline"
++     transform="translate(-125.874,-261.09332)" />
++  <g
++     inkscape:label="Layer 1"
++     inkscape:groupmode="layer"
++     id="layer1"
++     transform="translate(-125.874,-261.09332)">
++    <path
++       style="fill:#bfbfbf;fill-opacity:1;stroke:url(#linearGradient3970);filter:url(#filter4040)"
++       d="m 477.14286,660.93361 0,-400 -400.000003,0 0,400 200.714283,197.85714 z"
++       id="path2987"
++       inkscape:connector-curvature="0"
++       sodipodi:nodetypes="cccccc"
++       transform="matrix(-1,0,0,-1,605.71429,1122.5815)" />
++  </g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/shift-80c342.svg
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-427 84 144 134" enable-background="new -427 84 144 134" xml:space="preserve">
++<g>
++	<rect x="-427" y="84" fill="none" width="144" height="134"/>
++	<g>
++		<path fill="#80C342" d="M-323.4,218h-63.4v-56.5H-427l71.9-77.5l71.9,77.5h-40.2L-323.4,218L-323.4,218z M-375.3,206.5h40.5v-56.5
++			h25.4l-45.7-49.2l-45.7,49.2h25.4L-375.3,206.5L-375.3,206.5z"/>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/shift-868482.svg
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-427 84 144 134" enable-background="new -427 84 144 134" xml:space="preserve">
++<g>
++	<rect x="-427" y="84" fill="none" width="144" height="134"/>
++	<g>
++		<path fill="#868482" d="M-323.4,218h-63.4v-56.5H-427l71.9-77.5l71.9,77.5h-40.2L-323.4,218L-323.4,218z M-375.3,206.5h40.5v-56.5
++			h25.4l-45.7-49.2l-45.7,49.2h25.4L-375.3,206.5L-375.3,206.5z"/>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/shift-c5d6b6.svg
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 viewBox="-427 84 144 134" enable-background="new -427 84 144 134" xml:space="preserve">
++<g>
++	<rect x="-427" y="84" fill="none" width="144" height="134"/>
++	<g>
++		<path fill="#C5D6B6" d="M-323.4,218h-63.4v-56.5H-427l71.9-77.5l71.9,77.5h-40.2L-323.4,218L-323.4,218z M-375.3,206.5h40.5v-56.5
++			h25.4l-45.7-49.2l-45.7,49.2h25.4L-375.3,206.5L-375.3,206.5z"/>
++	</g>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/textmode-868482.svg
+@@ -0,0 +1,33 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
++	 width="124px" height="96px" viewBox="0 0 124 96" enable-background="new 0 0 124 96" xml:space="preserve">
++<g>
++	<g>
++		<g>
++			<path fill="#868482" d="M55.4,70.8L46.9,49H19.4L11,70.8H2.9L30,2h6.7l27,68.8H55.4z M44.4,41.8l-8-21.2c-1-2.7-2.1-6-3.2-9.9
++				c-0.7,3-1.7,6.3-3,9.9l-8.1,21.2H44.4z"/>
++			<path fill="#868482" d="M66.6,72.8H54.1L45.5,51H20.8l-8.4,21.8H0L28.7,0h9.4L66.6,72.8z M56.8,68.8h4L35.4,4h-1.9l1.7,6.2
++				c1.1,3.8,2.1,7.1,3.1,9.7l9,24h-28l9.1-23.9c1.2-3.5,2.2-6.7,2.9-9.6L32.8,4h-1.4L5.9,68.8h3.8L18.1,47h30.2L56.8,68.8z
++				 M25.1,39.8h16.4l-7-18.5c-0.4-1.1-0.8-2.2-1.2-3.4c-0.4,1.1-0.7,2.2-1.2,3.4L25.1,39.8z"/>
++		</g>
++		<g>
++			<path fill="#868482" d="M116.2,70.8l-1.5-7.3h-0.4c-2.6,3.2-5.1,5.4-7.7,6.5s-5.7,1.7-9.5,1.7c-5.1,0-9.1-1.3-12-3.9
++				s-4.3-6.4-4.3-11.2c0-10.4,8.3-15.8,24.9-16.3l8.7-0.3v-3.2c0-4-0.9-7-2.6-8.9s-4.5-2.9-8.3-2.9c-4.3,0-9.1,1.3-14.5,3.9l-2.4-6
++				c2.5-1.4,5.3-2.5,8.3-3.2s6-1.2,9.1-1.2c6.1,0,10.7,1.4,13.6,4.1s4.4,7.1,4.4,13.1v35.1H116.2z M98.7,65.3c4.8,0,8.6-1.3,11.4-4
++				s4.1-6.4,4.1-11.2v-4.6l-7.8,0.3c-6.2,0.2-10.6,1.2-13.4,2.9S89,53.1,89,56.7c0,2.8,0.9,5,2.6,6.4S95.6,65.3,98.7,65.3z"/>
++			<path fill="#868482" d="M97.1,73.8c-5.6,0-10.1-1.5-13.3-4.5c-3.3-3-5-7.3-5-12.7c0-11.6,9-17.8,26.8-18.3l6.8-0.2v-1.3
++				c0-3.5-0.7-6.1-2.1-7.6c-1.3-1.5-3.6-2.2-6.8-2.2c-4,0-8.6,1.3-13.7,3.7l-1.9,0.9L84,22.1l1.6-0.8c2.7-1.4,5.6-2.6,8.8-3.4
++				c3.2-0.8,6.4-1.2,9.6-1.2c6.6,0,11.7,1.6,15,4.6c3.4,3.1,5.1,8,5.1,14.5v37.1h-9.4l-1.1-5.3c-2,2-4,3.5-6,4.4
++				C104.7,73.1,101.2,73.8,97.1,73.8z M103.5,23c4.4,0,7.7,1.2,9.8,3.5c2.1,2.3,3.1,5.7,3.1,10.3V42l-10.7,0.3
++				c-23,0.7-23,10.9-23,14.3c0,4.3,1.2,7.5,3.7,9.7c2.5,2.3,6.1,3.4,10.6,3.4c3.5,0,6.4-0.5,8.7-1.5c2.2-1,4.6-3,6.9-6l0.6-0.8h2.6
++				l0.7,1.6l1.2,5.7h2.1V35.8c0-5.4-1.3-9.3-3.8-11.6c-2.6-2.4-6.7-3.5-12.3-3.5c-2.8,0-5.7,0.4-8.6,1.1c-2.2,0.6-4.3,1.3-6.3,2.3
++				l0.9,2.3C94.9,24.1,99.4,23,103.5,23z M98.7,67.3c-3.5,0-6.4-0.9-8.5-2.7C88,62.8,87,60.1,87,56.7c0-4.3,1.7-7.6,5-9.6
++				c3.1-1.9,7.8-3,14.4-3.2l9.9-0.4v6.7c0,5.3-1.6,9.6-4.8,12.6C108.3,65.8,104,67.3,98.7,67.3z M112.2,47.6l-5.7,0.2
++				c-5.8,0.2-10,1.1-12.4,2.6C92,51.8,91,53.8,91,56.7c0,2.2,0.6,3.8,1.9,4.9c1.3,1.1,3.3,1.7,5.8,1.7c4.3,0,7.6-1.1,10-3.4
++				c2.4-2.3,3.5-5.5,3.5-9.7V47.6z"/>
++		</g>
++	</g>
++	<rect y="88" fill="#868482" width="124" height="8"/>
++</g>
++</svg>
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/style.qml
+@@ -0,0 +1,1036 @@
++/****************************************************************************
++**
++** Copyright (C) 2016 The Qt Company Ltd.
++** Contact: https://www.qt.io/licensing/
++**
++** This file is part of the Qt Virtual Keyboard module of the Qt Toolkit.
++**
++** $QT_BEGIN_LICENSE:GPL$
++** Commercial License Usage
++** Licensees holding valid commercial Qt licenses may use this file in
++** accordance with the commercial license agreement provided with the
++** Software or, alternatively, in accordance with the terms contained in
++** a written agreement between you and The Qt Company. For licensing terms
++** and conditions see https://www.qt.io/terms-conditions. For further
++** information use the contact form at https://www.qt.io/contact-us.
++**
++** GNU General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU
++** General Public License version 3 or (at your option) any later version
++** approved by the KDE Free Qt Foundation. The licenses are as published by
++** the Free Software Foundation and appearing in the file LICENSE.GPL3
++** included in the packaging of this file. Please review the following
++** information to ensure the GNU General Public License requirements will
++** be met: https://www.gnu.org/licenses/gpl-3.0.html.
++**
++** $QT_END_LICENSE$
++**
++****************************************************************************/
++
++import QtQuick 2.7
++import QtQuick.VirtualKeyboard 2.1
++import QtQuick.VirtualKeyboard.Styles 2.1
++
++KeyboardStyle {
++    id: currentStyle
++    readonly property bool compactSelectionList: [InputEngine.InputMode.Pinyin, InputEngine.InputMode.Cangjie, InputEngine.InputMode.Zhuyin].indexOf(InputContext.inputEngine.inputMode) !== -1
++    readonly property string fontFamily: "Sans"
++    readonly property real keyBackgroundMargin: Math.round(13 * scaleHint)
++    readonly property real keyContentMargin: Math.round(55 * scaleHint)
++    readonly property real keyIconScale: scaleHint * 0.8
++    readonly property string resourcePrefix: "qrc:/QtQuick/VirtualKeyboard/content/styles/default_portrait/"
++
++    readonly property string inputLocale: InputContext.locale
++    property color inputLocaleIndicatorColor: "white"
++    property Timer inputLocaleIndicatorHighlightTimer: Timer {
++        interval: 1000
++        onTriggered: inputLocaleIndicatorColor = "gray"
++    }
++    onInputLocaleChanged: {
++        inputLocaleIndicatorColor = "white"
++        inputLocaleIndicatorHighlightTimer.restart()
++    }
++
++    keyboardDesignWidth: 2560
++    keyboardDesignHeight: 1280
++    keyboardRelativeLeftMargin: 1 / keyboardDesignWidth
++    keyboardRelativeRightMargin: 1 / keyboardDesignWidth
++    keyboardRelativeTopMargin: 13 / keyboardDesignHeight
++    keyboardRelativeBottomMargin: 16 / keyboardDesignHeight
++
++    keyboardBackground: Rectangle {
++        color: "black"
++    }
++
++    keyPanel: KeyPanel {
++        id: keyPanel
++        Rectangle {
++            id: keyBackground
++            radius: 5
++            color: "#383533"
++            anchors.fill: keyPanel
++            anchors.margins: keyBackgroundMargin
++            Text {
++                id: keySmallText
++                text: control.smallText
++                visible: control.smallTextVisible
++                color: "gray"
++                anchors.right: parent.right
++                anchors.top: parent.top
++                anchors.margins: keyContentMargin / 3
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 78 * scaleHint
++                    capitalization: control.uppercased ? Font.AllUppercase : Font.MixedCase
++                }
++            }
++            Text {
++                id: keyText
++                text: control.displayText
++                color: "white"
++                horizontalAlignment: Text.AlignHCenter
++                verticalAlignment: Text.AlignVCenter
++                anchors.fill: parent
++                anchors.leftMargin: keyContentMargin
++                anchors.topMargin: keyContentMargin
++                anchors.rightMargin: keyContentMargin
++                anchors.bottomMargin: keyContentMargin
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 92 * scaleHint
++                    capitalization: control.uppercased ? Font.AllUppercase : Font.MixedCase
++                }
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: keyBackground
++                    opacity: 0.75
++                }
++                PropertyChanges {
++                    target: keyText
++                    opacity: 0.5
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: keyBackground
++                    opacity: 0.75
++                }
++                PropertyChanges {
++                    target: keyText
++                    opacity: 0.05
++                }
++            }
++        ]
++    }
++
++    backspaceKeyPanel: KeyPanel {
++        id: backspaceKeyPanel
++        Rectangle {
++            id: backspaceKeyBackground
++            radius: 5
++            color: "#23211E"
++            anchors.fill: backspaceKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Image {
++                id: backspaceKeyIcon
++                anchors.centerIn: parent
++                sourceSize.width: 159 * keyIconScale
++                sourceSize.height: 88 * keyIconScale
++                smooth: false
++                source: resourcePrefix + "images/backspace-868482.svg"
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: backspaceKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: backspaceKeyIcon
++                    opacity: 0.6
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: backspaceKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: backspaceKeyIcon
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    languageKeyPanel: KeyPanel {
++        id: languageKeyPanel
++        Rectangle {
++            id: languageKeyBackground
++            radius: 5
++            color: "#35322f"
++            anchors.fill: languageKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Image {
++                id: languageKeyIcon
++                anchors.centerIn: parent
++                sourceSize.width: 144 * keyIconScale
++                sourceSize.height: 144 * keyIconScale
++                smooth: false
++                source: resourcePrefix + "images/globe-868482.svg"
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: languageKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: languageKeyIcon
++                    opacity: 0.75
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: languageKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: languageKeyIcon
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    enterKeyPanel: KeyPanel {
++        id: enterKeyPanel
++        Rectangle {
++            id: enterKeyBackground
++            radius: 5
++            color: "#1e1b18"
++            anchors.fill: enterKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Image {
++                id: enterKeyIcon
++                visible: enterKeyText.text.length === 0
++                anchors.centerIn: parent
++                readonly property size enterKeyIconSize: {
++                    switch (control.actionId) {
++                    case EnterKeyAction.Go:
++                    case EnterKeyAction.Send:
++                    case EnterKeyAction.Next:
++                    case EnterKeyAction.Done:
++                        return Qt.size(170, 119)
++                    case EnterKeyAction.Search:
++                        return Qt.size(148, 148)
++                    default:
++                        return Qt.size(211, 80)
++                    }
++                }
++                sourceSize.width: enterKeyIconSize.width * keyIconScale
++                sourceSize.height: enterKeyIconSize.height * keyIconScale
++                smooth: false
++                source: {
++                    switch (control.actionId) {
++                    case EnterKeyAction.Go:
++                    case EnterKeyAction.Send:
++                    case EnterKeyAction.Next:
++                    case EnterKeyAction.Done:
++                        return resourcePrefix + "images/check-868482.svg"
++                    case EnterKeyAction.Search:
++                        return resourcePrefix + "images/search-868482.svg"
++                    default:
++                        return resourcePrefix + "images/enter-868482.svg"
++                    }
++                }
++            }
++            Text {
++                id: enterKeyText
++                visible: text.length !== 0
++                text: control.actionId !== EnterKeyAction.None ? control.displayText : ""
++                clip: true
++                fontSizeMode: Text.HorizontalFit
++                horizontalAlignment: Text.AlignHCenter
++                verticalAlignment: Text.AlignVCenter
++                color: "#80c342"
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 94 * scaleHint
++                    capitalization: Font.AllUppercase
++                }
++                anchors.fill: parent
++                anchors.margins: Math.round(42 * scaleHint)
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: enterKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: enterKeyIcon
++                    opacity: 0.6
++                }
++                PropertyChanges {
++                    target: enterKeyText
++                    opacity: 0.6
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: enterKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: enterKeyIcon
++                    opacity: 0.2
++                }
++                PropertyChanges {
++                    target: enterKeyText
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    hideKeyPanel: KeyPanel {
++        id: hideKeyPanel
++        Rectangle {
++            id: hideKeyBackground
++            radius: 5
++            color: "#1e1b18"
++            anchors.fill: hideKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Image {
++                id: hideKeyIcon
++                anchors.centerIn: parent
++                sourceSize.width: 144 * keyIconScale
++                sourceSize.height: 127 * keyIconScale
++                smooth: false
++                source: resourcePrefix + "images/hidekeyboard-868482.svg"
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: hideKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: hideKeyIcon
++                    opacity: 0.6
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: hideKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: hideKeyIcon
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    shiftKeyPanel: KeyPanel {
++        id: shiftKeyPanel
++        Rectangle {
++            id: shiftKeyBackground
++            radius: 5
++            color: "#1e1b18"
++            anchors.fill: shiftKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Image {
++                id: shiftKeyIcon
++                anchors.centerIn: parent
++                sourceSize.width: 144 * keyIconScale
++                sourceSize.height: 134 * keyIconScale
++                smooth: false
++                source: resourcePrefix + "images/shift-868482.svg"
++            }
++            states: [
++                State {
++                    name: "capsLockActive"
++                    when: InputContext.capsLockActive
++                    PropertyChanges {
++                        target: shiftKeyBackground
++                        color: "#5a892e"
++                    }
++                    PropertyChanges {
++                        target: shiftKeyIcon
++                        source: resourcePrefix + "images/shift-c5d6b6.svg"
++                    }
++                },
++                State {
++                    name: "shiftActive"
++                    when: InputContext.shiftActive
++                    PropertyChanges {
++                        target: shiftKeyIcon
++                        source: resourcePrefix + "images/shift-80c342.svg"
++                    }
++                }
++            ]
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: shiftKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: shiftKeyIcon
++                    opacity: 0.6
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: shiftKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: shiftKeyIcon
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    spaceKeyPanel: KeyPanel {
++        id: spaceKeyPanel
++        Rectangle {
++            id: spaceKeyBackground
++            radius: 5
++            color: "#35322f"
++            anchors.fill: spaceKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Text {
++                id: spaceKeyText
++                text: Qt.locale(InputContext.locale).nativeLanguageName
++                color: currentStyle.inputLocaleIndicatorColor
++                Behavior on color { PropertyAnimation { duration: 250 } }
++                anchors.centerIn: parent
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 98 * scaleHint
++                }
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: spaceKeyBackground
++                    opacity: 0.80
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: spaceKeyBackground
++                    opacity: 0.8
++                }
++            }
++        ]
++    }
++
++    symbolKeyPanel: KeyPanel {
++        id: symbolKeyPanel
++        Rectangle {
++            id: symbolKeyBackground
++            radius: 5
++            color: "#1e1b18"
++            anchors.fill: symbolKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Text {
++                id: symbolKeyText
++                text: control.displayText
++                color: "white"
++                horizontalAlignment: Text.AlignHCenter
++                verticalAlignment: Text.AlignVCenter
++                anchors.fill: parent
++                anchors.margins: keyContentMargin
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 94 * scaleHint
++                    capitalization: Font.AllUppercase
++                }
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: symbolKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: symbolKeyText
++                    opacity: 0.6
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: symbolKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: symbolKeyText
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    modeKeyPanel: KeyPanel {
++        id: modeKeyPanel
++        Rectangle {
++            id: modeKeyBackground
++            radius: 5
++            color: "#1e1b18"
++            anchors.fill: modeKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Text {
++                id: modeKeyText
++                text: control.displayText
++                color: "white"
++                horizontalAlignment: Text.AlignHCenter
++                verticalAlignment: Text.AlignVCenter
++                anchors.fill: parent
++                anchors.margins: keyContentMargin
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 94 * scaleHint
++                    capitalization: Font.AllUppercase
++                }
++            }
++            Rectangle {
++                id: modeKeyIndicator
++                implicitHeight: parent.height * 0.1
++                anchors.left: parent.left
++                anchors.right: parent.right
++                anchors.bottom: parent.bottom
++                anchors.leftMargin: parent.width * 0.4
++                anchors.rightMargin: parent.width * 0.4
++                anchors.bottomMargin: parent.height * 0.12
++                color: "#80c342"
++                radius: 3
++                visible: control.mode
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: modeKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: modeKeyText
++                    opacity: 0.6
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: modeKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: modeKeyText
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    handwritingKeyPanel: KeyPanel {
++        id: handwritingKeyPanel
++        Rectangle {
++            id: hwrKeyBackground
++            radius: 5
++            color: "#35322f"
++            anchors.fill: handwritingKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Image {
++                id: hwrKeyIcon
++                anchors.centerIn: parent
++                readonly property size hwrKeyIconSize: keyboard.handwritingMode ? Qt.size(124, 96) : Qt.size(156, 104)
++                sourceSize.width: hwrKeyIconSize.width * keyIconScale
++                sourceSize.height: hwrKeyIconSize.height * keyIconScale
++                smooth: false
++                source: resourcePrefix + (keyboard.handwritingMode ? "images/textmode-868482.svg" : "images/handwriting-868482.svg")
++            }
++        }
++        states: [
++            State {
++                name: "pressed"
++                when: control.pressed
++                PropertyChanges {
++                    target: hwrKeyBackground
++                    opacity: 0.80
++                }
++                PropertyChanges {
++                    target: hwrKeyIcon
++                    opacity: 0.6
++                }
++            },
++            State {
++                name: "disabled"
++                when: !control.enabled
++                PropertyChanges {
++                    target: hwrKeyBackground
++                    opacity: 0.8
++                }
++                PropertyChanges {
++                    target: hwrKeyIcon
++                    opacity: 0.2
++                }
++            }
++        ]
++    }
++
++    characterPreviewMargin: 0
++    characterPreviewDelegate: Item {
++        property string text
++        id: characterPreview
++        Rectangle {
++            id: characterPreviewBackground
++            anchors.fill: parent
++            color: "#5d5b59"
++            radius: 5
++            Text {
++                id: characterPreviewText
++                color: "white"
++                text: characterPreview.text
++                fontSizeMode: Text.HorizontalFit
++                horizontalAlignment: Text.AlignHCenter
++                verticalAlignment: Text.AlignVCenter
++                anchors.fill: parent
++                anchors.margins: Math.round(48 * scaleHint)
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 82 * scaleHint
++                }
++            }
++        }
++    }
++
++    alternateKeysListItemWidth: 99 * scaleHint
++    alternateKeysListItemHeight: 200 * scaleHint
++    alternateKeysListDelegate: Item {
++        id: alternateKeysListItem
++        width: alternateKeysListItemWidth
++        height: alternateKeysListItemHeight
++        Text {
++            id: listItemText
++            text: model.text
++            color: "#868482"
++            font {
++                family: fontFamily
++                weight: Font.Normal
++                pixelSize: 102 * scaleHint
++            }
++            anchors.centerIn: parent
++        }
++        states: State {
++            name: "current"
++            when: alternateKeysListItem.ListView.isCurrentItem
++            PropertyChanges {
++                target: listItemText
++                color: "white"
++            }
++        }
++    }
++    alternateKeysListHighlight: Rectangle {
++        color: "#5d5b59"
++        radius: 5
++    }
++    alternateKeysListBackground: Rectangle {
++        color: "#1e1b18"
++        radius: 5
++    }
++
++    selectionListHeight: 155 * scaleHint
++    selectionListDelegate: SelectionListItem {
++        id: selectionListItem
++        width: Math.round(selectionListLabel.width + selectionListLabel.anchors.leftMargin * 2)
++        Text {
++            id: selectionListLabel
++            anchors.left: parent.left
++            anchors.leftMargin: Math.round((compactSelectionList ? 50 : 190) * scaleHint)
++            anchors.verticalCenter: parent.verticalCenter
++            text: decorateText(display, wordCompletionLength)
++            color: "#80c342"
++            font {
++                family: fontFamily
++                weight: Font.Normal
++                pixelSize: 94 * scaleHint
++            }
++            function decorateText(text, wordCompletionLength) {
++                if (wordCompletionLength > 0) {
++                    return text.slice(0, -wordCompletionLength) + '<u>' + text.slice(-wordCompletionLength) + '</u>'
++                }
++                return text
++            }
++        }
++        Rectangle {
++            id: selectionListSeparator
++            width: 8 * scaleHint
++            height: 86 * scaleHint
++            radius: 2
++            color: "#35322f"
++            anchors.verticalCenter: parent.verticalCenter
++            anchors.right: parent.left
++        }
++        states: State {
++            name: "current"
++            when: selectionListItem.ListView.isCurrentItem
++            PropertyChanges {
++                target: selectionListLabel
++                color: "white"
++            }
++        }
++    }
++    selectionListBackground: Rectangle {
++        color: "#1e1b18"
++    }
++    selectionListAdd: Transition {
++        NumberAnimation { property: "y"; from: wordCandidateView.height; duration: 200 }
++        NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 200 }
++    }
++    selectionListRemove: Transition {
++        NumberAnimation { property: "y"; to: -wordCandidateView.height; duration: 200 }
++        NumberAnimation { property: "opacity"; to: 0; duration: 200 }
++    }
++
++    navigationHighlight: Rectangle {
++        color: "transparent"
++        border.color: "yellow"
++        border.width: 5
++    }
++
++    traceInputKeyPanelDelegate: TraceInputKeyPanel {
++        id: traceInputKeyPanel
++        traceMargins: keyBackgroundMargin
++        Rectangle {
++            id: traceInputKeyPanelBackground
++            radius: 5
++            color: "#35322f"
++            anchors.fill: traceInputKeyPanel
++            anchors.margins: keyBackgroundMargin
++            Text {
++                id: hwrInputModeIndicator
++                visible: control.patternRecognitionMode === InputEngine.PatternRecognitionMode.Handwriting
++                text: {
++                    switch (InputContext.inputEngine.inputMode) {
++                    case InputEngine.InputMode.Numeric:
++                        if (["ar", "fa"].indexOf(InputContext.locale.substring(0, 2)) !== -1)
++                            return "\u0660\u0661\u0662"
++                        // Fallthrough
++                    case InputEngine.InputMode.Dialable:
++                        return "123"
++                    case InputEngine.InputMode.Greek:
++                        return "ΑΒΓ"
++                    case InputEngine.InputMode.Cyrillic:
++                        return "АБВ"
++                    case InputEngine.InputMode.Arabic:
++                        if (InputContext.locale.substring(0, 2) === "fa")
++                            return "\u0627\u200C\u0628\u200C\u067E"
++                        return "\u0623\u200C\u0628\u200C\u062C"
++                    case InputEngine.InputMode.Hebrew:
++                        return "\u05D0\u05D1\u05D2"
++                    case InputEngine.InputMode.ChineseHandwriting:
++                        return "中文"
++                    case InputEngine.InputMode.JapaneseHandwriting:
++                        return "日本語"
++                    case InputEngine.InputMode.KoreanHandwriting:
++                        return "한국어"
++                    case InputEngine.InputMode.Thai:
++                        return "กขค"
++                    default:
++                        return "Abc"
++                    }
++                }
++                color: "white"
++                anchors.left: parent.left
++                anchors.top: parent.top
++                anchors.margins: keyContentMargin
++                font {
++                    family: fontFamily
++                    weight: Font.Normal
++                    pixelSize: 94 * scaleHint
++                    capitalization: {
++                        if (InputContext.capsLockActive)
++                            return Font.AllUppercase
++                        if (InputContext.shiftActive)
++                            return Font.MixedCase
++                        return Font.AllLowercase
++                    }
++                }
++            }
++        }
++        Canvas {
++            id: traceInputKeyGuideLines
++            anchors.fill: traceInputKeyPanelBackground
++            opacity: 0.1
++            onPaint: {
++                var ctx = getContext("2d")
++                ctx.lineWidth = 1
++                ctx.strokeStyle = Qt.rgba(0xFF, 0xFF, 0xFF)
++                ctx.clearRect(0, 0, width, height)
++                var i
++                var margin = Math.round(30 * scaleHint)
++                if (control.horizontalRulers) {
++                    for (i = 0; i < control.horizontalRulers.length; i++) {
++                        ctx.beginPath()
++                        var y = Math.round(control.horizontalRulers[i])
++                        var rightMargin = Math.round(width - margin)
++                        if (i + 1 === control.horizontalRulers.length) {
++                            ctx.moveTo(margin, y)
++                            ctx.lineTo(rightMargin, y)
++                        } else {
++                            var dashLen = Math.round(20 * scaleHint)
++                            for (var dash = margin, dashCount = 0;
++                                 dash < rightMargin; dash += dashLen, dashCount++) {
++                                if ((dashCount & 1) === 0) {
++                                    ctx.moveTo(dash, y)
++                                    ctx.lineTo(Math.min(dash + dashLen, rightMargin), y)
++                                }
++                            }
++                        }
++                        ctx.stroke()
++                    }
++                }
++                if (control.verticalRulers) {
++                    for (i = 0; i < control.verticalRulers.length; i++) {
++                        ctx.beginPath()
++                        ctx.moveTo(control.verticalRulers[i], margin)
++                        ctx.lineTo(control.verticalRulers[i], Math.round(height - margin))
++                        ctx.stroke()
++                    }
++                }
++            }
++            Connections {
++                target: control
++                onHorizontalRulersChanged: traceInputKeyGuideLines.requestPaint()
++                onVerticalRulersChanged: traceInputKeyGuideLines.requestPaint()
++            }
++        }
++    }
++
++    traceCanvasDelegate: TraceCanvas {
++        id: traceCanvas
++        onAvailableChanged: {
++            if (!available)
++                return
++            var ctx = getContext("2d")
++            if (parent.canvasType === "fullscreen") {
++                ctx.lineWidth = 10
++                ctx.strokeStyle = Qt.rgba(0, 0, 0)
++            } else {
++                ctx.lineWidth = 10 * scaleHint
++                ctx.strokeStyle = Qt.rgba(0xFF, 0xFF, 0xFF)
++            }
++            ctx.lineCap = "round"
++            ctx.fillStyle = ctx.strokeStyle
++        }
++        autoDestroyDelay: 800
++        onTraceChanged: if (trace === null) opacity = 0
++        Behavior on opacity { PropertyAnimation { easing.type: Easing.OutCubic; duration: 150 } }
++    }
++
++    popupListDelegate: SelectionListItem {
++        property real cursorAnchor: popupListLabel.x + popupListLabel.width
++        id: popupListItem
++        width: popupListLabel.width + popupListLabel.anchors.leftMargin * 2
++        height: popupListLabel.height + popupListLabel.anchors.topMargin * 2
++        Text {
++            id: popupListLabel
++            anchors.left: parent.left
++            anchors.top: parent.top
++            anchors.leftMargin: popupListLabel.height / 2
++            anchors.topMargin: popupListLabel.height / 3
++            text: decorateText(display, wordCompletionLength)
++            color: "#5CAA15"
++            font {
++                family: fontFamily
++                weight: Font.Normal
++                pixelSize: Qt.inputMethod.cursorRectangle.height * 0.8
++            }
++            function decorateText(text, wordCompletionLength) {
++                if (wordCompletionLength > 0) {
++                    return text.slice(0, -wordCompletionLength) + '<u>' + text.slice(-wordCompletionLength) + '</u>'
++                }
++                return text
++            }
++        }
++        states: State {
++            name: "current"
++            when: popupListItem.ListView.isCurrentItem
++            PropertyChanges {
++                target: popupListLabel
++                color: "black"
++            }
++        }
++    }
++
++    popupListBackground: Item {
++        Rectangle {
++            width: parent.width
++            height: parent.height
++            color: "white"
++            border {
++                width: 1
++                color: "#929495"
++            }
++        }
++    }
++
++    popupListAdd: Transition {
++        NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 200 }
++    }
++
++    popupListRemove: Transition {
++        NumberAnimation { property: "opacity"; to: 0; duration: 200 }
++    }
++
++    languagePopupListEnabled: true
++
++    languageListDelegate: SelectionListItem {
++        id: languageListItem
++        width: languageNameTextMetrics.width * 17
++        height: languageNameTextMetrics.height + languageListLabel.anchors.topMargin + languageListLabel.anchors.bottomMargin
++        Text {
++            id: languageListLabel
++            anchors.left: parent.left
++            anchors.top: parent.top
++            anchors.leftMargin: languageNameTextMetrics.height / 2
++            anchors.rightMargin: anchors.leftMargin
++            anchors.topMargin: languageNameTextMetrics.height / 3
++            anchors.bottomMargin: anchors.topMargin
++            text: languageNameFormatter.elidedText
++            color: "#5CAA15"
++            font {
++                family: fontFamily
++                weight: Font.Normal
++                pixelSize: 84 * scaleHint
++            }
++        }
++        TextMetrics {
++            id: languageNameTextMetrics
++            font {
++                family: fontFamily
++                weight: Font.Normal
++                pixelSize: 84 * scaleHint
++            }
++            text: "X"
++        }
++        TextMetrics {
++            id: languageNameFormatter
++            font {
++                family: fontFamily
++                weight: Font.Normal
++                pixelSize: 84 * scaleHint
++            }
++            elide: Text.ElideRight
++            elideWidth: languageListItem.width - languageListLabel.anchors.leftMargin - languageListLabel.anchors.rightMargin
++            text: displayName
++        }
++        states: State {
++            name: "current"
++            when: languageListItem.ListView.isCurrentItem
++            PropertyChanges {
++                target: languageListLabel
++                color: "black"
++            }
++        }
++    }
++
++    languageListBackground: Rectangle {
++        color: "white"
++        border {
++            width: 1
++            color: "#929495"
++        }
++    }
++
++    languageListAdd: Transition {
++        NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 200 }
++    }
++
++    languageListRemove: Transition {
++        NumberAnimation { property: "opacity"; to: 0; duration: 200 }
++    }
++
++    selectionHandle: Image {
++        sourceSize.width: 20
++        source: resourcePrefix + "images/selectionhandle-bottom.svg"
++    }
++
++    fullScreenInputContainerBackground: Rectangle {
++        color: "#FFF"
++    }
++
++    fullScreenInputBackground: Rectangle {
++        color: "#FFF"
++    }
++
++    fullScreenInputMargins: Math.round(15 * scaleHint)
++
++    fullScreenInputPadding: Math.round(30 * scaleHint)
++
++    fullScreenInputCursor: Rectangle {
++        width: 1
++        color: "#000"
++        visible: parent.blinkStatus
++    }
++
++    fullScreenInputFont.pixelSize: 58 * scaleHint
++}
+--- /dev/null
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/virtualkeyboard_default_portrait_style.qrc
+@@ -0,0 +1,17 @@
++<RCC>
++    <qresource prefix="/QtQuick/VirtualKeyboard/content/styles/default_portrait">
++        <file>style.qml</file>
++        <file>images/backspace-868482.svg</file>
++        <file>images/check-868482.svg</file>
++        <file>images/enter-868482.svg</file>
++        <file>images/globe-868482.svg</file>
++        <file>images/handwriting-868482.svg</file>
++        <file>images/hidekeyboard-868482.svg</file>
++        <file>images/search-868482.svg</file>
++        <file>images/shift-80c342.svg</file>
++        <file>images/shift-868482.svg</file>
++        <file>images/shift-c5d6b6.svg</file>
++        <file>images/textmode-868482.svg</file>
++        <file>images/selectionhandle-bottom.svg</file>
++    </qresource>
++</RCC>
+--- a/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro
++++ b/qtvirtualkeyboard/src/virtualkeyboard/virtualkeyboard.pro
+@@ -77,6 +77,8 @@ HEADERS += \
+ 
+ !no-builtin-style: RESOURCES += \
+     content/styles/default/virtualkeyboard_default_style.qrc \
++    content/styles/default_landscape/virtualkeyboard_default_landscape_style.qrc \
++    content/styles/default_portrait/virtualkeyboard_default_portrait_style.qrc \
+     content/styles/retro/virtualkeyboard_retro_style.qrc
+ 
+ RESOURCES += \
+@@ -404,6 +406,8 @@ DEFINES += \
+ 
+ OTHER_FILES += \
+     content/styles/default/*.qml \
++    content/styles/default_landscape/*.qml \
++    content/styles/default_portrait/*.qml \
+     content/styles/retro/*.qml \
+     content/*.qml \
+     content/components/*.qml \

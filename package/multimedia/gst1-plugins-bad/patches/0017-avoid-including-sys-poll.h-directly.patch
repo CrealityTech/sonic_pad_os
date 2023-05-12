@@ -1,0 +1,31 @@
+From 001bbb67e47c1b171cd1512a3e52dedbd12886fb Mon Sep 17 00:00:00 2001
+From: houxiaoni <houxiaoni@allwinnertech.com>
+Date: Tue, 14 Jul 2020 14:02:26 +0800
+Subject: [PATCH 4/5] avoid including <sys/poll.h> directly
+
+musl libc generates warnings if <sys/poll.h> is included directly.
+
+Upstream-Status: Pending
+
+Change-Id: I704f468bfdf3d528399b9bf063bcf326f52434c3
+Signed-off-by: houxiaoni <houxiaoni@allwinnertech.com>
+---
+ sys/dvb/gstdvbsrc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sys/dvb/gstdvbsrc.c b/sys/dvb/gstdvbsrc.c
+index d9bee26..2edd9fa 100644
+--- a/sys/dvb/gstdvbsrc.c
++++ b/sys/dvb/gstdvbsrc.c
+@@ -97,7 +97,7 @@
+ #include <gst/gst.h>
+ #include <gst/glib-compat-private.h>
+ #include <sys/ioctl.h>
+-#include <sys/poll.h>
++#include <poll.h>
+ #include <fcntl.h>
+ #include <errno.h>
+ #include <stdio.h>
+-- 
+1.9.1
+

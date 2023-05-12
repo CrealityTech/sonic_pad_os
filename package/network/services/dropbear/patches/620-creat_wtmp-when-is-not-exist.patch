@@ -1,0 +1,11 @@
+--- a/loginrec.c
++++ b/loginrec.c
+@@ -904,7 +904,7 @@ wtmp_write(struct logininfo *li, struct
+ 	struct stat buf;
+ 	int fd, ret = 1;
+ 
+-	if ((fd = open(WTMP_FILE, O_WRONLY|O_APPEND, 0)) < 0) {
++	if ((fd = open(WTMP_FILE, O_WRONLY|O_CREAT|O_APPEND, 0)) < 0) {
+ 		dropbear_log(LOG_WARNING, "wtmp_write: problem writing %s: %s",
+ 		    WTMP_FILE, strerror(errno));
+ 		return 0;

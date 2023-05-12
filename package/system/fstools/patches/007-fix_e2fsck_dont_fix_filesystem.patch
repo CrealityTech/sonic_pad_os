@@ -1,0 +1,11 @@
+--- a/block.c
++++ b/block.c
+@@ -769,7 +769,7 @@ static void check_filesystem(struct prob
+ 			execl(ckfs, ckfs, "-b", pr->dev, NULL);
+ 			exit(EXIT_FAILURE);
+ 		} else {
+-			execl(ckfs, ckfs, "-p", pr->dev, NULL);
++			execl(ckfs, ckfs, "-y", pr->dev, NULL);
+ 			exit(EXIT_FAILURE);
+ 		}
+ 	} else if (pid > 0) {

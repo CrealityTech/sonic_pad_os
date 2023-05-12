@@ -1,0 +1,15 @@
+--- a/conf/nginx.conf
++++ b/conf/nginx.conf
+@@ -582,6 +582,12 @@ index index.html;
+            proxy_pass http://127.0.0.1:8004;
+         }
+ 
++
++         location /control {
++           proxy_pass http://127.0.0.1:8004;
++        }
++
++
+         location ~ ^/(printer|api|access|machine|server)/ {
+             proxy_pass http://apiserver$request_uri;
+             proxy_set_header Host $http_host;

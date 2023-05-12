@@ -1,0 +1,130 @@
+From 1c18aafa880f57e5794ef48e75eb67f52b9db557 Mon Sep 17 00:00:00 2001
+From: chengweipeng <chengweipeng@allwinnertech.com>
+Date: Wed, 27 May 2020 09:06:44 +0800
+Subject: [PATCH] fix some error with openssl-1.1.x 	1. fix import hashlib
+ error 	2. fix import _ssl error 	3. fix compile error
+
+Signed-off-by: chengweipeng <chengweipeng@allwinnertech.com>
+---
+ Modules/_hashopenssl.c |  4 ++++
+ Modules/_ssl.c         | 33 ++++++++++++++++++++++++++++++---
+ 2 files changed, 34 insertions(+), 3 deletions(-)
+
+diff --git a/Modules/_hashopenssl.c b/Modules/_hashopenssl.c
+index de69f6f..a3fcc19 100644
+--- a/Modules/_hashopenssl.c
++++ b/Modules/_hashopenssl.c
+@@ -67,6 +67,10 @@
+ #define HAS_FAST_PKCS5_PBKDF2_HMAC 1
+ #endif
+ 
++#if (OPENSSL_VERSION_NUMBER >= 0x10100000L) && !defined(LIBRESSL_VERSION_NUMBER)
++#  define OPENSSL_VERSION_1_1 1
++#  define PY_OPENSSL_1_1_API 1
++#endif
+ 
+ typedef struct {
+     PyObject_HEAD
+diff --git a/Modules/_ssl.c b/Modules/_ssl.c
+index d0ce913..78d30d4 100644
+--- a/Modules/_ssl.c
++++ b/Modules/_ssl.c
+@@ -1027,8 +1027,13 @@ _get_peer_alt_names (X509 *certificate) {
+                     goto fail;
+                 }
+                 PyTuple_SET_ITEM(t, 0, v);
++# if OPENSSL_API_COMPAT < 0x10100000L
+                 v = PyString_FromStringAndSize((char *)ASN1_STRING_data(as),
+                                                ASN1_STRING_length(as));
++# else
++                v = PyString_FromStringAndSize(ASN1_STRING_get0_data(as),
++                                               ASN1_STRING_length(as));
++# endif
+                 if (v == NULL) {
+                     Py_DECREF(t);
+                     goto fail;
+@@ -1328,7 +1333,11 @@ _decode_certificate(X509 *certificate) {
+     Py_DECREF(sn_obj);
+ 
+     (void) BIO_reset(biobuf);
++# if OPENSSL_API_COMPAT < 0x10100000L
+     notBefore = X509_get_notBefore(certificate);
++# else
++    notBefore = X509_getm_notBefore(certificate);
++# endif
+     ASN1_TIME_print(biobuf, notBefore);
+     len = BIO_gets(biobuf, buf, sizeof(buf)-1);
+     if (len < 0) {
+@@ -1345,7 +1354,11 @@ _decode_certificate(X509 *certificate) {
+     Py_DECREF(pnotBefore);
+ 
+     (void) BIO_reset(biobuf);
++# if OPENSSL_API_COMPAT < 0x10100000L
+     notAfter = X509_get_notAfter(certificate);
++# else
++    notAfter = X509_getm_notAfter(certificate);
++# endif
+     ASN1_TIME_print(biobuf, notAfter);
+     len = BIO_gets(biobuf, buf, sizeof(buf)-1);
+     if (len < 0) {
+@@ -2183,24 +2196,30 @@ context_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+         return NULL;
+ 
+     PySSL_BEGIN_ALLOW_THREADS
+-    if (proto_version == PY_SSL_VERSION_TLS1)
++    if (proto_version == PY_SSL_VERSION_TLS)
++        ctx = SSL_CTX_new(TLS_method());
++#ifndef OPENSSL_NO_TLS1_METHOD
++    else if (proto_version == PY_SSL_VERSION_TLS1)
+         ctx = SSL_CTX_new(TLSv1_method());
++#endif
++#ifndef OPENSSL_NO_TLS1_1_METHOD
+ #if HAVE_TLSv1_2
+     else if (proto_version == PY_SSL_VERSION_TLS1_1)
+         ctx = SSL_CTX_new(TLSv1_1_method());
+     else if (proto_version == PY_SSL_VERSION_TLS1_2)
+         ctx = SSL_CTX_new(TLSv1_2_method());
+ #endif
++#endif
++#ifndef OPENSSL_NO_SSL3_METHOD
+ #ifndef OPENSSL_NO_SSL3
+     else if (proto_version == PY_SSL_VERSION_SSL3)
+         ctx = SSL_CTX_new(SSLv3_method());
+ #endif
++#endif
+ #ifndef OPENSSL_NO_SSL2
+     else if (proto_version == PY_SSL_VERSION_SSL2)
+         ctx = SSL_CTX_new(SSLv2_method());
+ #endif
+-    else if (proto_version == PY_SSL_VERSION_TLS)
+-        ctx = SSL_CTX_new(TLS_method());
+     else
+         proto_version = -1;
+     PySSL_END_ALLOW_THREADS
+@@ -4472,7 +4491,11 @@ init_ssl(void)
+     /* SSLeay() gives us the version of the library linked against,
+        which could be different from the headers version.
+     */
++# if OPENSSL_API_COMPAT < 0x10100000L
+     libver = SSLeay();
++# else
++    libver = OpenSSL_version_num();
++# endif
+     r = PyLong_FromUnsignedLong(libver);
+     if (r == NULL)
+         return;
+@@ -4482,7 +4505,11 @@ init_ssl(void)
+     r = Py_BuildValue("IIIII", major, minor, fix, patch, status);
+     if (r == NULL || PyModule_AddObject(m, "OPENSSL_VERSION_INFO", r))
+         return;
++# if (OPENSSL_VERSION_NUMBER < 0x10100000L)
+     r = PyString_FromString(SSLeay_version(SSLEAY_VERSION));
++# else
++    r = PyString_FromString(OpenSSL_version(OPENSSL_VERSION));
++# endif
+     if (r == NULL || PyModule_AddObject(m, "OPENSSL_VERSION", r))
+         return;
+ 
+-- 
+1.9.1
+

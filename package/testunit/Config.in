@@ -1,0 +1,9 @@
+if PACKAGE_testunit
+    comment "Settings For TESTUNIT"
+    source basic/Config.in
+    source camera/Config.in
+    source audio/Config.in
+    source network/Config.in
+    source display/Config.in
+    source multimedia/Config.in
+endif

@@ -1,0 +1,40 @@
+From 376e23e5a3e996f68576745a6d7e5c3e57452997 Mon Sep 17 00:00:00 2001
+From: houxiaoni <houxiaoni@allwinnertech.com>
+Date: Tue, 14 Jul 2020 11:20:44 +0800
+Subject: [PATCH 10/12] get caps from src pad when query caps
+
+https://bugzilla.gnome.org/show_bug.cgi?id=728312
+
+Upstream-Status: Pending
+
+Change-Id: Idbd51b5b2b90a17bd9aa404100a248ac345694c6
+Signed-off-by: houxiaoni <houxiaoni@allwinnertech.com>
+---
+ gst-libs/gst/tag/gsttagdemux.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/gst-libs/gst/tag/gsttagdemux.c b/gst-libs/gst/tag/gsttagdemux.c
+index 5c5887b..ca65102 100644
+--- a/gst-libs/gst/tag/gsttagdemux.c
++++ b/gst-libs/gst/tag/gsttagdemux.c
+@@ -1767,6 +1767,17 @@ gst_tag_demux_pad_query (GstPad * pad, GstObject * parent, GstQuery * query)
+       }
+       break;
+     }
++    case GST_QUERY_CAPS:
++    {
++      /*  We can hijack caps query if we typefind already */
++      if (demux->priv->src_caps) {
++	gst_query_set_caps_result (query, demux->priv->src_caps);
++	res = TRUE;
++      } else {
++	res = gst_pad_query_default (pad, parent, query);
++      }
++      break;
++    }
+     default:
+       res = gst_pad_query_default (pad, parent, query);
+       break;
+-- 
+1.9.1
+

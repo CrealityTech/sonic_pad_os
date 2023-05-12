@@ -1,0 +1,27 @@
+From 92f3edcf07e028b218354d3369b9cd3aa3d2817e Mon Sep 17 00:00:00 2001
+From: houxiaoni <houxiaoni@allwinnertech.com>
+Date: Mon, 13 Jul 2020 15:20:26 +0800
+Subject: [PATCH] remove po to fix compile error
+
+Change-Id: Ifcea05d378eebd1aea752579ff85a1515d891176
+Signed-off-by: houxiaoni <houxiaoni@allwinnertech.com>
+---
+ Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index ad6fd4d..2c6186c 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1,7 +1,7 @@
+ DISTCHECK_CONFIGURE_FLAGS=--enable-gtk-doc
+ 
+ SUBDIRS = \
+-	gst-libs gst ext docs m4 tests common pkgconfig po
++	gst-libs gst ext docs m4 tests common pkgconfig
+ 	
+ EXTRA_DIST = \
+ 	depcomp \
+-- 
+1.9.1
+

@@ -1,0 +1,740 @@
+{
+    "lvgl": {
+        "name": "explorer.lvgl",
+        "resolution": {
+            "height": 480,
+            "width": 800
+        },
+        "screen color": "#f1f0f5",
+        "widgets": [
+            {
+                "accessible": true,
+                "class": "lv_list",
+                "drag": false,
+                "edge flash": true,
+                "geometry": {
+                    "height": 386,
+                    "width": 600,
+                    "x": 200,
+                    "y": 94
+                },
+                "items": [
+                ],
+                "locked": false,
+                "name": "list_2",
+                "scroll propagation": false,
+                "single mode": true,
+                "styles": [
+                    {
+                        "base": "lv_style_btn_pr",
+                        "body": {
+                            "border": {
+                                "width": 0
+                            },
+                            "grad_color": "#f47e4f",
+                            "main_color": "#f47e4f",
+                            "radius": 0
+                        },
+                        "type": "LV_LIST_STYLE_BTN_PR"
+                    },
+                    {
+                        "base": "lv_style_btn_rel",
+                        "body": {
+                            "border": {
+                                "width": 0
+                            },
+                            "grad_color": "#c4c4c7",
+                            "main_color": "#c4c4c7",
+                            "radius": 0
+                        },
+                        "text": {
+                            "color": "#383834"
+                        },
+                        "type": "LV_LIST_STYLE_BTN_REL"
+                    },
+                    {
+                        "base": "lv_style_btn_tgl_pr",
+                        "body": {
+                            "grad_color": "#f47e4f",
+                            "main_color": "#f47e4f",
+                            "radius": 0
+                        },
+                        "type": "LV_LIST_STYLE_BTN_TGL_PR"
+                    },
+                    {
+                        "base": "lv_style_btn_tgl_rel",
+                        "body": {
+                            "border": {
+                                "width": 0
+                            },
+                            "grad_color": "#f47e4f",
+                            "main_color": "#f47e4f",
+                            "radius": 0
+                        },
+                        "text": {
+                            "color": "#ffffff"
+                        },
+                        "type": "LV_LIST_STYLE_BTN_TGL_REL"
+                    },
+                    {
+                        "base": "lv_style_pretty",
+                        "body": {
+                            "border": {
+                                "width": 0
+                            },
+                            "grad_color": "#6f6f6f",
+                            "main_color": "#6f6f6f",
+                            "padding": {
+                                "bottom": 0,
+                                "inner": 0,
+                                "left": 0,
+                                "right": 0,
+                                "top": 0
+                            },
+                            "radius": 0
+                        },
+                        "type": "LV_LIST_STYLE_SCRL"
+                    },
+                    {
+                        "body": {
+                            "border": {
+                                "color": "#000000",
+                                "opa": 255,
+                                "part": 15,
+                                "width": 0
+                            },
+                            "grad_color": "#5596d8",
+                            "main_color": "#5596d8",
+                            "opa": 255,
+                            "padding": {
+                                "bottom": 5,
+                                "inner": 5,
+                                "left": 5,
+                                "right": 5,
+                                "top": 5
+                            },
+                            "radius": 0,
+                            "shadow": {
+                                "color": "#808080",
+                                "type": 1,
+                                "width": 0
+                            }
+                        },
+                        "image": {
+                            "color": "#f0f0f0",
+                            "intense": 0,
+                            "opa": 255
+                        },
+                        "text": {
+                            "color": "#f0f0f0",
+                            "font": "Roboto 16",
+                            "letter_space": 0,
+                            "line_space": 2,
+                            "opa": 255,
+                            "sel_color": "#5596d8"
+                        },
+                        "type": "LV_LIST_STYLE_EDGE_FLASH"
+                    }
+                ],
+                "visible": true,
+                "widget": "List"
+            },
+            {
+                "accessible": true,
+                "children": [
+                    {
+                        "accessible": true,
+                        "class": "lv_list",
+                        "drag": false,
+                        "edge flash": false,
+                        "geometry": {
+                            "height": 222,
+                            "width": 200,
+                            "x": 0,
+                            "y": 40
+                        },
+                        "items": [
+                        ],
+                        "locked": false,
+                        "name": "medium_list_1",
+                        "scroll propagation": false,
+                        "single mode": true,
+                        "styles": [
+                            {
+                                "base": "lv_style_btn_pr",
+                                "body": {
+                                    "border": {
+                                        "color": "#b0b0b0",
+                                        "part": 1
+                                    },
+                                    "grad_color": "#eb703e",
+                                    "main_color": "#eb703e",
+                                    "radius": 0
+                                },
+                                "type": "LV_LIST_STYLE_BTN_PR"
+                            },
+                            {
+                                "base": "lv_style_btn_rel",
+                                "body": {
+                                    "border": {
+                                        "color": "#404040",
+                                        "opa": 76,
+                                        "part": 8
+                                    },
+                                    "grad_color": "#c4c4c7",
+                                    "main_color": "#c4c4c7",
+                                    "radius": 0
+                                },
+                                "text": {
+                                    "color": "#000000"
+                                },
+                                "type": "LV_LIST_STYLE_BTN_REL"
+                            },
+                            {
+                                "base": "lv_style_btn_tgl_pr",
+                                "body": {
+                                    "border": {
+                                        "color": "#b0b0b0",
+                                        "part": 1
+                                    },
+                                    "grad_color": "#eb703e",
+                                    "main_color": "#eb703e",
+                                    "radius": 0
+                                },
+                                "type": "LV_LIST_STYLE_BTN_TGL_PR"
+                            },
+                            {
+                                "base": "lv_style_btn_tgl_rel",
+                                "body": {
+                                    "border": {
+                                        "color": "#b0b0b0",
+                                        "part": 9
+                                    },
+                                    "grad_color": "#eb703e",
+                                    "main_color": "#eb703e",
+                                    "radius": 0
+                                },
+                                "type": "LV_LIST_STYLE_BTN_TGL_REL"
+                            },
+                            {
+                                "base": "lv_style_pretty",
+                                "body": {
+                                    "padding": {
+                                        "bottom": 0,
+                                        "inner": 0,
+                                        "left": 0,
+                                        "right": 0,
+                                        "top": 0
+                                    },
+                                    "radius": 0
+                                },
+                                "type": "LV_LIST_STYLE_SCRL"
+                            },
+                            {
+                                "base": "lv_style_transp_fit",
+                                "body": {
+                                    "border": {
+                                        "opa": 0
+                                    }
+                                },
+                                "type": "LV_LIST_STYLE_BG"
+                            },
+                            {
+                                "body": {
+                                    "border": {
+                                        "color": "#000000",
+                                        "opa": 255,
+                                        "part": 15,
+                                        "width": 0
+                                    },
+                                    "grad_color": "#5596d8",
+                                    "main_color": "#5596d8",
+                                    "opa": 255,
+                                    "padding": {
+                                        "bottom": 5,
+                                        "inner": 5,
+                                        "left": 5,
+                                        "right": 5,
+                                        "top": 5
+                                    },
+                                    "radius": 0,
+                                    "shadow": {
+                                        "color": "#808080",
+                                        "type": 1,
+                                        "width": 0
+                                    }
+                                },
+                                "image": {
+                                    "color": "#f0f0f0",
+                                    "intense": 0,
+                                    "opa": 255
+                                },
+                                "text": {
+                                    "color": "#f0f0f0",
+                                    "font": "Roboto 16",
+                                    "letter_space": 0,
+                                    "line_space": 2,
+                                    "opa": 255,
+                                    "sel_color": "#5596d8"
+                                },
+                                "type": "LV_LIST_STYLE_EDGE_FLASH"
+                            },
+                            {
+                                "base": "lv_style_pretty_color",
+                                "body": {
+                                    "border": {
+                                        "opa": 0
+                                    }
+                                },
+                                "type": "LV_LIST_STYLE_SB"
+                            }
+                        ],
+                        "visible": true,
+                        "widget": "List"
+                    },
+                    {
+                        "accessible": true,
+                        "children": [
+                            {
+                                "accessible": true,
+                                "align": "Left",
+                                "anim speed": 25,
+                                "body draw": false,
+                                "class": "lv_label",
+                                "drag": false,
+                                "geometry": {
+                                    "height": 19,
+                                    "width": 59,
+                                    "x": 70,
+                                    "y": 13
+                                },
+                                "locked": false,
+                                "long mode": "Expand",
+                                "name": "label_2",
+                                "recolor": false,
+                                "text": "Medium",
+                                "visible": true,
+                                "widget": "Label"
+                            }
+                        ],
+                        "class": "lv_cont",
+                        "drag": false,
+                        "fit": {
+                            "cont_bottom_fit": 0,
+                            "cont_left_fit": 0,
+                            "cont_right_fit": 0,
+                            "cont_top_fit": 0
+                        },
+                        "geometry": {
+                            "height": 42,
+                            "width": 200,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "layout": "Off",
+                        "locked": false,
+                        "name": "container_7",
+                        "styles": [
+                            {
+                                "base": "lv_style_pretty",
+                                "body": {
+                                    "radius": 0
+                                },
+                                "type": "LV_CONT_STYLE_MAIN"
+                            }
+                        ],
+                        "visible": true,
+                        "widget": "Container"
+                    }
+                ],
+                "class": "lv_cont",
+                "drag": false,
+                "fit": {
+                    "cont_bottom_fit": 0,
+                    "cont_left_fit": 0,
+                    "cont_right_fit": 0,
+                    "cont_top_fit": 0
+                },
+                "geometry": {
+                    "height": 262,
+                    "width": 200,
+                    "x": 0,
+                    "y": 54
+                },
+                "layout": "Off",
+                "locked": false,
+                "name": "medium_cont",
+                "styles": [
+                    {
+                        "base": "lv_style_pretty",
+                        "body": {
+                            "border": {
+                                "color": "#000000",
+                                "part": 8
+                            },
+                            "grad_color": "#e7e5e4",
+                            "main_color": "#e7e5e4",
+                            "radius": 0
+                        },
+                        "type": "LV_CONT_STYLE_MAIN"
+                    }
+                ],
+                "visible": true,
+                "widget": "Container"
+            },
+            {
+                "accessible": true,
+                "children": [
+                    {
+                        "accessible": true,
+                        "auto size": true,
+                        "class": "lv_img",
+                        "drag": false,
+                        "geometry": {
+                            "height": 32,
+                            "width": 32,
+                            "x": 9,
+                            "y": 12
+                        },
+                        "locked": false,
+                        "name": "image_1",
+                        "offset": {
+                            "X": 0,
+                            "Y": 0
+                        },
+                        "source": "home_return.png",
+                        "styles": [
+                            {
+                                "base": "lv_style_plain",
+                                "image": {
+                                    "color": "#ffffff",
+                                    "intense": 255
+                                },
+                                "type": "LV_IMG_STYLE_MAIN"
+                            }
+                        ],
+                        "visible": true,
+                        "widget": "Image"
+                    },
+                    {
+                        "accessible": true,
+                        "align": "Left",
+                        "anim speed": 25,
+                        "body draw": false,
+                        "class": "lv_label",
+                        "drag": false,
+                        "geometry": {
+                            "height": 26,
+                            "width": 80,
+                            "x": 46,
+                            "y": 15
+                        },
+                        "locked": false,
+                        "long mode": "Expand",
+                        "name": "label_5",
+                        "recolor": false,
+                        "styles": [
+                            {
+                                "base": "lv_style_transp",
+                                "text": {
+                                    "color": "#ffffff",
+                                    "font": "Roboto 22"
+                                },
+                                "type": "LV_LABEL_STYLE_MAIN"
+                            }
+                        ],
+                        "text": "Explorer",
+                        "visible": true,
+                        "widget": "Label"
+                    }
+                ],
+                "class": "lv_cont",
+                "drag": false,
+                "fit": {
+                    "cont_bottom_fit": 0,
+                    "cont_left_fit": 0,
+                    "cont_right_fit": 0,
+                    "cont_top_fit": 0
+                },
+                "geometry": {
+                    "height": 55,
+                    "width": 800,
+                    "x": 0,
+                    "y": 0
+                },
+                "layout": "Off",
+                "locked": false,
+                "name": "container_3",
+                "styles": [
+                    {
+                        "base": "lv_style_pretty",
+                        "body": {
+                            "border": {
+                                "color": "#a3a3a3",
+                                "opa": 255,
+                                "part": 1
+                            },
+                            "grad_color": "#53514a",
+                            "main_color": "#53514a",
+                            "radius": 0
+                        },
+                        "type": "LV_CONT_STYLE_MAIN"
+                    }
+                ],
+                "visible": true,
+                "widget": "Container"
+            },
+            {
+                "accessible": true,
+                "children": [
+                    {
+                        "accessible": true,
+                        "children": [
+                            {
+                                "accessible": true,
+                                "align": "Left",
+                                "anim speed": 25,
+                                "body draw": false,
+                                "class": "lv_label",
+                                "drag": false,
+                                "geometry": {
+                                    "height": 19,
+                                    "width": 83,
+                                    "x": 59,
+                                    "y": 7
+                                },
+                                "locked": false,
+                                "long mode": "Expand",
+                                "name": "label_1",
+                                "recolor": false,
+                                "text": "Information",
+                                "visible": true,
+                                "widget": "Label"
+                            }
+                        ],
+                        "class": "lv_cont",
+                        "drag": false,
+                        "fit": {
+                            "cont_bottom_fit": 0,
+                            "cont_left_fit": 0,
+                            "cont_right_fit": 0,
+                            "cont_top_fit": 0
+                        },
+                        "geometry": {
+                            "height": 39,
+                            "width": 200,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "layout": "Off",
+                        "locked": false,
+                        "name": "container_5",
+                        "styles": [
+                            {
+                                "base": "lv_style_pretty",
+                                "body": {
+                                    "radius": 0
+                                },
+                                "type": "LV_CONT_STYLE_MAIN"
+                            }
+                        ],
+                        "visible": true,
+                        "widget": "Container"
+                    },
+                    {
+                        "accessible": true,
+                        "align": "Left",
+                        "anim speed": 25,
+                        "body draw": false,
+                        "class": "lv_label",
+                        "drag": false,
+                        "geometry": {
+                            "height": 19,
+                            "width": 65,
+                            "x": 36,
+                            "y": 67
+                        },
+                        "locked": false,
+                        "long mode": "Expand",
+                        "name": "label_4",
+                        "recolor": false,
+                        "text": "File Size:",
+                        "visible": true,
+                        "widget": "Label"
+                    },
+                    {
+                        "accessible": true,
+                        "align": "Left",
+                        "anim speed": 25,
+                        "body draw": false,
+                        "class": "lv_label",
+                        "drag": false,
+                        "geometry": {
+                            "height": 19,
+                            "width": 104,
+                            "x": 42,
+                            "y": 98
+                        },
+                        "locked": false,
+                        "long mode": "Expand",
+                        "name": "label_7",
+                        "recolor": false,
+                        "text": "Modified time:",
+                        "visible": true,
+                        "widget": "Label"
+                    },
+                    {
+                        "accessible": true,
+                        "align": "Left",
+                        "anim speed": 25,
+                        "body draw": false,
+                        "class": "lv_label",
+                        "drag": false,
+                        "geometry": {
+                            "height": 19,
+                            "width": 31,
+                            "x": 118,
+                            "y": 67
+                        },
+                        "locked": false,
+                        "long mode": "Expand",
+                        "name": "label_6",
+                        "recolor": false,
+                        "text": "Text",
+                        "visible": true,
+                        "widget": "Label"
+                    },
+                    {
+                        "accessible": true,
+                        "align": "Left",
+                        "anim speed": 25,
+                        "body draw": false,
+                        "class": "lv_label",
+                        "drag": false,
+                        "geometry": {
+                            "height": 19,
+                            "width": 134,
+                            "x": 32,
+                            "y": 126
+                        },
+                        "locked": false,
+                        "long mode": "Expand",
+                        "name": "label_8",
+                        "recolor": false,
+                        "text": "1970/1/1 08:00:00",
+                        "visible": true,
+                        "widget": "Label"
+                    }
+                ],
+                "class": "lv_cont",
+                "drag": false,
+                "fit": {
+                    "cont_bottom_fit": 0,
+                    "cont_left_fit": 0,
+                    "cont_right_fit": 0,
+                    "cont_top_fit": 0
+                },
+                "geometry": {
+                    "height": 165,
+                    "width": 200,
+                    "x": 0,
+                    "y": 315
+                },
+                "layout": "Off",
+                "locked": false,
+                "name": "container_1",
+                "styles": [
+                    {
+                        "base": "lv_style_pretty",
+                        "body": {
+                            "grad_color": "#e7e5e4",
+                            "main_color": "#e7e5e4",
+                            "radius": 0
+                        },
+                        "type": "LV_CONT_STYLE_MAIN"
+                    }
+                ],
+                "visible": true,
+                "widget": "Container"
+            },
+            {
+                "accessible": true,
+                "children": [
+                    {
+                        "accessible": true,
+                        "auto size": true,
+                        "class": "lv_img",
+                        "drag": false,
+                        "geometry": {
+                            "height": 32,
+                            "width": 32,
+                            "x": 5,
+                            "y": 5
+                        },
+                        "locked": false,
+                        "name": "image_3",
+                        "offset": {
+                            "X": 0,
+                            "Y": 0
+                        },
+                        "source": "explorer_opendir.png",
+                        "visible": true,
+                        "widget": "Image"
+                    }
+                ],
+                "class": "lv_cont",
+                "drag": false,
+                "fit": {
+                    "cont_bottom_fit": 0,
+                    "cont_left_fit": 0,
+                    "cont_right_fit": 0,
+                    "cont_top_fit": 0
+                },
+                "geometry": {
+                    "height": 42,
+                    "width": 600,
+                    "x": 200,
+                    "y": 53
+                },
+                "layout": "Centered row",
+                "locked": false,
+                "name": "direct_cont",
+                "styles": [
+                    {
+                        "base": "lv_style_pretty",
+                        "body": {
+                            "border": {
+                                "part": 3
+                            },
+                            "radius": 0
+                        },
+                        "type": "LV_CONT_STYLE_MAIN"
+                    }
+                ],
+                "visible": true,
+                "widget": "Container"
+            },
+            {
+                "accessible": true,
+                "auto size": true,
+                "class": "lv_img",
+                "drag": false,
+                "geometry": {
+                    "height": 32,
+                    "width": 32,
+                    "x": 763,
+                    "y": 59
+                },
+                "locked": false,
+                "name": "image_2",
+                "offset": {
+                    "X": 0,
+                    "Y": 0
+                },
+                "source": "explorer_return.png",
+                "visible": true,
+                "widget": "Image"
+            }
+        ]
+    }
+}

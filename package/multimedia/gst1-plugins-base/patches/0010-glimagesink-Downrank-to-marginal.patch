@@ -1,0 +1,33 @@
+From 323a1897feb20d8c0a8b02755cffd9eaebf0b270 Mon Sep 17 00:00:00 2001
+From: houxiaoni <houxiaoni@allwinnertech.com>
+Date: Tue, 14 Jul 2020 11:16:21 +0800
+Subject: [PATCH 08/12] glimagesink: Downrank to marginal
+
+On desktop, where there is good OpenGL, xvimagesink will come up first,
+on other platforms, OpenGL can't be trusted because it's either software (like
+in a VM) or broken (like on embedded)., so let ximagesink come above.
+
+Upstream-Status: Submitted [https://bugzilla.gnome.org/show_bug.cgi?id=751684]
+
+Change-Id: I7f3fa97530209545dbc9ea90e3a5ecda8258443d
+Signed-off-by: houxiaoni <houxiaoni@allwinnertech.com>
+---
+ ext/gl/gstopengl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ext/gl/gstopengl.c b/ext/gl/gstopengl.c
+index fc67298..028edbd 100644
+--- a/ext/gl/gstopengl.c
++++ b/ext/gl/gstopengl.c
+@@ -124,7 +124,7 @@ plugin_init (GstPlugin * plugin)
+ #endif
+ 
+   if (!gst_element_register (plugin, "glimagesink",
+-          GST_RANK_SECONDARY, gst_gl_image_sink_bin_get_type ())) {
++          GST_RANK_MARGINAL, gst_gl_image_sink_bin_get_type ())) {
+     return FALSE;
+   }
+ 
+-- 
+1.9.1
+

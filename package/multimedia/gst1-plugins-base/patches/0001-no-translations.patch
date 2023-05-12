@@ -1,0 +1,47 @@
+From 92e3f0131524f9cd643b71d246d3ee89dbb0d024 Mon Sep 17 00:00:00 2001
+From: houxiaoni <houxiaoni@allwinnertech.com>
+Date: Mon, 13 Jul 2020 14:43:53 +0800
+Subject: [PATCH] no translations
+
+Change-Id: I515b40f79479616646d96e590d9b374ecabc5936
+Signed-off-by: houxiaoni <houxiaoni@allwinnertech.com>
+---
+ Makefile.am  | 2 --
+ configure.ac | 1 -
+ 2 files changed, 3 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 020e2e6..a16410c 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -13,7 +13,6 @@ SUBDIRS = 			\
+ 	tools 			\
+ 	tests 			\
+ 	docs			\
+-	po 			\
+ 	common 			\
+ 	m4
+ 
+@@ -24,7 +23,6 @@ DIST_SUBDIRS = 			\
+ 	gst sys ext		\
+ 	tools 			\
+ 	tests 			\
+-	po 			\
+ 	common 			\
+ 	m4
+ 
+diff --git a/configure.ac b/configure.ac
+index 1287583..356ca4e 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1030,7 +1030,6 @@ docs/Makefile
+ docs/libs/Makefile
+ docs/plugins/Makefile
+ docs/version.entities
+-po/Makefile.in
+ common/Makefile
+ common/m4/Makefile
+ m4/Makefile
+-- 
+1.9.1
+

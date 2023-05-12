@@ -1,0 +1,18 @@
+menuconfig TINATEST_SYS_GLOBAL_INFO_LANG
+    bool "language"
+    default n
+
+if TINATEST_SYS_GLOBAL_INFO_LANG
+choice
+	prompt "TinaTest Language"
+	default TINATEST_SYS_GLOBAL_INFO_LANG_EN
+
+config TINATEST_SYS_GLOBAL_INFO_LANG_en
+	bool "English"
+
+config TINATEST_SYS_GLOBAL_INFO_LANG_zh
+	bool "Chiness"
+
+endchoice
+endif
+

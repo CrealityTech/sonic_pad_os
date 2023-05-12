@@ -1,0 +1,127 @@
+diff --git a/qtbase/src/plugins/platforms/linuxfb/qlinuxfbscreen.cpp b/qtbase/src/plugins/platforms/linuxfb/qlinuxfbscreen.cpp
+index dc7ea08..237fca1 100644
+--- a/qtbase/src/plugins/platforms/linuxfb/qlinuxfbscreen.cpp
++++ b/qtbase/src/plugins/platforms/linuxfb/qlinuxfbscreen.cpp
+@@ -241,7 +241,7 @@ static QImage::Format determineFormat(const fb_var_screeninfo &info, int depth)
+     default:
+         break;
+     }
+-
++       qDebug() << "*******************************************" << format << "************************************************";
+     return format;
+ }
+ 
+@@ -287,7 +287,7 @@ static void blankScreen(int fd, bool on)
+ }
+ 
+ QLinuxFbScreen::QLinuxFbScreen(const QStringList &args)
+-    : mArgs(args), mFbFd(-1), mTtyFd(-1), mBlitter(0)
++    : mArgs(args), mFbFd(-1), mTtyFd(-1), mBlitter(0),mRotation(0)
+ {
+     mMmap.data = 0;
+ }
+@@ -313,7 +313,9 @@ bool QLinuxFbScreen::initialize()
+     QRegularExpression mmSizeRx(QLatin1String("mmsize=(\\d+)x(\\d+)"));
+     QRegularExpression sizeRx(QLatin1String("size=(\\d+)x(\\d+)"));
+     QRegularExpression offsetRx(QLatin1String("offset=(\\d+)x(\\d+)"));
+-
++       // add by immorta start
++       QRegularExpression rotationRx(QLatin1String("rotation=(0|90|180|270)"));
++       // add by immorta end
+     QString fbDevice, ttyDevice;
+     QSize userMmSize;
+     QRect userGeometry;
+@@ -334,6 +336,10 @@ bool QLinuxFbScreen::initialize()
+             ttyDevice = match.captured(1);
+         else if (arg.contains(fbRx, &match))
+             fbDevice = match.captured(1);
++               // add by immortal start
++               else if (arg.contains(rotationRx, &match))
++                       mRotation = match.captured(1).toInt();
++               // add by immortal end
+     }
+ 
+     if (fbDevice.isEmpty()) {
+@@ -372,10 +378,20 @@ bool QLinuxFbScreen::initialize()
+     mDepth = determineDepth(vinfo);
+     mBytesPerLine = finfo.line_length;
+     QRect geometry = determineGeometry(vinfo, userGeometry);
++       // add by immortal start
++       QRect originalGeometry = geometry;
++       if( 90 == mRotation  || 270 == mRotation )
++    {
++               int tmp = geometry.width();
++        geometry.setWidth(geometry.height());
++        geometry.setHeight(tmp);
++    }
++       // add by immortal end
+     mGeometry = QRect(QPoint(0, 0), geometry.size());
+     mFormat = determineFormat(vinfo, mDepth);
+-    mPhysicalSize = determinePhysicalSize(vinfo, userMmSize, geometry.size());
+ 
++    //mPhysicalSize = determinePhysicalSize(vinfo, userMmSize, geometry.size());
++       mPhysicalSize = determinePhysicalSize(vinfo, userMmSize, originalGeometry.size());
+     // mmap the framebuffer
+     mMmap.size = finfo.smem_len;
+     uchar *data = (unsigned char *)mmap(0, mMmap.size, PROT_READ | PROT_WRITE, MAP_SHARED, mFbFd, 0);
+@@ -384,11 +400,13 @@ bool QLinuxFbScreen::initialize()
+         return false;
+     }
+ 
+-    mMmap.offset = geometry.y() * mBytesPerLine + geometry.x() * mDepth / 8;
++    //mMmap.offset = geometry.y() * mBytesPerLine + geometry.x() * mDepth / 8;
++       mMmap.offset = originalGeometry.y() * mBytesPerLine + originalGeometry.x() * mDepth / 8;
+     mMmap.data = data + mMmap.offset;
+ 
+     QFbScreen::initializeCompositor();
+-    mFbScreenImage = QImage(mMmap.data, geometry.width(), geometry.height(), mBytesPerLine, mFormat);
++    //mFbScreenImage = QImage(mMmap.data, geometry.width(), geometry.height(), mBytesPerLine, mFormat);
++       mFbScreenImage = QImage(mMmap.data, originalGeometry.width(), originalGeometry.height(), mBytesPerLine, mFormat);
+ 
+     mCursor = new QFbCursor(this);
+ 
+@@ -412,10 +430,26 @@ QRegion QLinuxFbScreen::doRedraw()
+     if (!mBlitter)
+         mBlitter = new QPainter(&mFbScreenImage);
+ 
++       const QVector<QRect> rects = touched.rects();
+     mBlitter->setCompositionMode(QPainter::CompositionMode_Source);
+-    for (const QRect &rect : touched)
+-        mBlitter->drawImage(rect, mScreenImage, rect);
+-
++       for (int i = 0; i < rects.size(); ++i)
++       {
++               if( 90 == mRotation || 270 == mRotation )
++        {
++                       mBlitter->translate(mGeometry.height()/2, mGeometry.width()/2);
++        }
++        else if( 180 == mRotation )
++        {
++            mBlitter->translate(mGeometry.width()/2, mGeometry.height()/2);
++        }
++        if( mRotation != 0 )
++        {
++            mBlitter->rotate(mRotation);
++            mBlitter->translate(-mGeometry.width()/2, -mGeometry.height()/2);
++        }
++        mBlitter->drawImage(rects[i], mScreenImage, rects[i]);
++               mBlitter->resetTransform();
++    }
+     return touched;
+ }
+ 
+diff --git a/qtbase/src/plugins/platforms/linuxfb/qlinuxfbscreen.h b/qtbase/src/plugins/platforms/linuxfb/qlinuxfbscreen.h
+index c7ce455..7164e5b 100644
+--- a/qtbase/src/plugins/platforms/linuxfb/qlinuxfbscreen.h
++++ b/qtbase/src/plugins/platforms/linuxfb/qlinuxfbscreen.h
+@@ -64,7 +64,9 @@ private:
+     QStringList mArgs;
+     int mFbFd;
+     int mTtyFd;
+-
++       // add by immortal start
++       int mRotation;
++       // add by immortal end
+     QImage mFbScreenImage;
+     int mBytesPerLine;
+     int mOldTtyMode;

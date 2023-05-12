@@ -1,0 +1,37 @@
+From 4771da2f7028e1cbdc1123fa01ab4504d1416046 Mon Sep 17 00:00:00 2001
+From: liumingyuan <liumingyuan@allwinnertech.com>
+Date: Tue, 2 Jun 2020 13:49:30 +0800
+Subject: [PATCH] hciattach_xradio: add bt lpm enable.
+
+Signed-off-by: liumingyuan <liumingyuan@allwinnertech.com>
+---
+ tools/hciattach_xradio.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/tools/hciattach_xradio.c b/tools/hciattach_xradio.c
+index d75df45..b83bd44 100644
+--- a/tools/hciattach_xradio.c
++++ b/tools/hciattach_xradio.c
+@@ -313,8 +313,8 @@ enum {
+ #endif
+ 
+ /* proc fs node for sleep bt device */
+-#ifndef VENDOR_BTWAKE_PROC_NODE
+-#define VENDOR_BTWAKE_PROC_NODE	"/proc/bluetooth/sleep/btwrite"
++#ifndef VENDOR_BTWRITE_PROC_NODE
++#define VENDOR_BTWRITE_PROC_NODE	"/proc/bluetooth/sleep/btwrite"
+ #endif
+ 
+ #ifndef VENDOR_BTWAKE_PROC_NODE
+@@ -1550,5 +1550,8 @@ int xradio_init(int fd, int def_speed, int speed, struct termios *ti,
+ 		proc_enable_hci(fd);
+ 	}
+ 
++#ifdef CONFIG_XR829_BT_LPM
++    upio_set(UPIO_LPM_MODE, UPIO_ASSERT, 0);
++#endif
+ 	return 0;
+ }
+-- 
+1.9.1
+

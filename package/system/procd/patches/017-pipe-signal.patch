@@ -1,0 +1,115 @@
+diff --git a/signal.c b/signal.c
+index 16824f7..83a4db0 100644
+--- a/signal.c
++++ b/signal.c
+@@ -17,8 +17,15 @@
+
+ #include <unistd.h>
+
++#include <fcntl.h>
++#include <libubox/uloop.h>
++#include <libubox/runqueue.h>
++#include <libubox/ustream.h>
++
+ #include "procd.h"
+
++#define PIPE_SIGNAL
++
+ static void do_reboot(void)
+ {
+ 	LOG("reboot\n");
+@@ -79,11 +86,87 @@ struct sigaction sa_dummy = {
+ 	.sa_flags = SA_SIGINFO
+ };
+
++#ifdef PIPE_SIGNAL
++int pipefd[2];
++struct ustream_fd sig_stream_fd;
++
++void sig_handler(int signal);
++void sig_handler(int signal)
++{
++	switch(signal) {
++	case SIGINT:
++	case SIGTERM:
++	case SIGUSR1:
++	case SIGUSR2:
++		signal_shutdown(signal, NULL, NULL);
++		break;
++	case SIGSEGV:
++	case SIGBUS:
++		signal_crash(signal, NULL, NULL);
++		break;
++	case SIGHUP:
++	case SIGKILL:
++	case SIGSTOP:
++		signal_dummy(signal, NULL, NULL);
++		break;
++	default:
++		ERROR("Sig handler got unexpected signal %d\n", signal);
++	}
++}
++
++static void pipe_cb(struct ustream *s, int bytes)
++{
++	char *str;
++
++	do {
++		str = ustream_get_read_buf(s, NULL);
++		if (!str)
++			break;
++		int *signal = (int *)str;
++		sig_handler(*signal);
++		ustream_consume(s, sizeof(int));
++	} while (1);
++}
++
++static void signal_pipe(int signal, siginfo_t *siginfo, void *data)
++{
++	write(pipefd[1], &signal, sizeof(int));
++}
++
++struct sigaction sa_pipe = {
++	.sa_sigaction = signal_pipe,
++	.sa_flags = SA_SIGINFO
++};
++#endif
++
+ void procd_signal(void)
+ {
+ 	signal(SIGPIPE, SIG_IGN);
+ 	if (getpid() != 1)
+ 		return;
++#ifdef PIPE_SIGNAL
++	if (pipe(pipefd) == -1) {
++		ERROR("Failed to create pipe\n");
++		return;
++	}
++
++	fcntl(pipefd[0], F_SETFD, FD_CLOEXEC);
++	fcntl(pipefd[1], F_SETFD, FD_CLOEXEC);
++	sig_stream_fd.stream.string_data = false,
++	sig_stream_fd.stream.notify_read = pipe_cb,
++	ustream_fd_init(&sig_stream_fd, pipefd[0]);
++
++	sigaction(SIGTERM, &sa_pipe, NULL);
++	sigaction(SIGINT, &sa_pipe, NULL);
++	sigaction(SIGUSR1, &sa_pipe, NULL);
++	sigaction(SIGUSR2, &sa_pipe, NULL);
++	sigaction(SIGSEGV, &sa_pipe, NULL);
++	sigaction(SIGBUS, &sa_pipe, NULL);
++	sigaction(SIGHUP, &sa_pipe, NULL);
++	sigaction(SIGKILL, &sa_pipe, NULL);
++	sigaction(SIGSTOP, &sa_pipe, NULL);
++
++#else
+ 	sigaction(SIGTERM, &sa_shutdown, NULL);
+ 	sigaction(SIGINT, &sa_shutdown, NULL);
+ 	sigaction(SIGUSR1, &sa_shutdown, NULL);
+@@ -93,5 +176,6 @@ void procd_signal(void)
+ 	sigaction(SIGHUP, &sa_dummy, NULL);
+ 	sigaction(SIGKILL, &sa_dummy, NULL);
+ 	sigaction(SIGSTOP, &sa_dummy, NULL);
++#endif
+ 	reboot(RB_DISABLE_CAD);
+ }

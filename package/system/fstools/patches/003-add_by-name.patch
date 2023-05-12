@@ -1,0 +1,10 @@
+--- a/block.c
++++ b/block.c
+@@ -557,6 +557,7 @@ static void cache_load(int mtd)
+ 	_cache_load("/dev/xvd*");
+ 	_cache_load("/dev/dm-*");
+     _cache_load("/dev/nand*");
++    _cache_load("/dev/by-name/*");
+ }
+ 
+ 

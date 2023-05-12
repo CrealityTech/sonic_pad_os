@@ -1,0 +1,5 @@
+menuconfig TESTUNIT_BASIC_CPU
+    bool "cpu"
+    default y
+	select PACKAGE_benchmarks
+	select BENCHMARKS_LINPACK

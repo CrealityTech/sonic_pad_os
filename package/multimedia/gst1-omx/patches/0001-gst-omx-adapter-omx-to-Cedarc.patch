@@ -1,0 +1,3283 @@
+From c665fd6a8f5eaafc6bcf68bec599dd12b0fed423 Mon Sep 17 00:00:00 2001
+From: junsenhuang <junsenhuang@allwinnertech.com>
+Date: Fri, 17 May 2019 11:17:03 +0800
+Subject: [PATCH 2/9] gst-omx: adapter omx to Cedarc.
+
+Change-Id: I431bf07e21f9e8b3096aa00a7959aef2665fdefc
+---
+ config/bellagio/gstomx.conf | 232 +++++++++++++++++++++++++++++++++++++-------
+ omx/Makefile.am             |  41 +++++++-
+ omx/gstomx.c                |  28 +++++-
+ omx/gstomxavsdec.c          |  98 +++++++++++++++++++
+ omx/gstomxavsdec.h          |  59 +++++++++++
+ omx/gstomxdivx4dec.c        |  99 +++++++++++++++++++
+ omx/gstomxdivx4dec.h        |  59 +++++++++++
+ omx/gstomxdivxdec.c         | 101 +++++++++++++++++++
+ omx/gstomxdivxdec.h         |  59 +++++++++++
+ omx/gstomxflv1dec.c         |  99 +++++++++++++++++++
+ omx/gstomxflv1dec.h         |  59 +++++++++++
+ omx/gstomxmjpegenc.c        | 174 +++++++++++++++++++++++++++++++++
+ omx/gstomxmjpegenc.h        |  59 +++++++++++
+ omx/gstomxmpeg1dec.c        |  99 +++++++++++++++++++
+ omx/gstomxmpeg1dec.h        |  59 +++++++++++
+ omx/gstomxmsmpeg4v1dec.c    |  99 +++++++++++++++++++
+ omx/gstomxmsmpeg4v1dec.h    |  59 +++++++++++
+ omx/gstomxmsmpeg4v2dec.c    |  99 +++++++++++++++++++
+ omx/gstomxmsmpeg4v2dec.h    |  59 +++++++++++
+ omx/gstomxmsmpeg4v3dec.c    |  99 +++++++++++++++++++
+ omx/gstomxmsmpeg4v3dec.h    |  59 +++++++++++
+ omx/gstomxrv20dec.c         |  99 +++++++++++++++++++
+ omx/gstomxrv20dec.h         |  59 +++++++++++
+ omx/gstomxrxdec.c           |  99 +++++++++++++++++++
+ omx/gstomxrxdec.h           |  59 +++++++++++
+ omx/gstomxvp6dec.c          |  98 +++++++++++++++++++
+ omx/gstomxvp6dec.h          |  59 +++++++++++
+ omx/gstomxvp9dec.c          |  98 +++++++++++++++++++
+ omx/gstomxvp9dec.h          |  59 +++++++++++
+ omx/gstomxwmv1dec.c         |  99 +++++++++++++++++++
+ omx/gstomxwmv1dec.h         |  59 +++++++++++
+ omx/gstomxwmv2dec.c         |  99 +++++++++++++++++++
+ omx/gstomxwmv2dec.h         |  59 +++++++++++
+ omx/gstomxxviddec.c         |  98 +++++++++++++++++++
+ omx/gstomxxviddec.h         |  59 +++++++++++
+ omx/openmax/OMX_Video.h     |  20 ++++
+ 36 files changed, 2882 insertions(+), 40 deletions(-)
+ create mode 100644 omx/gstomxavsdec.c
+ create mode 100644 omx/gstomxavsdec.h
+ create mode 100644 omx/gstomxdivx4dec.c
+ create mode 100644 omx/gstomxdivx4dec.h
+ create mode 100644 omx/gstomxdivxdec.c
+ create mode 100644 omx/gstomxdivxdec.h
+ create mode 100644 omx/gstomxflv1dec.c
+ create mode 100644 omx/gstomxflv1dec.h
+ create mode 100644 omx/gstomxmjpegenc.c
+ create mode 100644 omx/gstomxmjpegenc.h
+ create mode 100644 omx/gstomxmpeg1dec.c
+ create mode 100644 omx/gstomxmpeg1dec.h
+ create mode 100644 omx/gstomxmsmpeg4v1dec.c
+ create mode 100644 omx/gstomxmsmpeg4v1dec.h
+ create mode 100644 omx/gstomxmsmpeg4v2dec.c
+ create mode 100644 omx/gstomxmsmpeg4v2dec.h
+ create mode 100644 omx/gstomxmsmpeg4v3dec.c
+ create mode 100644 omx/gstomxmsmpeg4v3dec.h
+ create mode 100644 omx/gstomxrv20dec.c
+ create mode 100644 omx/gstomxrv20dec.h
+ create mode 100644 omx/gstomxrxdec.c
+ create mode 100644 omx/gstomxrxdec.h
+ create mode 100644 omx/gstomxvp6dec.c
+ create mode 100644 omx/gstomxvp6dec.h
+ create mode 100644 omx/gstomxvp9dec.c
+ create mode 100644 omx/gstomxvp9dec.h
+ create mode 100644 omx/gstomxwmv1dec.c
+ create mode 100644 omx/gstomxwmv1dec.h
+ create mode 100644 omx/gstomxwmv2dec.c
+ create mode 100644 omx/gstomxwmv2dec.h
+ create mode 100644 omx/gstomxxviddec.c
+ create mode 100644 omx/gstomxxviddec.h
+
+diff --git a/config/bellagio/gstomx.conf b/config/bellagio/gstomx.conf
+index 0e856be..481aff0 100644
+--- a/config/bellagio/gstomx.conf
++++ b/config/bellagio/gstomx.conf
+@@ -1,60 +1,224 @@
++[omxmpeg2videodec]
++type-name=GstOMXMPEG2VideoDec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.mpeg2
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
++
++[omxmjpegvideodec]
++type-name=GstOMXMJPEGDec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.mjpeg
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
++
++[omxmpeg1videodec]
++type-name=GstOMXMPEG1Dec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.mpeg1
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
++
+ [omxmpeg4videodec]
+ type-name=GstOMXMPEG4VideoDec
+-core-name=/usr/local/lib/libomxil-bellagio.so.0
+-component-name=OMX.st.video_decoder.mpeg4
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.mpeg4
+ rank=257
+ in-port-index=0
+ out-port-index=1
+-hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
+ 
+-[omxh264dec]
+-type-name=GstOMXH264Dec
+-core-name=/usr/local/lib/libomxil-bellagio.so.0
+-component-name=OMX.st.video_decoder.avc
++[omxmsmpeg4v1videodec]
++type-name=GstOMXMSMPEG4V1Dec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.msmpeg4v1
+ rank=257
+ in-port-index=0
+ out-port-index=1
+-hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
+ 
+-[omxmpeg4videoenc]
+-type-name=GstOMXMPEG4VideoEnc
+-core-name=/usr/local/lib/libomxil-bellagio.so.0
+-component-name=OMX.st.video_encoder.mpeg4
+-rank=0
++[omxmsmpeg4v2videodec]
++type-name=GstOMXMSMPEG4V2Dec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.msmpeg4v2
++rank=257
+ in-port-index=0
+ out-port-index=1
+-hacks=event-port-settings-changed-ndata-parameter-swap;video-framerate-integer;syncframe-flag-not-used
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
+ 
+-[omxaacenc]
+-type-name=GstOMXAACEnc
+-core-name=/usr/local/lib/libomxil-bellagio.so.0
+-component-name=OMX.st.audio_encoder.aac
+-rank=0
++[omxmsmpeg4v3videodec]
++type-name=GstOMXMSMPEG4V3Dec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.msmpeg4v3
++rank=257
+ in-port-index=0
+ out-port-index=1
+-hacks=event-port-settings-changed-ndata-parameter-swap
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
+ 
+-[omxmp3dec]
+-type-name=GstOMXMP3Dec
+-core-name=/usr/lib/libomxil-bellagio.so.0
+-component-name=OMX.st.audio_decoder.mp3.mad
+-rank=0
++[omxdivxvideodec]
++type-name=GstOMXDIVXDec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.divx
++rank=257
+ in-port-index=0
+ out-port-index=1
+-hacks=event-port-settings-changed-ndata-parameter-swap;no-component-role;no-disable-outport;drain-may-not-return
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
++
++[omxxvidvideodec]
++type-name=GstOMXXVIDDec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.xvid
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
++
++[omxflv1videodec]
++type-name=GstOMXFLV1Dec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.s263
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
++
++[omxrv20videodec]
++type-name=GstOMXRV20Dec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.rxg2
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
++
++[omxh263videodec]
++type-name=GstOMXH263Dec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.h263
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
+ 
+ [omxh264dec]
+ type-name=GstOMXH264Dec
+-core-name=/usr/lib/libomxil-bellagio.so.0
+-component-name=OMX.mesa.video_decoder.avc
+-rank=0
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.avc
++rank=257
+ in-port-index=0
+ out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
+ 
+-[omxmpeg2dec]
+-type-name=GstOMXMPEG2VideoDec
+-core-name=/usr/lib/libomxil-bellagio.so.0
+-component-name=OMX.mesa.video_decoder.mpeg2
+-rank=0
++[omxwmv1videodec]
++type-name=GstOMXWMV1Dec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.wmv1
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;video-framerate-integer;syncframe-flag-not-used;no-disable-outport
++
++[omxwmv2videodec]
++type-name=GstOMXWMV2Dec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.wmv2
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;video-framerate-integer;syncframe-flag-not-used;no-disable-outport
++
++[omxvc1videodec]
++type-name=GstOMXWMVDec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.vc1
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;video-framerate-integer;syncframe-flag-not-used;no-disable-outport
++
++[omxvp6videodec]
++type-name=GstOMXVP6Dec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.vp6
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;video-framerate-integer;syncframe-flag-not-used;no-disable-outport
++
++[omxvp8videodec]
++type-name=GstOMXVP8Dec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.vp8
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;video-framerate-integer;syncframe-flag-not-used;no-disable-outport
++
++[omxvp9videodec]
++type-name=GstOMXVP9Dec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.vp9
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;video-framerate-integer;syncframe-flag-not-used;no-disable-outport
++
++[omxhevcvideodec]
++type-name=GstOMXH265Dec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.hevc
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;video-framerate-integer;syncframe-flag-not-used;no-disable-outport
++
++[omxh264videoenc]
++type-name=GstOMXH264Enc
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.encoder.avc
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;video-framerate-integer;syncframe-flag-not-used;no-disable-outport
++
++[omxmjpegvideoenc]
++type-name=GstOMXMJPEGEnc
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.encoder.mjpeg
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;video-framerate-integer;syncframe-flag-not-used;no-disable-outport
++
++[omxrxvideodec]
++type-name=GstOMXRXDec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.rx
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
++
++[omxdivx4videodec]
++type-name=GstOMXDIVX4Dec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.divx4
++rank=257
++in-port-index=0
++out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
++
++[omxavsvideodec]
++type-name=GstOMXAVSDec
++core-name=/usr/lib/libOmxCore.so
++component-name=OMX.allwinner.video.decoder.avs
++rank=257
+ in-port-index=0
+ out-port-index=1
++hacks=event-port-settings-changed-ndata-parameter-swap;event-port-settings-changed-port-0-to-1;no-disable-outport
+diff --git a/omx/Makefile.am b/omx/Makefile.am
+index 3019040..1447f69 100644
+--- a/omx/Makefile.am
++++ b/omx/Makefile.am
+@@ -49,7 +49,23 @@ libgstomx_la_SOURCES = \
+ 	gstomxamrdec.c \
+ 	gstomxaudiosink.c \
+ 	gstomxanalogaudiosink.c \
+-	gstomxhdmiaudiosink.c	
++	gstomxhdmiaudiosink.c   \
++	gstomxdivxdec.c         \
++	gstomxxviddec.c         \
++	gstomxmsmpeg4v3dec.c    \
++	gstomxmsmpeg4v2dec.c    \
++	gstomxmsmpeg4v1dec.c    \
++	gstomxmpeg1dec.c        \
++	gstomxwmv1dec.c         \
++	gstomxwmv2dec.c         \
++	gstomxvp6dec.c          \
++	gstomxvp9dec.c          \
++	gstomxflv1dec.c         \
++	gstomxrv20dec.c         \
++	gstomxdivx4dec.c        \
++	gstomxrxdec.c           \
++	gstomxavsdec.c          \
++	gstomxmjpegenc.c
+ 
+ noinst_HEADERS = \
+ 	gstomx.h \
+@@ -79,11 +95,28 @@ noinst_HEADERS = \
+ 	gstomxamrdec.h \
+ 	gstomxaudiosink.h \
+ 	gstomxanalogaudiosink.h \
+-	gstomxhdmiaudiosink.h 	
++	gstomxhdmiaudiosink.h	\
++	gstomxdivxdec.h         \
++	gstomxxviddec.h         \
++	gstomxmsmpeg4v3dec.h    \
++	gstomxmsmpeg4v2dec.h    \
++	gstomxmsmpeg4v1dec.h    \
++	gstomxmpeg1dec.h        \
++	gstomxwmv1dec.h         \
++	gstomxwmv2dec.h         \
++	gstomxvp6dec.h          \
++	gstomxvp9dec.h          \
++	gstomxh264dec.h         \
++	gstomxflv1dec.h         \
++	gstomxrv20dec.h         \
++	gstomxdivx4dec.h        \
++	gstomxrxdec.h           \
++	gstomxavsdec.h          \
++	gstomxmjpegenc.h
+ 
+-if !HAVE_EXTERNAL_OMX
++#if !HAVE_EXTERNAL_OMX
+ OMX_INCLUDEPATH = -I$(abs_srcdir)/openmax
+-endif
++#endif
+ 
+ libgstomx_la_CFLAGS = \
+ 	-DGST_USE_UNSTABLE_API=1 \
+diff --git a/omx/gstomx.c b/omx/gstomx.c
+index d7181bf..ceeadfe 100644
+--- a/omx/gstomx.c
++++ b/omx/gstomx.c
+@@ -49,6 +49,23 @@
+ #include "gstomxamrdec.h"
+ #include "gstomxanalogaudiosink.h"
+ #include "gstomxhdmiaudiosink.h"
++#include "gstomxdivxdec.h"
++#include "gstomxxviddec.h"
++#include "gstomxmsmpeg4v3dec.h"
++#include "gstomxmsmpeg4v2dec.h"
++#include "gstomxmsmpeg4v1dec.h"
++#include "gstomxmpeg1dec.h"
++#include "gstomxwmv1dec.h"
++#include "gstomxwmv2dec.h"
++#include "gstomxvp6dec.h"
++#include "gstomxvp9dec.h"
++#include "gstomxh265dec.h"
++#include "gstomxflv1dec.h"
++#include "gstomxrv20dec.h"
++#include "gstomxdivx4dec.h"
++#include "gstomxrxdec.h"
++#include "gstomxavsdec.h"
++#include "gstomxmjpegenc.h"
+ 
+ GST_DEBUG_CATEGORY (gstomx_debug);
+ #define GST_CAT_DEFAULT gstomx_debug
+@@ -2571,8 +2588,15 @@ static const GGetTypeFunction types[] = {
+   gst_omx_h264_enc_get_type, gst_omx_h263_enc_get_type,
+   gst_omx_aac_enc_get_type, gst_omx_mjpeg_dec_get_type,
+   gst_omx_aac_dec_get_type, gst_omx_mp3_dec_get_type,
+-  gst_omx_aac_dec_get_type, gst_omx_mp3_enc_get_type,
+-  gst_omx_amr_dec_get_type
++  gst_omx_amr_dec_get_type, gst_omx_divx_dec_get_type,
++  gst_omx_xvid_dec_get_type, gst_omx_msmpeg4v3_dec_get_type,
++  gst_omx_msmpeg4v2_dec_get_type, gst_omx_msmpeg4v1_dec_get_type,
++  gst_omx_mpeg1_dec_get_type, gst_omx_wmv1_dec_get_type,
++  gst_omx_wmv2_dec_get_type, gst_omx_vp6_dec_get_type,
++  gst_omx_vp9_dec_get_type, gst_omx_h265_dec_get_type,
++  gst_omx_flv1_dec_get_type, gst_omx_rv20_dec_get_type,
++  gst_omx_rx_dec_get_type, gst_omx_divx4_dec_get_type,
++  gst_omx_avs_dec_get_type, gst_omx_mjpeg_enc_get_type
+ #ifdef HAVE_VP8
+       , gst_omx_vp8_dec_get_type
+ #endif
+diff --git a/omx/gstomxavsdec.c b/omx/gstomxavsdec.c
+new file mode 100644
+index 0000000..fab5dd0
+--- /dev/null
++++ b/omx/gstomxavsdec.c
+@@ -0,0 +1,98 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++
++#include "gstomxavsdec.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_avs_dec_debug_category);
++#define GST_CAT_DEFAULT gst_omx_avs_dec_debug_category
++
++/* prototypes */
++static gboolean gst_omx_avs_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++static gboolean gst_omx_avs_dec_set_format (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_avs_dec_debug_category, "omxavsdec", 0, \
++      "debug category for gst-omx video decoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXAVSDec, gst_omx_avs_dec,
++    GST_TYPE_OMX_VIDEO_DEC, DEBUG_INIT);
++
++static void
++gst_omx_avs_dec_class_init (GstOMXAVSDecClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoDecClass *videodec_class = GST_OMX_VIDEO_DEC_CLASS (klass);
++
++  videodec_class->is_format_change =
++      GST_DEBUG_FUNCPTR (gst_omx_avs_dec_is_format_change);
++  videodec_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_avs_dec_set_format);
++
++  videodec_class->cdata.default_sink_template_caps = "video/x-cavs, "
++	  "width=(int) [1,MAX], " "height=(int) [1,MAX]";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX AVS Video Decoder",
++      "Codec/Decoder/Video",
++      "Decode AVS video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videodec_class->cdata, "video_decoder.avs");
++}
++
++static void
++gst_omx_avs_dec_init (GstOMXAVSDec * self)
++{
++}
++
++static gboolean
++gst_omx_avs_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state)
++{
++  return FALSE;
++}
++
++static gboolean
++gst_omx_avs_dec_set_format (GstOMXVideoDec * dec, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  gboolean ret;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++
++  gst_omx_port_get_port_definition (port, &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingAVS;
++  ret = gst_omx_port_update_port_definition (port, &port_def) == OMX_ErrorNone;
++
++  return ret;
++}
+diff --git a/omx/gstomxavsdec.h b/omx/gstomxavsdec.h
+new file mode 100644
+index 0000000..29172a2
+--- /dev/null
++++ b/omx/gstomxavsdec.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_AVS_DEC_H__
++#define __GST_OMX_AVS_DEC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideodec.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_AVS_DEC \
++  (gst_omx_avs_dec_get_type())
++#define GST_OMX_AVS_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_AVS_DEC,GstOMXAVSDec))
++#define GST_OMX_AVS_DEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_AVS_DEC,GstOMXAVSDecClass))
++#define GST_OMX_AVS_DEC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_AVS_DEC,GstOMXAVSDecClass))
++#define GST_IS_OMX_AVS_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_AVS_DEC))
++#define GST_IS_OMX_AVS_DEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_AVS_DEC))
++
++typedef struct _GstOMXAVSDec GstOMXAVSDec;
++typedef struct _GstOMXAVSDecClass GstOMXAVSDecClass;
++
++struct _GstOMXAVSDec
++{
++  GstOMXVideoDec parent;
++};
++
++struct _GstOMXAVSDecClass
++{
++  GstOMXVideoDecClass parent_class;
++};
++
++GType gst_omx_avs_dec_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_AVS_DEC_H__ */
+diff --git a/omx/gstomxdivx4dec.c b/omx/gstomxdivx4dec.c
+new file mode 100644
+index 0000000..52dd5ad
+--- /dev/null
++++ b/omx/gstomxdivx4dec.c
+@@ -0,0 +1,99 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++
++#include "gstomxdivx4dec.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_divx4_dec_debug_category);
++#define GST_CAT_DEFAULT gst_omx_divx4_dec_debug_category
++
++/* prototypes */
++static gboolean gst_omx_divx4_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++static gboolean gst_omx_divx4_dec_set_format (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_divx4_dec_debug_category, "omxdivx4dec", 0, \
++      "debug category for gst-omx video decoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXDIVX4Dec, gst_omx_divx4_dec,
++    GST_TYPE_OMX_VIDEO_DEC, DEBUG_INIT);
++
++static void
++gst_omx_divx4_dec_class_init (GstOMXDIVX4DecClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoDecClass *videodec_class = GST_OMX_VIDEO_DEC_CLASS (klass);
++
++  videodec_class->is_format_change =
++      GST_DEBUG_FUNCPTR (gst_omx_divx4_dec_is_format_change);
++  videodec_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_divx4_dec_set_format);
++
++  videodec_class->cdata.default_sink_template_caps = "video/x-divx, "
++	  "divxversion=(int)4, "
++	  "width=(int) [1,MAX], " "height=(int) [1,MAX]";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX DIVX4 Video Decoder",
++      "Codec/Decoder/Video",
++      "Decode DIVX4 video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videodec_class->cdata, "video_decoder.divx4");
++}
++
++static void
++gst_omx_divx4_dec_init (GstOMXDIVX4Dec * self)
++{
++}
++
++static gboolean
++gst_omx_divx4_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state)
++{
++  return FALSE;
++}
++
++static gboolean
++gst_omx_divx4_dec_set_format (GstOMXVideoDec * dec, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  gboolean ret;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++
++  gst_omx_port_get_port_definition (port, &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingDIVX4;
++  ret = gst_omx_port_update_port_definition (port, &port_def) == OMX_ErrorNone;
++
++  return ret;
++}
+diff --git a/omx/gstomxdivx4dec.h b/omx/gstomxdivx4dec.h
+new file mode 100644
+index 0000000..d9b0927
+--- /dev/null
++++ b/omx/gstomxdivx4dec.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_DIVX4_DEC_H__
++#define __GST_OMX_DIVX4_DEC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideodec.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_DIVX4_DEC \
++  (gst_omx_divx4_dec_get_type())
++#define GST_OMX_DIVX4_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_DIVX4_DEC,GstOMXDIVX4Dec))
++#define GST_OMX_DIVX4_DEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_DIVX4_DEC,GstOMXDIVX4DecClass))
++#define GST_OMX_DIVX4_DEC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_DIVX4_DEC,GstOMXDIVX4DecClass))
++#define GST_IS_OMX_DIVX4_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_DIVX4_DEC))
++#define GST_IS_OMX_DIVX4_DEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_DIVX4_DEC))
++
++typedef struct _GstOMXDIVX4Dec GstOMXDIVX4Dec;
++typedef struct _GstOMXDIVX4DecClass GstOMXDIVX4DecClass;
++
++struct _GstOMXDIVX4Dec
++{
++  GstOMXVideoDec parent;
++};
++
++struct _GstOMXDIVX4DecClass
++{
++  GstOMXVideoDecClass parent_class;
++};
++
++GType gst_omx_divx4_dec_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_DIVX4_DEC_H__ */
+diff --git a/omx/gstomxdivxdec.c b/omx/gstomxdivxdec.c
+new file mode 100644
+index 0000000..ba3e4fa
+--- /dev/null
++++ b/omx/gstomxdivxdec.c
+@@ -0,0 +1,101 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++#include "OMX_Video.h"
++#include <gst/gst.h>
++#include <stdio.h>
++
++#include "gstomxdivxdec.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_divx_dec_debug_category);
++#define GST_CAT_DEFAULT gst_omx_divx_dec_debug_category
++
++/* prototypes */
++static gboolean gst_omx_divx_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++static gboolean gst_omx_divx_dec_set_format (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_divx_dec_debug_category, "omxdivxdec", 0, \
++      "debug category for gst-omx video decoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXDIVXDec, gst_omx_divx_dec,
++    GST_TYPE_OMX_VIDEO_DEC, DEBUG_INIT);
++
++static void
++gst_omx_divx_dec_class_init (GstOMXDIVXDecClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoDecClass *videodec_class = GST_OMX_VIDEO_DEC_CLASS (klass);
++  printf("divx class init!\n");
++  videodec_class->is_format_change =
++      GST_DEBUG_FUNCPTR (gst_omx_divx_dec_is_format_change);
++  videodec_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_divx_dec_set_format);
++
++  videodec_class->cdata.default_sink_template_caps = "video/x-divx, "
++	  "divxversion=(int)5, "
++      "parsed=(boolean) true, " "width=(int) [1,MAX], " "height=(int) [1,MAX]";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX divx Video Decoder",
++      "Codec/Decoder/Video",
++      "Decode divx video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videodec_class->cdata, "video_decoder.divx");
++}
++
++static void
++gst_omx_divx_dec_init (GstOMXDIVXDec * self)
++{
++	printf("divx dec init!\n");
++}
++
++static gboolean
++gst_omx_divx_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state)
++{
++  return FALSE;
++}
++
++static gboolean
++gst_omx_divx_dec_set_format (GstOMXVideoDec * dec, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  gboolean ret;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++  printf("divx set format!\n");
++  gst_omx_port_get_port_definition (port, &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingDIVX;
++  ret = gst_omx_port_update_port_definition (port, &port_def) == OMX_ErrorNone;
++
++  return ret;
++}
+diff --git a/omx/gstomxdivxdec.h b/omx/gstomxdivxdec.h
+new file mode 100644
+index 0000000..c4bc66f
+--- /dev/null
++++ b/omx/gstomxdivxdec.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_DIVX_DEC_H__
++#define __GST_OMX_DIVX_DEC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideodec.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_DIVX_DEC \
++  (gst_omx_divx_dec_get_type())
++#define GST_OMX_DIVX_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_DIVX_DEC,GstOMXDIVXDec))
++#define GST_OMX_DIVX_DEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_DIVX_DEC,GstOMXDIVXDecClass))
++#define GST_OMX_DIVX_DEC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_DIVX_DEC,GstOMXDIVXDecClass))
++#define GST_IS_OMX_DIVX_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_DIVX_DEC))
++#define GST_IS_OMX_DIVX_DEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_DIVX_DEC))
++
++typedef struct _GstOMXDIVXDec GstOMXDIVXDec;
++typedef struct _GstOMXDIVXDecClass GstOMXDIVXDecClass;
++
++struct _GstOMXDIVXDec
++{
++  GstOMXVideoDec parent;
++};
++
++struct _GstOMXDIVXDecClass
++{
++  GstOMXVideoDecClass parent_class;
++};
++
++GType gst_omx_divx_dec_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_DIVX_DEC_H__ */
+diff --git a/omx/gstomxflv1dec.c b/omx/gstomxflv1dec.c
+new file mode 100644
+index 0000000..5dcc80e
+--- /dev/null
++++ b/omx/gstomxflv1dec.c
+@@ -0,0 +1,99 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++
++#include "gstomxflv1dec.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_flv1_dec_debug_category);
++#define GST_CAT_DEFAULT gst_omx_flv1_dec_debug_category
++
++/* prototypes */
++static gboolean gst_omx_flv1_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++static gboolean gst_omx_flv1_dec_set_format (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_flv1_dec_debug_category, "omxflv1dec", 0, \
++      "debug category for gst-omx video decoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXFLV1Dec, gst_omx_flv1_dec,
++    GST_TYPE_OMX_VIDEO_DEC, DEBUG_INIT);
++
++static void
++gst_omx_flv1_dec_class_init (GstOMXFLV1DecClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoDecClass *videodec_class = GST_OMX_VIDEO_DEC_CLASS (klass);
++
++  videodec_class->is_format_change =
++      GST_DEBUG_FUNCPTR (gst_omx_flv1_dec_is_format_change);
++  videodec_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_flv1_dec_set_format);
++
++  videodec_class->cdata.default_sink_template_caps = "video/x-flash-video, "
++      "flvversion=(int)1, "
++	  "width=(int) [1,MAX], " "height=(int) [1,MAX]";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX FLV1 Video Decoder",
++      "Codec/Decoder/Video",
++      "Decode FLV1 video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videodec_class->cdata, "video_decoder.flv1");
++}
++
++static void
++gst_omx_flv1_dec_init (GstOMXFLV1Dec * self)
++{
++}
++
++static gboolean
++gst_omx_flv1_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state)
++{
++  return FALSE;
++}
++
++static gboolean
++gst_omx_flv1_dec_set_format (GstOMXVideoDec * dec, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  gboolean ret;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++
++  gst_omx_port_get_port_definition (port, &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingS263;
++  ret = gst_omx_port_update_port_definition (port, &port_def) == OMX_ErrorNone;
++
++  return ret;
++}
+diff --git a/omx/gstomxflv1dec.h b/omx/gstomxflv1dec.h
+new file mode 100644
+index 0000000..1845caf
+--- /dev/null
++++ b/omx/gstomxflv1dec.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_FLV1_DEC_H__
++#define __GST_OMX_FLV1_DEC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideodec.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_FLV1_DEC \
++  (gst_omx_flv1_dec_get_type())
++#define GST_OMX_FLV1_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_FLV1_DEC,GstOMXFLV1Dec))
++#define GST_OMX_FLV1_DEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_FLV1_DEC,GstOMXFLV1DecClass))
++#define GST_OMX_FLV1_DEC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_FLV1_DEC,GstOMXFLV1DecClass))
++#define GST_IS_OMX_FLV1_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_FLV1_DEC))
++#define GST_IS_OMX_FLV1_DEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_FLV1_DEC))
++
++typedef struct _GstOMXFLV1Dec GstOMXFLV1Dec;
++typedef struct _GstOMXFLV1DecClass GstOMXFLV1DecClass;
++
++struct _GstOMXFLV1Dec
++{
++  GstOMXVideoDec parent;
++};
++
++struct _GstOMXFLV1DecClass
++{
++  GstOMXVideoDecClass parent_class;
++};
++
++GType gst_omx_flv1_dec_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_FLV1_DEC_H__ */
+diff --git a/omx/gstomxmjpegenc.c b/omx/gstomxmjpegenc.c
+new file mode 100644
+index 0000000..ed2234e
+--- /dev/null
++++ b/omx/gstomxmjpegenc.c
+@@ -0,0 +1,174 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++
++#include "gstomxmjpegenc.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_mjpeg_enc_debug_category);
++#define GST_CAT_DEFAULT gst_omx_mjpeg_enc_debug_category
++
++/* prototypes */
++static gboolean gst_omx_mjpeg_enc_set_format (GstOMXVideoEnc * enc,
++    GstOMXPort * port, GstVideoCodecState * state);
++static GstCaps *gst_omx_mjpeg_enc_get_caps (GstOMXVideoEnc * enc,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_mjpeg_enc_debug_category, "omxmjpegenc", 0, \
++      "debug category for gst-omx video encoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXMJPEGEnc, gst_omx_mjpeg_enc,
++    GST_TYPE_OMX_VIDEO_ENC, DEBUG_INIT);
++
++static void
++gst_omx_mjpeg_enc_class_init (GstOMXMJPEGEncClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoEncClass *videoenc_class = GST_OMX_VIDEO_ENC_CLASS (klass);
++  printf("mjpeg class init!\n");
++  videoenc_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_mjpeg_enc_set_format);
++  videoenc_class->get_caps = GST_DEBUG_FUNCPTR (gst_omx_mjpeg_enc_get_caps);
++
++  videoenc_class->cdata.default_src_template_caps = "image/jpeg";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX Mjpeg Video Encoder",
++      "Codec/Encoder/Video",
++      "Encode Mjpeg video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videoenc_class->cdata, "video_encoder.mjpeg");
++}
++
++static void
++gst_omx_mjpeg_enc_init (GstOMXMJPEGEnc * self)
++{
++}
++
++static gboolean
++gst_omx_mjpeg_enc_set_format (GstOMXVideoEnc * enc, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  GstOMXMJPEGEnc *self = GST_OMX_MJPEG_ENC (enc);
++  GstCaps *peercaps;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++  OMX_VIDEO_PARAM_PROFILELEVELTYPE param;
++  OMX_ERRORTYPE err;
++  guint profile_id, level_id;
++
++  gst_omx_port_get_port_definition (GST_OMX_VIDEO_ENC (self)->enc_out_port,
++      &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingMJPEG;
++  err =
++      gst_omx_port_update_port_definition (GST_OMX_VIDEO_ENC
++      (self)->enc_out_port, &port_def);
++  if (err != OMX_ErrorNone)
++    return FALSE;
++
++  GST_OMX_INIT_STRUCT (&param);
++  param.nPortIndex = GST_OMX_VIDEO_ENC (self)->enc_out_port->index;
++  err =
++      gst_omx_component_get_parameter (GST_OMX_VIDEO_ENC (self)->enc,
++      OMX_IndexParamVideoProfileLevelCurrent, &param);
++  if (err != OMX_ErrorNone) {
++    GST_WARNING_OBJECT (self,
++        "Getting profile/level not supported by component");
++    return TRUE;
++  }
++
++  peercaps = gst_pad_peer_query_caps (GST_VIDEO_ENCODER_SRC_PAD (enc),
++      gst_pad_get_pad_template_caps (GST_VIDEO_ENCODER_SRC_PAD (enc)));
++  if (peercaps) {
++    GstStructure *s;
++
++    if (gst_caps_is_empty (peercaps)) {
++      gst_caps_unref (peercaps);
++      GST_ERROR_OBJECT (self, "Empty caps");
++      return FALSE;
++    }
++
++    s = gst_caps_get_structure (peercaps, 0);
++    gst_caps_unref (peercaps);
++  }
++
++  err =
++      gst_omx_component_set_parameter (GST_OMX_VIDEO_ENC (self)->enc,
++      OMX_IndexParamVideoProfileLevelCurrent, &param);
++  if (err == OMX_ErrorUnsupportedIndex) {
++    GST_WARNING_OBJECT (self,
++        "Setting profile/level not supported by component");
++  } else if (err != OMX_ErrorNone) {
++    GST_ERROR_OBJECT (self,
++        "Error setting profile %u and level %u: %s (0x%08x)",
++        (guint) param.eProfile, (guint) param.eLevel,
++        gst_omx_error_to_string (err), err);
++    return FALSE;
++  }
++
++  return TRUE;
++
++unsupported_profile:
++  GST_ERROR_OBJECT (self, "Unsupported profile %u", profile_id);
++  gst_caps_unref (peercaps);
++  return FALSE;
++
++unsupported_level:
++  GST_ERROR_OBJECT (self, "Unsupported level %u", level_id);
++  gst_caps_unref (peercaps);
++  return FALSE;
++}
++
++static GstCaps *
++gst_omx_mjpeg_enc_get_caps (GstOMXVideoEnc * enc, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  GstOMXMJPEGEnc *self = GST_OMX_MJPEG_ENC (enc);
++  GstCaps *caps;
++  OMX_ERRORTYPE err;
++  OMX_VIDEO_PARAM_PROFILELEVELTYPE param;
++  guint profile, level;
++
++  caps = gst_caps_new_empty_simple ("image/jpeg");
++
++  GST_OMX_INIT_STRUCT (&param);
++  param.nPortIndex = GST_OMX_VIDEO_ENC (self)->enc_out_port->index;
++
++  err =
++      gst_omx_component_get_parameter (GST_OMX_VIDEO_ENC (self)->enc,
++      OMX_IndexParamVideoProfileLevelCurrent, &param);
++  if (err != OMX_ErrorNone && err != OMX_ErrorUnsupportedIndex) {
++    gst_caps_unref (caps);
++    return NULL;
++  }
++
++  return caps;
++}
+diff --git a/omx/gstomxmjpegenc.h b/omx/gstomxmjpegenc.h
+new file mode 100644
+index 0000000..e053d04
+--- /dev/null
++++ b/omx/gstomxmjpegenc.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_MJPEG_ENC_H__
++#define __GST_OMX_MJPEG_ENC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideoenc.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_MJPEG_ENC \
++  (gst_omx_mjpeg_enc_get_type())
++#define GST_OMX_MJPEG_ENC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_MJPEG_ENC,GstOMXMJPEGEnc))
++#define GST_OMX_MJPEG_ENC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_MJPEG_ENC,GstOMXMJPEGEncClass))
++#define GST_OMX_MJPEG_ENC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_MJPEG_ENC,GstOMXMJPEGEncClass))
++#define GST_IS_OMX_MJPEG_ENC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_MJPEG_ENC))
++#define GST_IS_OMX_MJPEG_ENC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_MJPEG_ENC))
++
++typedef struct _GstOMXMJPEGEnc GstOMXMJPEGEnc;
++typedef struct _GstOMXMJPEGEncClass GstOMXMJPEGEncClass;
++
++struct _GstOMXMJPEGEnc
++{
++  GstOMXVideoEnc parent;
++};
++
++struct _GstOMXMJPEGEncClass
++{
++  GstOMXVideoEncClass parent_class;
++};
++
++GType gst_omx_mjpeg_enc_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_MJPEG_ENC_H__ */
+diff --git a/omx/gstomxmpeg1dec.c b/omx/gstomxmpeg1dec.c
+new file mode 100644
+index 0000000..81d6ff6
+--- /dev/null
++++ b/omx/gstomxmpeg1dec.c
+@@ -0,0 +1,99 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++#include "gstomxmpeg1dec.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_mpeg1_dec_debug_category);
++#define GST_CAT_DEFAULT gst_omx_mpeg1_dec_debug_category
++
++/* prototypes */
++static gboolean gst_omx_mpeg1_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++static gboolean gst_omx_mpeg1_dec_set_format (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_mpeg1_dec_debug_category, "omxmpeg1dec", 0, \
++      "debug category for gst-omx video decoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXMPEG1Dec, gst_omx_mpeg1_dec,
++    GST_TYPE_OMX_VIDEO_DEC, DEBUG_INIT);
++
++static void
++gst_omx_mpeg1_dec_class_init (GstOMXMPEG1DecClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoDecClass *videodec_class = GST_OMX_VIDEO_DEC_CLASS (klass);
++
++  videodec_class->is_format_change =
++      GST_DEBUG_FUNCPTR (gst_omx_mpeg1_dec_is_format_change);
++  videodec_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_mpeg1_dec_set_format);
++
++  videodec_class->cdata.default_sink_template_caps = "video/mpeg, "
++	  "mpegversion=(int)1, "
++	  "systemstream=(boolean) false, "
++	  "width=(int) [1,MAX], " "height=(int) [1,MAX]";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX MPEG1 Video Decoder",
++      "Codec/Decoder/Video",
++      "Decode MPEG1 video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videodec_class->cdata, "video_decoder.mpeg1");
++}
++
++static void
++gst_omx_mpeg1_dec_init (GstOMXMPEG1Dec * self)
++{
++}
++
++static gboolean
++gst_omx_mpeg1_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state)
++{
++  return FALSE;
++}
++
++static gboolean
++gst_omx_mpeg1_dec_set_format (GstOMXVideoDec * dec, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  gboolean ret;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++
++  gst_omx_port_get_port_definition (port, &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingMPEG1;
++  ret = gst_omx_port_update_port_definition (port, &port_def) == OMX_ErrorNone;
++
++  return ret;
++}
+diff --git a/omx/gstomxmpeg1dec.h b/omx/gstomxmpeg1dec.h
+new file mode 100644
+index 0000000..9bd1d4c
+--- /dev/null
++++ b/omx/gstomxmpeg1dec.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_MPEG1_DEC_H__
++#define __GST_OMX_MPEG1_DEC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideodec.h"
++#include "gstomx.h"
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_MPEG1_DEC \
++  (gst_omx_mpeg1_dec_get_type())
++#define GST_OMX_MPEG1_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_MPEG1_DEC,GstOMXMPEG1Dec))
++#define GST_OMX_MPEG1_DEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_MPEG1_DEC,GstOMXMPEG1DecClass))
++#define GST_OMX_MPEG1_DEC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_MPEG1_DEC,GstOMXMPEG1DecClass))
++#define GST_IS_OMX_MPEG1_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_MPEG1_DEC))
++#define GST_IS_OMX_MPEG1_DEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_MPEG1_DEC))
++
++typedef struct _GstOMXMPEG1Dec GstOMXMPEG1Dec;
++typedef struct _GstOMXMPEG1DecClass GstOMXMPEG1DecClass;
++
++struct _GstOMXMPEG1Dec
++{
++  GstOMXVideoDec parent;
++};
++
++struct _GstOMXMPEG1DecClass
++{
++  GstOMXVideoDecClass parent_class;
++};
++
++GType gst_omx_mpeg1_dec_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_MPEG1_DEC_H__ */
+diff --git a/omx/gstomxmsmpeg4v1dec.c b/omx/gstomxmsmpeg4v1dec.c
+new file mode 100644
+index 0000000..384ecd2
+--- /dev/null
++++ b/omx/gstomxmsmpeg4v1dec.c
+@@ -0,0 +1,99 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++
++#include "gstomxmsmpeg4v1dec.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_msmpeg4v1_dec_debug_category);
++#define GST_CAT_DEFAULT gst_omx_msmpeg4v1_dec_debug_category
++
++/* prototypes */
++static gboolean gst_omx_msmpeg4v1_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++static gboolean gst_omx_msmpeg4v1_dec_set_format (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_msmpeg4v1_dec_debug_category, "omxmsmpeg4v1dec", 0, \
++      "debug category for gst-omx video decoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXMSMPEG4V1Dec, gst_omx_msmpeg4v1_dec,
++    GST_TYPE_OMX_VIDEO_DEC, DEBUG_INIT);
++
++static void
++gst_omx_msmpeg4v1_dec_class_init (GstOMXMSMPEG4V1DecClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoDecClass *videodec_class = GST_OMX_VIDEO_DEC_CLASS (klass);
++
++  videodec_class->is_format_change =
++      GST_DEBUG_FUNCPTR (gst_omx_msmpeg4v1_dec_is_format_change);
++  videodec_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_msmpeg4v1_dec_set_format);
++
++  videodec_class->cdata.default_sink_template_caps = "video/x-msmpeg, "
++      "msmpegversion=(int)41, "
++	  "width=(int) [1,MAX], " "height=(int) [1,MAX]";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX MSMPEG4V1 Video Decoder",
++      "Codec/Decoder/Video",
++      "Decode MSMPEG4V1 video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videodec_class->cdata, "video_decoder.msmpeg4v1");
++}
++
++static void
++gst_omx_msmpeg4v1_dec_init (GstOMXMSMPEG4V1Dec * self)
++{
++}
++
++static gboolean
++gst_omx_msmpeg4v1_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state)
++{
++  return FALSE;
++}
++
++static gboolean
++gst_omx_msmpeg4v1_dec_set_format (GstOMXVideoDec * dec, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  gboolean ret;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++
++  gst_omx_port_get_port_definition (port, &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingMSMPEG4V1;
++  ret = gst_omx_port_update_port_definition (port, &port_def) == OMX_ErrorNone;
++
++  return ret;
++}
+diff --git a/omx/gstomxmsmpeg4v1dec.h b/omx/gstomxmsmpeg4v1dec.h
+new file mode 100644
+index 0000000..7edddca
+--- /dev/null
++++ b/omx/gstomxmsmpeg4v1dec.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_MSMPEG4V1_DEC_H__
++#define __GST_OMX_MSMPEG4V1_DEC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideodec.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_MSMPEG4V1_DEC \
++  (gst_omx_msmpeg4v1_dec_get_type())
++#define GST_OMX_MSMPEG4V1_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_MSMPEG4V1_DEC,GstOMXMSMPEG4V1Dec))
++#define GST_OMX_MSMPEG4V1_DEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_MSMPEG4V1_DEC,GstOMXMSMPEG4V1DecClass))
++#define GST_OMX_MSMPEG4V1_DEC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_MSMPEG4V1_DEC,GstOMXMSMPEG4V1DecClass))
++#define GST_IS_OMX_MSMPEG4V1_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_MSMPEG4V1_DEC))
++#define GST_IS_OMX_MSMPEG4V1_DEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_MSMPEG4V1_DEC))
++
++typedef struct _GstOMXMSMPEG4V1Dec GstOMXMSMPEG4V1Dec;
++typedef struct _GstOMXMSMPEG4V1DecClass GstOMXMSMPEG4V1DecClass;
++
++struct _GstOMXMSMPEG4V1Dec
++{
++  GstOMXVideoDec parent;
++};
++
++struct _GstOMXMSMPEG4V1DecClass
++{
++  GstOMXVideoDecClass parent_class;
++};
++
++GType gst_omx_msmpeg4v1_dec_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_MSMPEG4V1_DEC_H__ */
+diff --git a/omx/gstomxmsmpeg4v2dec.c b/omx/gstomxmsmpeg4v2dec.c
+new file mode 100644
+index 0000000..96fc749
+--- /dev/null
++++ b/omx/gstomxmsmpeg4v2dec.c
+@@ -0,0 +1,99 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++
++#include "gstomxmsmpeg4v2dec.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_msmpeg4v2_dec_debug_category);
++#define GST_CAT_DEFAULT gst_omx_msmpeg4v2_dec_debug_category
++
++/* prototypes */
++static gboolean gst_omx_msmpeg4v2_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++static gboolean gst_omx_msmpeg4v2_dec_set_format (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_msmpeg4v2_dec_debug_category, "omxmsmpeg4v2dec", 0, \
++      "debug category for gst-omx video decoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXMSMPEG4V2Dec, gst_omx_msmpeg4v2_dec,
++    GST_TYPE_OMX_VIDEO_DEC, DEBUG_INIT);
++
++static void
++gst_omx_msmpeg4v2_dec_class_init (GstOMXMSMPEG4V2DecClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoDecClass *videodec_class = GST_OMX_VIDEO_DEC_CLASS (klass);
++
++  videodec_class->is_format_change =
++      GST_DEBUG_FUNCPTR (gst_omx_msmpeg4v2_dec_is_format_change);
++  videodec_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_msmpeg4v2_dec_set_format);
++
++  videodec_class->cdata.default_sink_template_caps = "video/x-msmpeg, "
++      "msmpegversion=(int)42, "
++	  "width=(int) [1,MAX], " "height=(int) [1,MAX]";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX MSMPEG4V2 Video Decoder",
++      "Codec/Decoder/Video",
++      "Decode MSMPEG4V2 video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videodec_class->cdata, "video_decoder.msmpeg4v2");
++}
++
++static void
++gst_omx_msmpeg4v2_dec_init (GstOMXMSMPEG4V2Dec * self)
++{
++}
++
++static gboolean
++gst_omx_msmpeg4v2_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state)
++{
++  return FALSE;
++}
++
++static gboolean
++gst_omx_msmpeg4v2_dec_set_format (GstOMXVideoDec * dec, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  gboolean ret;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++
++  gst_omx_port_get_port_definition (port, &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingMSMPEG4V2;
++  ret = gst_omx_port_update_port_definition (port, &port_def) == OMX_ErrorNone;
++
++  return ret;
++}
+diff --git a/omx/gstomxmsmpeg4v2dec.h b/omx/gstomxmsmpeg4v2dec.h
+new file mode 100644
+index 0000000..62b30b6
+--- /dev/null
++++ b/omx/gstomxmsmpeg4v2dec.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_MSMPEG4V2_DEC_H__
++#define __GST_OMX_MSMPEG4V2_DEC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideodec.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_MSMPEG4V2_DEC \
++  (gst_omx_msmpeg4v2_dec_get_type())
++#define GST_OMX_MSMPEG4V2_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_MSMPEG4V2_DEC,GstOMXMSMPEG4V2Dec))
++#define GST_OMX_MSMPEG4V2_DEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_MSMPEG4V2_DEC,GstOMXMSMPEG4V2DecClass))
++#define GST_OMX_MSMPEG4V2_DEC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_MSMPEG4V2_DEC,GstOMXMSMPEG4V2DecClass))
++#define GST_IS_OMX_MSMPEG4V2_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_MSMPEG4V2_DEC))
++#define GST_IS_OMX_MSMPEG4V2_DEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_MSMPEG4V2_DEC))
++
++typedef struct _GstOMXMSMPEG4V2Dec GstOMXMSMPEG4V2Dec;
++typedef struct _GstOMXMSMPEG4V2DecClass GstOMXMSMPEG4V2DecClass;
++
++struct _GstOMXMSMPEG4V2Dec
++{
++  GstOMXVideoDec parent;
++};
++
++struct _GstOMXMSMPEG4V2DecClass
++{
++  GstOMXVideoDecClass parent_class;
++};
++
++GType gst_omx_msmpeg4v2_dec_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_MSMPEG4V2_DEC_H__ */
+diff --git a/omx/gstomxmsmpeg4v3dec.c b/omx/gstomxmsmpeg4v3dec.c
+new file mode 100644
+index 0000000..3bf08a2
+--- /dev/null
++++ b/omx/gstomxmsmpeg4v3dec.c
+@@ -0,0 +1,99 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++
++#include "gstomxmsmpeg4v3dec.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_msmpeg4v3_dec_debug_category);
++#define GST_CAT_DEFAULT gst_omx_msmpeg4v3_dec_debug_category
++
++/* prototypes */
++static gboolean gst_omx_msmpeg4v3_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++static gboolean gst_omx_msmpeg4v3_dec_set_format (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_msmpeg4v3_dec_debug_category, "omxmsmpeg4v3dec", 0, \
++      "debug category for gst-omx video decoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXMSMPEG4V3Dec, gst_omx_msmpeg4v3_dec,
++    GST_TYPE_OMX_VIDEO_DEC, DEBUG_INIT);
++
++static void
++gst_omx_msmpeg4v3_dec_class_init (GstOMXMSMPEG4V3DecClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoDecClass *videodec_class = GST_OMX_VIDEO_DEC_CLASS (klass);
++
++  videodec_class->is_format_change =
++      GST_DEBUG_FUNCPTR (gst_omx_msmpeg4v3_dec_is_format_change);
++  videodec_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_msmpeg4v3_dec_set_format);
++
++  videodec_class->cdata.default_sink_template_caps = "video/x-msmpeg, "
++      "msmpegversion=(int)43, "
++	  "width=(int) [1,MAX], " "height=(int) [1,MAX]";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX MSMPEG4V3 Video Decoder",
++      "Codec/Decoder/Video",
++      "Decode MSMPEG4V3 video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videodec_class->cdata, "video_decoder.msmpeg4v3");
++}
++
++static void
++gst_omx_msmpeg4v3_dec_init (GstOMXMSMPEG4V3Dec * self)
++{
++}
++
++static gboolean
++gst_omx_msmpeg4v3_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state)
++{
++  return FALSE;
++}
++
++static gboolean
++gst_omx_msmpeg4v3_dec_set_format (GstOMXVideoDec * dec, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  gboolean ret;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++
++  gst_omx_port_get_port_definition (port, &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingMSMPEG4V3;
++  ret = gst_omx_port_update_port_definition (port, &port_def) == OMX_ErrorNone;
++
++  return ret;
++}
+diff --git a/omx/gstomxmsmpeg4v3dec.h b/omx/gstomxmsmpeg4v3dec.h
+new file mode 100644
+index 0000000..3fba8bb
+--- /dev/null
++++ b/omx/gstomxmsmpeg4v3dec.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_MSMPEG4V3_DEC_H__
++#define __GST_OMX_MSMPEG4V3_DEC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideodec.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_MSMPEG4V3_DEC \
++  (gst_omx_msmpeg4v3_dec_get_type())
++#define GST_OMX_MSMPEG4V3_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_MSMPEG4V3_DEC,GstOMXMSMPEG4V3Dec))
++#define GST_OMX_MSMPEG4V3_DEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_MSMPEG4V3_DEC,GstOMXMSMPEG4V3DecClass))
++#define GST_OMX_MSMPEG4V3_DEC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_MSMPEG4V3_DEC,GstOMXMSMPEG4V3DecClass))
++#define GST_IS_OMX_MSMPEG4V3_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_MSMPEG4V3_DEC))
++#define GST_IS_OMX_MSMPEG4V3_DEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_MSMPEG4V3_DEC))
++
++typedef struct _GstOMXMSMPEG4V3Dec GstOMXMSMPEG4V3Dec;
++typedef struct _GstOMXMSMPEG4V3DecClass GstOMXMSMPEG4V3DecClass;
++
++struct _GstOMXMSMPEG4V3Dec
++{
++  GstOMXVideoDec parent;
++};
++
++struct _GstOMXMSMPEG4V3DecClass
++{
++  GstOMXVideoDecClass parent_class;
++};
++
++GType gst_omx_msmpeg4v3_dec_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_MSMPEG4V3_DEC_H__ */
+diff --git a/omx/gstomxrv20dec.c b/omx/gstomxrv20dec.c
+new file mode 100644
+index 0000000..4199452
+--- /dev/null
++++ b/omx/gstomxrv20dec.c
+@@ -0,0 +1,99 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++
++#include "gstomxrv20dec.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_rv20_dec_debug_category);
++#define GST_CAT_DEFAULT gst_omx_rv20_dec_debug_category
++
++/* prototypes */
++static gboolean gst_omx_rv20_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++static gboolean gst_omx_rv20_dec_set_format (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_rv20_dec_debug_category, "omxrv20dec", 0, \
++      "debug category for gst-omx video decoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXRV20Dec, gst_omx_rv20_dec,
++    GST_TYPE_OMX_VIDEO_DEC, DEBUG_INIT);
++
++static void
++gst_omx_rv20_dec_class_init (GstOMXRV20DecClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoDecClass *videodec_class = GST_OMX_VIDEO_DEC_CLASS (klass);
++
++  videodec_class->is_format_change =
++      GST_DEBUG_FUNCPTR (gst_omx_rv20_dec_is_format_change);
++  videodec_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_rv20_dec_set_format);
++
++  videodec_class->cdata.default_sink_template_caps = "video/x-pn-realvideo, "
++      "rmversion=(int)[1,2], "
++	  "width=(int) [1,MAX], " "height=(int) [1,MAX]";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX RV20 Video Decoder",
++      "Codec/Decoder/Video",
++      "Decode RV20 video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videodec_class->cdata, "video_decoder.rv20");
++}
++
++static void
++gst_omx_rv20_dec_init (GstOMXRV20Dec * self)
++{
++}
++
++static gboolean
++gst_omx_rv20_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state)
++{
++  return FALSE;
++}
++
++static gboolean
++gst_omx_rv20_dec_set_format (GstOMXVideoDec * dec, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  gboolean ret;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++
++  gst_omx_port_get_port_definition (port, &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingRXG2;
++  ret = gst_omx_port_update_port_definition (port, &port_def) == OMX_ErrorNone;
++
++  return ret;
++}
+diff --git a/omx/gstomxrv20dec.h b/omx/gstomxrv20dec.h
+new file mode 100644
+index 0000000..3b207a8
+--- /dev/null
++++ b/omx/gstomxrv20dec.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_RV20_DEC_H__
++#define __GST_OMX_RV20_DEC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideodec.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_RV20_DEC \
++  (gst_omx_rv20_dec_get_type())
++#define GST_OMX_RV20_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_RV20_DEC,GstOMXRV20Dec))
++#define GST_OMX_RV20_DEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_RV20_DEC,GstOMXRV20DecClass))
++#define GST_OMX_RV20_DEC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_RV20_DEC,GstOMXRV20DecClass))
++#define GST_IS_OMX_RV20_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_RV20_DEC))
++#define GST_IS_OMX_RV20_DEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_RV20_DEC))
++
++typedef struct _GstOMXRV20Dec GstOMXRV20Dec;
++typedef struct _GstOMXRV20DecClass GstOMXRV20DecClass;
++
++struct _GstOMXRV20Dec
++{
++  GstOMXVideoDec parent;
++};
++
++struct _GstOMXRV20DecClass
++{
++  GstOMXVideoDecClass parent_class;
++};
++
++GType gst_omx_rv20_dec_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_RV20_DEC_H__ */
+diff --git a/omx/gstomxrxdec.c b/omx/gstomxrxdec.c
+new file mode 100644
+index 0000000..5b2dab1
+--- /dev/null
++++ b/omx/gstomxrxdec.c
+@@ -0,0 +1,99 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++
++#include "gstomxrxdec.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_rx_dec_debug_category);
++#define GST_CAT_DEFAULT gst_omx_rx_dec_debug_category
++
++/* prototypes */
++static gboolean gst_omx_rx_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++static gboolean gst_omx_rx_dec_set_format (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_rx_dec_debug_category, "omxrxdec", 0, \
++      "debug category for gst-omx video decoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXRXDec, gst_omx_rx_dec,
++    GST_TYPE_OMX_VIDEO_DEC, DEBUG_INIT);
++
++static void
++gst_omx_rx_dec_class_init (GstOMXRXDecClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoDecClass *videodec_class = GST_OMX_VIDEO_DEC_CLASS (klass);
++
++  videodec_class->is_format_change =
++      GST_DEBUG_FUNCPTR (gst_omx_rx_dec_is_format_change);
++  videodec_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_rx_dec_set_format);
++
++  videodec_class->cdata.default_sink_template_caps = "video/x-pn-realvideo, "
++      "rmversion=(int)[3,4], "
++	  "width=(int) [1,MAX], " "height=(int) [1,MAX]";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX RX Video Decoder",
++      "Codec/Decoder/Video",
++      "Decode RX video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videodec_class->cdata, "video_decoder.rx");
++}
++
++static void
++gst_omx_rx_dec_init (GstOMXRXDec * self)
++{
++}
++
++static gboolean
++gst_omx_rx_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state)
++{
++  return FALSE;
++}
++
++static gboolean
++gst_omx_rx_dec_set_format (GstOMXVideoDec * dec, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  gboolean ret;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++
++  gst_omx_port_get_port_definition (port, &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingRX;
++  ret = gst_omx_port_update_port_definition (port, &port_def) == OMX_ErrorNone;
++
++  return ret;
++}
+diff --git a/omx/gstomxrxdec.h b/omx/gstomxrxdec.h
+new file mode 100644
+index 0000000..c5c1171
+--- /dev/null
++++ b/omx/gstomxrxdec.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_RX_DEC_H__
++#define __GST_OMX_RX_DEC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideodec.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_RX_DEC \
++  (gst_omx_rx_dec_get_type())
++#define GST_OMX_RX_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_RX_DEC,GstOMXRXDec))
++#define GST_OMX_RX_DEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_RX_DEC,GstOMXRXDecClass))
++#define GST_OMX_RX_DEC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_RX_DEC,GstOMXRXDecClass))
++#define GST_IS_OMX_RX_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_RX_DEC))
++#define GST_IS_OMX_RX_DEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_RX_DEC))
++
++typedef struct _GstOMXRXDec GstOMXRXDec;
++typedef struct _GstOMXRXDecClass GstOMXRXDecClass;
++
++struct _GstOMXRXDec
++{
++  GstOMXVideoDec parent;
++};
++
++struct _GstOMXRXDecClass
++{
++  GstOMXVideoDecClass parent_class;
++};
++
++GType gst_omx_rx_dec_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_RX_DEC_H__ */
+diff --git a/omx/gstomxvp6dec.c b/omx/gstomxvp6dec.c
+new file mode 100644
+index 0000000..c4d0c31
+--- /dev/null
++++ b/omx/gstomxvp6dec.c
+@@ -0,0 +1,98 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++
++#include "gstomxvp6dec.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_vp6_dec_debug_category);
++#define GST_CAT_DEFAULT gst_omx_vp6_dec_debug_category
++
++/* prototypes */
++static gboolean gst_omx_vp6_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++static gboolean gst_omx_vp6_dec_set_format (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_vp6_dec_debug_category, "omxvp6dec", 0, \
++      "debug category for gst-omx video decoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXVP6Dec, gst_omx_vp6_dec,
++    GST_TYPE_OMX_VIDEO_DEC, DEBUG_INIT);
++
++static void
++gst_omx_vp6_dec_class_init (GstOMXVP6DecClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoDecClass *videodec_class = GST_OMX_VIDEO_DEC_CLASS (klass);
++
++  videodec_class->is_format_change =
++      GST_DEBUG_FUNCPTR (gst_omx_vp6_dec_is_format_change);
++  videodec_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_vp6_dec_set_format);
++
++  videodec_class->cdata.default_sink_template_caps = "video/x-vp6, "
++	  "width=(int) [1,MAX], " "height=(int) [1,MAX]";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX VP6 Video Decoder",
++      "Codec/Decoder/Video",
++      "Decode VP6 video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videodec_class->cdata, "video_decoder.vp6");
++}
++
++static void
++gst_omx_vp6_dec_init (GstOMXVP6Dec * self)
++{
++}
++
++static gboolean
++gst_omx_vp6_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state)
++{
++  return FALSE;
++}
++
++static gboolean
++gst_omx_vp6_dec_set_format (GstOMXVideoDec * dec, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  gboolean ret;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++
++  gst_omx_port_get_port_definition (port, &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingVP6;
++  ret = gst_omx_port_update_port_definition (port, &port_def) == OMX_ErrorNone;
++
++  return ret;
++}
+diff --git a/omx/gstomxvp6dec.h b/omx/gstomxvp6dec.h
+new file mode 100644
+index 0000000..5fb31dd
+--- /dev/null
++++ b/omx/gstomxvp6dec.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_VP6_DEC_H__
++#define __GST_OMX_VP6_DEC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideodec.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_VP6_DEC \
++  (gst_omx_vp6_dec_get_type())
++#define GST_OMX_VP6_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_VP6_DEC,GstOMXVP6Dec))
++#define GST_OMX_VP6_DEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_VP6_DEC,GstOMXVP6DecClass))
++#define GST_OMX_VP6_DEC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_VP6_DEC,GstOMXVP6DecClass))
++#define GST_IS_OMX_VP6_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_VP6_DEC))
++#define GST_IS_OMX_VP6_DEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_VP6_DEC))
++
++typedef struct _GstOMXVP6Dec GstOMXVP6Dec;
++typedef struct _GstOMXVP6DecClass GstOMXVP6DecClass;
++
++struct _GstOMXVP6Dec
++{
++  GstOMXVideoDec parent;
++};
++
++struct _GstOMXVP6DecClass
++{
++  GstOMXVideoDecClass parent_class;
++};
++
++GType gst_omx_vp6_dec_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_VP6_DEC_H__ */
+diff --git a/omx/gstomxvp9dec.c b/omx/gstomxvp9dec.c
+new file mode 100644
+index 0000000..49a0c1c
+--- /dev/null
++++ b/omx/gstomxvp9dec.c
+@@ -0,0 +1,98 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++
++#include "gstomxvp9dec.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_vp9_dec_debug_category);
++#define GST_CAT_DEFAULT gst_omx_vp9_dec_debug_category
++
++/* prototypes */
++static gboolean gst_omx_vp9_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++static gboolean gst_omx_vp9_dec_set_format (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_vp9_dec_debug_category, "omxvp9dec", 0, \
++      "debug category for gst-omx video decoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXVP9Dec, gst_omx_vp9_dec,
++    GST_TYPE_OMX_VIDEO_DEC, DEBUG_INIT);
++
++static void
++gst_omx_vp9_dec_class_init (GstOMXVP9DecClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoDecClass *videodec_class = GST_OMX_VIDEO_DEC_CLASS (klass);
++
++  videodec_class->is_format_change =
++      GST_DEBUG_FUNCPTR (gst_omx_vp9_dec_is_format_change);
++  videodec_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_vp9_dec_set_format);
++
++  videodec_class->cdata.default_sink_template_caps = "video/x-vp9, "
++	  "width=(int) [1,MAX], " "height=(int) [1,MAX]";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX VP9 Video Decoder",
++      "Codec/Decoder/Video",
++      "Decode VP9 video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videodec_class->cdata, "video_decoder.vp9");
++}
++
++static void
++gst_omx_vp9_dec_init (GstOMXVP9Dec * self)
++{
++}
++
++static gboolean
++gst_omx_vp9_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state)
++{
++  return FALSE;
++}
++
++static gboolean
++gst_omx_vp9_dec_set_format (GstOMXVideoDec * dec, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  gboolean ret;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++
++  gst_omx_port_get_port_definition (port, &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingVP9;
++  ret = gst_omx_port_update_port_definition (port, &port_def) == OMX_ErrorNone;
++
++  return ret;
++}
+diff --git a/omx/gstomxvp9dec.h b/omx/gstomxvp9dec.h
+new file mode 100644
+index 0000000..bb003c6
+--- /dev/null
++++ b/omx/gstomxvp9dec.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_VP9_DEC_H__
++#define __GST_OMX_VP9_DEC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideodec.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_VP9_DEC \
++  (gst_omx_vp9_dec_get_type())
++#define GST_OMX_VP9_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_VP9_DEC,GstOMXVP9Dec))
++#define GST_OMX_VP9_DEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_VP9_DEC,GstOMXVP9DecClass))
++#define GST_OMX_VP9_DEC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_VP9_DEC,GstOMXVP9DecClass))
++#define GST_IS_OMX_VP9_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_VP9_DEC))
++#define GST_IS_OMX_VP9_DEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_VP9_DEC))
++
++typedef struct _GstOMXVP9Dec GstOMXVP9Dec;
++typedef struct _GstOMXVP9DecClass GstOMXVP9DecClass;
++
++struct _GstOMXVP9Dec
++{
++  GstOMXVideoDec parent;
++};
++
++struct _GstOMXVP9DecClass
++{
++  GstOMXVideoDecClass parent_class;
++};
++
++GType gst_omx_vp9_dec_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_VP9_DEC_H__ */
+diff --git a/omx/gstomxwmv1dec.c b/omx/gstomxwmv1dec.c
+new file mode 100644
+index 0000000..ccc8e60
+--- /dev/null
++++ b/omx/gstomxwmv1dec.c
+@@ -0,0 +1,99 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++
++#include "gstomxwmv1dec.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_wmv1_dec_debug_category);
++#define GST_CAT_DEFAULT gst_omx_wmv1_dec_debug_category
++
++/* prototypes */
++static gboolean gst_omx_wmv1_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++static gboolean gst_omx_wmv1_dec_set_format (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_wmv1_dec_debug_category, "omxwmv1dec", 0, \
++      "debug category for gst-omx video decoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXWMV1Dec, gst_omx_wmv1_dec,
++    GST_TYPE_OMX_VIDEO_DEC, DEBUG_INIT);
++
++static void
++gst_omx_wmv1_dec_class_init (GstOMXWMV1DecClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoDecClass *videodec_class = GST_OMX_VIDEO_DEC_CLASS (klass);
++
++  videodec_class->is_format_change =
++      GST_DEBUG_FUNCPTR (gst_omx_wmv1_dec_is_format_change);
++  videodec_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_wmv1_dec_set_format);
++
++  videodec_class->cdata.default_sink_template_caps = "video/x-wmv, "
++	  "wmvversion=(int)1, "
++	  "width=(int) [1,MAX], " "height=(int) [1,MAX]";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX WMV1 Video Decoder",
++      "Codec/Decoder/Video",
++      "Decode WMV1 video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videodec_class->cdata, "video_decoder.wmv1");
++}
++
++static void
++gst_omx_wmv1_dec_init (GstOMXWMV1Dec * self)
++{
++}
++
++static gboolean
++gst_omx_wmv1_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state)
++{
++  return FALSE;
++}
++
++static gboolean
++gst_omx_wmv1_dec_set_format (GstOMXVideoDec * dec, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  gboolean ret;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++
++  gst_omx_port_get_port_definition (port, &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingWMV1;
++  ret = gst_omx_port_update_port_definition (port, &port_def) == OMX_ErrorNone;
++
++  return ret;
++}
+diff --git a/omx/gstomxwmv1dec.h b/omx/gstomxwmv1dec.h
+new file mode 100644
+index 0000000..0a50170
+--- /dev/null
++++ b/omx/gstomxwmv1dec.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_WMV1_DEC_H__
++#define __GST_OMX_WMV1_DEC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideodec.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_WMV1_DEC \
++  (gst_omx_wmv1_dec_get_type())
++#define GST_OMX_WMV1_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_WMV1_DEC,GstOMXWMV1Dec))
++#define GST_OMX_WMV1_DEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_WMV1_DEC,GstOMXWMV1DecClass))
++#define GST_OMX_WMV1_DEC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_WMV1_DEC,GstOMXWMV1DecClass))
++#define GST_IS_OMX_WMV1_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_WMV1_DEC))
++#define GST_IS_OMX_WMV1_DEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_WMV1_DEC))
++
++typedef struct _GstOMXWMV1Dec GstOMXWMV1Dec;
++typedef struct _GstOMXWMV1DecClass GstOMXWMV1DecClass;
++
++struct _GstOMXWMV1Dec
++{
++  GstOMXVideoDec parent;
++};
++
++struct _GstOMXWMV1DecClass
++{
++  GstOMXVideoDecClass parent_class;
++};
++
++GType gst_omx_wmv1_dec_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_WMV1_DEC_H__ */
+diff --git a/omx/gstomxwmv2dec.c b/omx/gstomxwmv2dec.c
+new file mode 100644
+index 0000000..555b80b
+--- /dev/null
++++ b/omx/gstomxwmv2dec.c
+@@ -0,0 +1,99 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++
++#include "gstomxwmv2dec.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_wmv2_dec_debug_category);
++#define GST_CAT_DEFAULT gst_omx_wmv2_dec_debug_category
++
++/* prototypes */
++static gboolean gst_omx_wmv2_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++static gboolean gst_omx_wmv2_dec_set_format (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_wmv2_dec_debug_category, "omxwmv2dec", 0, \
++      "debug category for gst-omx video decoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXWMV2Dec, gst_omx_wmv2_dec,
++    GST_TYPE_OMX_VIDEO_DEC, DEBUG_INIT);
++
++static void
++gst_omx_wmv2_dec_class_init (GstOMXWMV2DecClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoDecClass *videodec_class = GST_OMX_VIDEO_DEC_CLASS (klass);
++
++  videodec_class->is_format_change =
++      GST_DEBUG_FUNCPTR (gst_omx_wmv2_dec_is_format_change);
++  videodec_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_wmv2_dec_set_format);
++
++  videodec_class->cdata.default_sink_template_caps = "video/x-wmv, "
++	  "wmvversion=(int)2, "
++	  "width=(int) [1,MAX], " "height=(int) [1,MAX]";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX WMV2 Video Decoder",
++      "Codec/Decoder/Video",
++      "Decode WMV2 video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videodec_class->cdata, "video_decoder.wmv2");
++}
++
++static void
++gst_omx_wmv2_dec_init (GstOMXWMV2Dec * self)
++{
++}
++
++static gboolean
++gst_omx_wmv2_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state)
++{
++  return FALSE;
++}
++
++static gboolean
++gst_omx_wmv2_dec_set_format (GstOMXVideoDec * dec, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  gboolean ret;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++
++  gst_omx_port_get_port_definition (port, &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingWMV2;
++  ret = gst_omx_port_update_port_definition (port, &port_def) == OMX_ErrorNone;
++
++  return ret;
++}
+diff --git a/omx/gstomxwmv2dec.h b/omx/gstomxwmv2dec.h
+new file mode 100644
+index 0000000..51e5393
+--- /dev/null
++++ b/omx/gstomxwmv2dec.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_WMV2_DEC_H__
++#define __GST_OMX_WMV2_DEC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideodec.h"
++#include "gstomx.h"
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_WMV2_DEC \
++  (gst_omx_wmv2_dec_get_type())
++#define GST_OMX_WMV2_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_WMV2_DEC,GstOMXWMV2Dec))
++#define GST_OMX_WMV2_DEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_WMV2_DEC,GstOMXWMV2DecClass))
++#define GST_OMX_WMV2_DEC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_WMV2_DEC,GstOMXWMV2DecClass))
++#define GST_IS_OMX_WMV2_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_WMV2_DEC))
++#define GST_IS_OMX_WMV2_DEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_WMV2_DEC))
++
++typedef struct _GstOMXWMV2Dec GstOMXWMV2Dec;
++typedef struct _GstOMXWMV2DecClass GstOMXWMV2DecClass;
++
++struct _GstOMXWMV2Dec
++{
++  GstOMXVideoDec parent;
++};
++
++struct _GstOMXWMV2DecClass
++{
++  GstOMXVideoDecClass parent_class;
++};
++
++GType gst_omx_wmv2_dec_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_WMV2_DEC_H__ */
+diff --git a/omx/gstomxxviddec.c b/omx/gstomxxviddec.c
+new file mode 100644
+index 0000000..68d3134
+--- /dev/null
++++ b/omx/gstomxxviddec.c
+@@ -0,0 +1,98 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gst/gst.h>
++
++#include "gstomxxviddec.h"
++
++GST_DEBUG_CATEGORY_STATIC (gst_omx_xvid_dec_debug_category);
++#define GST_CAT_DEFAULT gst_omx_xvid_dec_debug_category
++
++/* prototypes */
++static gboolean gst_omx_xvid_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++static gboolean gst_omx_xvid_dec_set_format (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state);
++
++enum
++{
++  PROP_0
++};
++
++/* class initialization */
++
++#define DEBUG_INIT \
++  GST_DEBUG_CATEGORY_INIT (gst_omx_xvid_dec_debug_category, "omxxviddec", 0, \
++      "debug category for gst-omx video decoder base class");
++
++G_DEFINE_TYPE_WITH_CODE (GstOMXXVIDDec, gst_omx_xvid_dec,
++    GST_TYPE_OMX_VIDEO_DEC, DEBUG_INIT);
++
++static void
++gst_omx_xvid_dec_class_init (GstOMXXVIDDecClass * klass)
++{
++  GstElementClass *element_class = GST_ELEMENT_CLASS (klass);
++  GstOMXVideoDecClass *videodec_class = GST_OMX_VIDEO_DEC_CLASS (klass);
++
++  videodec_class->is_format_change =
++      GST_DEBUG_FUNCPTR (gst_omx_xvid_dec_is_format_change);
++  videodec_class->set_format = GST_DEBUG_FUNCPTR (gst_omx_xvid_dec_set_format);
++
++  videodec_class->cdata.default_sink_template_caps = "video/x-xvid, "
++      "parsed=(boolean) true, " "width=(int) [1,MAX], " "height=(int) [1,MAX]";
++
++  gst_element_class_set_static_metadata (element_class,
++      "OpenMAX XVID Video Decoder",
++      "Codec/Decoder/Video",
++      "Decode XVID video streams",
++      "Sebastian Dröge <sebastian.droege@collabora.co.uk>");
++
++  gst_omx_set_default_role (&videodec_class->cdata, "video_decoder.xvid");
++}
++
++static void
++gst_omx_xvid_dec_init (GstOMXXVIDDec * self)
++{
++}
++
++static gboolean
++gst_omx_xvid_dec_is_format_change (GstOMXVideoDec * dec,
++    GstOMXPort * port, GstVideoCodecState * state)
++{
++  return FALSE;
++}
++
++static gboolean
++gst_omx_xvid_dec_set_format (GstOMXVideoDec * dec, GstOMXPort * port,
++    GstVideoCodecState * state)
++{
++  gboolean ret;
++  OMX_PARAM_PORTDEFINITIONTYPE port_def;
++
++  gst_omx_port_get_port_definition (port, &port_def);
++  port_def.format.video.eCompressionFormat = OMX_VIDEO_CodingXVID;
++  ret = gst_omx_port_update_port_definition (port, &port_def) == OMX_ErrorNone;
++
++  return ret;
++}
+diff --git a/omx/gstomxxviddec.h b/omx/gstomxxviddec.h
+new file mode 100644
+index 0000000..11d524d
+--- /dev/null
++++ b/omx/gstomxxviddec.h
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2011, Hewlett-Packard Development Company, L.P.
++ *   Author: Sebastian Dröge <sebastian.droege@collabora.co.uk>, Collabora Ltd.
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation
++ * version 2.1 of the License.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
++ *
++ */
++
++#ifndef __GST_OMX_XVID_DEC_H__
++#define __GST_OMX_XVID_DEC_H__
++
++#include <gst/gst.h>
++#include "gstomxvideodec.h"
++
++G_BEGIN_DECLS
++
++#define GST_TYPE_OMX_XVID_DEC \
++  (gst_omx_xvid_dec_get_type())
++#define GST_OMX_XVID_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_OMX_XVID_DEC,GstOMXXVIDDec))
++#define GST_OMX_XVID_DEC_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST((klass),GST_TYPE_OMX_XVID_DEC,GstOMXXVIDDecClass))
++#define GST_OMX_XVID_DEC_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS((obj),GST_TYPE_OMX_XVID_DEC,GstOMXXVIDDecClass))
++#define GST_IS_OMX_XVID_DEC(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE((obj),GST_TYPE_OMX_XVID_DEC))
++#define GST_IS_OMX_XVID_DEC_CLASS(obj) \
++  (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_OMX_XVID_DEC))
++
++typedef struct _GstOMXXVIDDec GstOMXXVIDDec;
++typedef struct _GstOMXXVIDDecClass GstOMXXVIDDecClass;
++
++struct _GstOMXXVIDDec
++{
++  GstOMXVideoDec parent;
++};
++
++struct _GstOMXXVIDDecClass
++{
++  GstOMXVideoDecClass parent_class;
++};
++
++GType gst_omx_xvid_dec_get_type (void);
++
++G_END_DECLS
++
++#endif /* __GST_OMX_XVID_DEC_H__ */
+diff --git a/omx/openmax/OMX_Video.h b/omx/openmax/OMX_Video.h
+index 163e450..cf7e99d 100644
+--- a/omx/openmax/OMX_Video.h
++++ b/omx/openmax/OMX_Video.h
+@@ -68,8 +68,27 @@ typedef enum OMX_VIDEO_CODINGTYPE {
+     OMX_VIDEO_CodingRV,         /**< all versions of Real Video */
+     OMX_VIDEO_CodingAVC,        /**< H.264/AVC */
+     OMX_VIDEO_CodingMJPEG,      /**< Motion JPEG */
++	OMX_VIDEO_CodingVP8,
++    OMX_VIDEO_CodingVP9,        /**< Google VP9 */
++    OMX_VIDEO_CodingHEVC,       /**< ITU H.265/HEVC */
+     OMX_VIDEO_CodingKhronosExtensions = 0x6F000000, /**< Reserved region for introducing Khronos Standard Extensions */ 
+     OMX_VIDEO_CodingVendorStartUnused = 0x7F000000, /**< Reserved region for introducing Vendor Extensions */
++    //*add by xiwang
++    OMX_VIDEO_CodingVP6,
++    OMX_VIDEO_CodingMPEG1,
++    OMX_VIDEO_CodingS263,
++    OMX_VIDEO_CodingMSMPEG4V1,
++    OMX_VIDEO_CodingMSMPEG4V2,
++    OMX_VIDEO_CodingDIVX,
++    OMX_VIDEO_CodingXVID,
++    OMX_VIDEO_CodingRXG2,
++    OMX_VIDEO_CodingWMV1,
++    OMX_VIDEO_CodingWMV2,
++    OMX_VIDEO_CodingMSMPEG4V3,
++	OMX_VIDEO_CodingDIVX4,
++	OMX_VIDEO_CodingRX,
++	OMX_VIDEO_CodingAVS,
++    //*end
+     OMX_VIDEO_CodingMax = 0x7FFFFFFF
+ } OMX_VIDEO_CODINGTYPE;
+ 
+@@ -798,6 +817,7 @@ typedef enum OMX_VIDEO_AVCLEVELTYPE {
+     OMX_VIDEO_AVCLevel42  = 0x2000,   /**< Level 4.2 */
+     OMX_VIDEO_AVCLevel5   = 0x4000,   /**< Level 5 */
+     OMX_VIDEO_AVCLevel51  = 0x8000,   /**< Level 5.1 */
++    OMX_VIDEO_AVCLevel52  = 0x10000,  /**< Level 5.2 */
+     OMX_VIDEO_AVCLevelKhronosExtensions = 0x6F000000, /**< Reserved region for introducing Khronos Standard Extensions */ 
+     OMX_VIDEO_AVCLevelVendorStartUnused = 0x7F000000, /**< Reserved region for introducing Vendor Extensions */
+     OMX_VIDEO_AVCLevelMax = 0x7FFFFFFF  
+-- 
+1.9.1
+

@@ -1,0 +1,82 @@
+From f146f08c233adbd8bcea455dca6d56a91f56de45 Mon Sep 17 00:00:00 2001
+From: luwinkey <luwinkey@allwinnertech.com>
+Date: Thu, 10 Sep 2020 19:19:57 +0800
+Subject: [PATCH] fix volume adjustment is limited by name length.
+
+Signed-off-by: luwinkey <luwinkey@allwinnertech.com>
+---
+ src/asound/bluealsa-ctl.c | 31 +++++++++++++++++++++++++------
+ 1 file changed, 25 insertions(+), 6 deletions(-)
+
+diff --git a/src/asound/bluealsa-ctl.c b/src/asound/bluealsa-ctl.c
+index 0d4c6fb..2809230 100644
+--- a/src/asound/bluealsa-ctl.c
++++ b/src/asound/bluealsa-ctl.c
+@@ -73,6 +73,22 @@ struct bluealsa_ctl {
+ 
+ };
+ 
++char *string_left_cut(char *dst, char *src, int n)
++{
++	char *p = src;
++	char *q = dst;
++	int len = strlen(src);
++
++	if(n > len)
++		 n = len;
++
++	while(n--)
++		*(q++) = *(p++);
++
++	*(q++)='\0';
++
++	return dst;
++}
+ 
+ /**
+  * Get device ID number.
+@@ -106,6 +122,9 @@ static void bluealsa_set_elem_name(struct ctl_elem *elem, int id) {
+ 
+ 	int len = sizeof(elem->name) - 16 - 1;
+ 	char no[8] = "";
++	char control_name[21] = {0};
++
++	string_left_cut(control_name, device->name, 20);
+ 
+ 	if (id != -1) {
+ 		sprintf(no, " #%d", id + 1);
+@@ -114,9 +133,9 @@ static void bluealsa_set_elem_name(struct ctl_elem *elem, int id) {
+ 
+ 	if (type == CTL_ELEM_TYPE_BATTERY) {
+ 		len -= 10;
+-		while (isspace(device->name[len - 1]))
++		while (isspace(control_name[len - 1]))
+ 			len--;
+-		sprintf(elem->name, "%.*s%s | Battery", len, device->name, no);
++		sprintf(elem->name, "%.*s%s | Battery", len, control_name, no);
+ 	}
+ 	else if (transport != NULL) {
+ 		/* avoid name duplication by adding profile suffixes */
+@@ -125,15 +144,15 @@ static void bluealsa_set_elem_name(struct ctl_elem *elem, int id) {
+ 			break;
+ 		case BA_PCM_TYPE_A2DP:
+ 			len -= 7;
+-			while (isspace(device->name[len - 1]))
++			while (isspace(control_name[len - 1]))
+ 				len--;
+-			sprintf(elem->name, "%.*s%s - A2DP", len, device->name, no);
++			sprintf(elem->name, "%.*s%s - A2DP", len, control_name, no);
+ 			break;
+ 		case BA_PCM_TYPE_SCO:
+ 			len -= 6;
+-			while (isspace(device->name[len - 1]))
++			while (isspace(control_name[len - 1]))
+ 				len--;
+-			sprintf(elem->name, "%.*s%s - SCO", len, device->name, no);
++			sprintf(elem->name, "%.*s%s - SCO", len, control_name, no);
+ 			break;
+ 		}
+ 	}
+-- 
+2.28.0
+

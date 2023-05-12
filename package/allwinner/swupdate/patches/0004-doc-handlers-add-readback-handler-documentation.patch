@@ -1,0 +1,66 @@
+From 56b2f1bdfc26f321de65cfd734407cf1dcc497a5 Mon Sep 17 00:00:00 2001
+From: Kevin Zhang <Kevin.Zhang3@cn.bosch.com>
+Date: Tue, 21 Jan 2020 08:55:51 +0100
+Subject: [PATCH] doc: handlers: add readback handler documentation
+
+Signed-off-by: Kevin Zhang <kevin.zhang3@cn.bosch.com>
+Signed-off-by: Mark Jonas <mark.jonas@de.bosch.com>
+Reviewed-by: Stefano Babic <sbabic@denx.de>
+Acked-by: Stefano Babic <sbabic@denx.de>
+---
+ doc/source/handlers.rst | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+
+diff --git a/doc/source/handlers.rst b/doc/source/handlers.rst
+index 6b694af..a55292b 100644
+--- a/doc/source/handlers.rst
++++ b/doc/source/handlers.rst
+@@ -642,4 +642,45 @@ of the two SSBL administration.
+    |             |          | when this SSBL is set.                             |
+    +-------------+----------+----------------------------------------------------+
+ 
++Readback Handler
++----------------
+ 
++To verify that an image was written properly, this readback handler calculates
++the sha256 hash of a partition (or part of it) and compares it against a given
++hash value.
++
++The following example explains how to use this handler:
++
++::
++    scripts: (
++    {
++        device = "/dev/mmcblk2p1";
++        type = "readback";
++        properties: {
++            sha256 = "e7afc9bd98afd4eb7d8325196d21f1ecc0c8864d6342bfc6b6b6c84eac86eb42";
++            size = "184728576";
++            offset = "0";
++        };
++    }
++    );
++
++Properties ``size`` and ``offset`` are optional, all the other properties are mandatory.
++
++.. table:: Properties for readback handler
++
++    +-------------+----------+----------------------------------------------------+
++    |  Name       |  Type    |  Description                                       |
++    +=============+==========+====================================================+
++    | device      | string   | The partition which shall be verified.             |
++    +-------------+----------+----------------------------------------------------+
++    | type        | string   | Identifier for the handler.                        |
++    +-------------+----------+----------------------------------------------------+
++    | sha256      | string   | Expected sha256 hash of the partition.             |
++    +-------------+----------+----------------------------------------------------+
++    | size        | string   | Data size (in bytes) to be verified.               |
++    |             |          | If 0 or not set, the handler will get the          |
++    |             |          | partition size from the device.                    |
++    +-------------+----------+----------------------------------------------------+
++    | offset      | string   | Offset (in bytes) to the start of the partition.   |
++    |             |          | If not set, default value 0 will be used.          |
++    +-------------+----------+----------------------------------------------------+
+-- 
+2.24.0
+

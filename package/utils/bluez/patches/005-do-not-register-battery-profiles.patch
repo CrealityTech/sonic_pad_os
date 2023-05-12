@@ -1,0 +1,29 @@
+From 005ddf860f755de848742aff71e10882371ffddc Mon Sep 17 00:00:00 2001
+From: luwinkey <luwinkey@allwinnertech.com>
+Date: Wed, 25 Nov 2020 20:10:33 +0800
+Subject: [PATCH] do not register battery profiles.
+
+This will cause the pairing box to pop up
+when the Apple phone is connected to ble.
+
+Signed-off-by: luwinkey <luwinkey@allwinnertech.com>
+---
+ profiles/battery/battery.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/profiles/battery/battery.c b/profiles/battery/battery.c
+index 4da4355..96b1590 100644
+--- a/profiles/battery/battery.c
++++ b/profiles/battery/battery.c
+@@ -358,7 +358,7 @@ static struct btd_profile batt_profile = {
+ 
+ static int batt_init(void)
+ {
+-	return btd_profile_register(&batt_profile);
++	return -1;
+ }
+ 
+ static void batt_exit(void)
+-- 
+2.28.0
+

@@ -1,0 +1,35 @@
+From cc3b4e2d26994a58ec91e20704982de8b0a0e95b Mon Sep 17 00:00:00 2001
+From: xuqiang <xuqiang@allwinnertech.com>
+Date: Tue, 22 Sep 2020 09:35:50 +0800
+Subject: [PATCH] change patch /run/udev/queue to /dev/queue
+
+Signed-off-by: xuqiang <xuqiang@allwinnertech.com>
+---
+ src/udev/udevd.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/udev/udevd.c b/src/udev/udevd.c
+index cf826c6..7be3080 100644
+--- a/src/udev/udevd.c
++++ b/src/udev/udevd.c
+@@ -684,13 +684,13 @@ static void event_queue_update(void) {
+         int r;
+ 
+         if (!udev_list_node_is_empty(&event_list)) {
+-                r = touch("/run/udev/queue");
++                r = touch(UDEV_ROOT_RUN "/udev/queue");
+                 if (r < 0)
+-                        log_warning_errno(r, "could not touch /run/udev/queue: %m");
++                        log_warning_errno(r, "could not touch " UDEV_ROOT_RUN "/udev/queue: %m");
+         } else {
+-                r = unlink("/run/udev/queue");
++                r = unlink(UDEV_ROOT_RUN "/udev/queue");
+                 if (r < 0 && errno != ENOENT)
+-                        log_warning("could not unlink /run/udev/queue: %m");
++                        log_warning("could not unlink " UDEV_ROOT_RUN "/udev/queue: %m");
+         }
+ }
+ 
+-- 
+2.28.0
+

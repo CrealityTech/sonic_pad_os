@@ -1,0 +1,24 @@
+--- a/conf/nginx.conf
++++ b/conf/nginx.conf
+@@ -421,6 +421,21 @@ index index.html;
+         add_header Access-Control-Allow-Methods 'GET,POST,PUT,OPTIONS,DELETE,PATCH,VIEW';      
+         add_header Access-Control-Allow-Headers 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization';                                                   
+         add_header Referrer-Policy "no-referrer" always;                                                                    
++        location ~* /ufiles/(.+)_(\d+)x(\d+)\.(jpg|jpeg|gif|png)$ {
++            set $w $2;
++            set $h $3;
++            image_filter resize  $w $h;
++            #image_filter test;
++            image_filter_buffer  100M; 
++            image_filter_interlace on;
++            image_filter_jpeg_quality 80;
++            try_files /$1.$4  /notfound.jpg;
++            expires 1d;
++            add_header 'Access-Control-Allow-Origin' '*';
++            add_header 'Access-Control-Allow-Credentials' 'true';
++            alias /mnt/exUDISK; 
++        }
++
+         location /sn {                                                  
+             alias /mnt/UDISK/.crealityprint/serial_number.png;                      
+             autoindex on;                                                                   

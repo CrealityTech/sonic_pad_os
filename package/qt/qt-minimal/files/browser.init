@@ -1,0 +1,56 @@
+#!/bin/sh /etc/rc.common
+
+START=55
+STOP=1
+DEPEND=nginx
+PROG=qt-minimal
+USE_PROCD=1
+
+remove_cache() {
+	find /.cache/ -type f | xargs rm
+	find /.local/ -type f ! -name "Cookies*" -exec rm -rf {} \;
+}
+
+start_browser(){
+	# set core file size
+	ulimit -c unlimited
+
+	egl_rotate=`uci get /etc/config/browser.core.egl_rotate`
+	tp_rotate=`uci get /etc/config/browser.core.tp_rotate`
+
+	export QT_QPA_EGLFS_INTEGRATION=none
+	export XDG_RUNTIME_DIR=/dev/shm
+	export QT_QPA_EVDEV_TOUCHSCREEN_PARAMETERS='evdev:/dev/event3'
+	export QT_QPA_GENERIC_PLUGINS='evdevtouch:/dev/event3'
+	export QT_QPA_EGLFS_PHYSICAL_WIDTH='384'
+	export QT_QPA_EGLFS_PHYSICAL_HEIGHT='207'
+	export QT_QPA_EGLFS_ROTATION=$egl_rotate
+	export QT_QPA_EVDEV_TOUCHSCREEN_PARAMETERS=evdev:/dev/event3:rotate=$tp_rotate
+	$PROG --no-sandbox -platform eglfs file:///usr/share/web/pad/build/index.html &
+}
+
+start_service() {
+	while [ ! -e "/tmp/boot_play_done" ]
+	do
+		sleep 1
+	done
+
+	remove_cache
+	start_browser
+}
+
+stop_service() {
+	minimal=`ps | grep -w $PROG | grep -v grep | awk '{print $1}'`
+	[ -n "$minimal" ] && {
+        for pid in "$minimal"
+        do
+            kill -9 $pid
+        done
+	}
+}
+
+reload_service() {
+	stop_service
+	sleep 1
+	start_browser
+}

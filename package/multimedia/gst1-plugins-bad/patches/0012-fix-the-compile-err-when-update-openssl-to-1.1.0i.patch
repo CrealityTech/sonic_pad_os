@@ -1,0 +1,29 @@
+From 73447dd6df8ad75153258fd30f4aea67c239fc26 Mon Sep 17 00:00:00 2001
+From: houxiaoni <houxiaoni@allwinnertech.com>
+Date: Mon, 13 Jul 2020 15:52:41 +0800
+Subject: [PATCH] fix the compile err when update openssl to 1.1.0i
+
+Change-Id: I1facd5f3740bfb124590d29a65d2df9b883e23a3
+Signed-off-by: houxiaoni <houxiaoni@allwinnertech.com>
+---
+ ext/dtls/gstdtlscertificate.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/ext/dtls/gstdtlscertificate.c b/ext/dtls/gstdtlscertificate.c
+index c2d9bb2..bd57a1e 100644
+--- a/ext/dtls/gstdtlscertificate.c
++++ b/ext/dtls/gstdtlscertificate.c
+@@ -47,6 +47,10 @@
+ 
+ #include <openssl/ssl.h>
+ 
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++#include <openssl/rsa.h>
++#endif
++
+ GST_DEBUG_CATEGORY_STATIC (gst_dtls_certificate_debug);
+ #define GST_CAT_DEFAULT gst_dtls_certificate_debug
+ 
+-- 
+1.9.1
+

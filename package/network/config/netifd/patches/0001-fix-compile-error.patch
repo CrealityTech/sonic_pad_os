@@ -1,0 +1,29 @@
+From f36ff5cb64cfd27c2543f7420c29020d6de103d7 Mon Sep 17 00:00:00 2001
+From: liumingyuan <liumingyuan@allwinnertech.com>
+Date: Wed, 1 Apr 2020 11:37:46 +0800
+Subject: [PATCH] fix compile error.
+
+update json-c to 0.13.1 cause follow error:
+
+"handler.c:implicit declaration of function 'is_error'"
+
+Signed-off-by: liumingyuan <liumingyuan@allwinnertech.com>
+---
+ handler.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/handler.h b/handler.h
+index e3e2af5..d17674a 100644
+--- a/handler.h
++++ b/handler.h
+@@ -16,6 +16,7 @@
+ 
+ #include <libubox/blobmsg_json.h>
+ #include <json-c/json.h>
++#include <json-c/bits.h>
+ #include "config.h"
+ 
+ typedef void (*script_dump_cb)(const char *script, const char *name, json_object *obj);
+-- 
+1.9.1
+

@@ -1,0 +1,166 @@
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/de_DE/main.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/de_DE/main.qml
+@@ -129,7 +129,7 @@ KeyboardLayout {
+             key: Qt.Key_Adiaeresis
+             text: "ä"
+         }
+-        EnterKey {
++        OkKey {
+             weight: 283
+         }
+     }
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/es_ES/main.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/es_ES/main.qml
+@@ -128,7 +128,7 @@ KeyboardLayout {
+             key: Qt.Key_Ntilde
+             text: "ñ"
+         }
+-        EnterKey {
++        OkKey {
+             weight: 246
+         }
+     }
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/es_ES/symbols.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/es_ES/symbols.qml
+@@ -122,7 +122,7 @@ KeyboardLayoutLoader {
+                     key: Qt.Key_ParenRight
+                     text: ")"
+                 }
+-                EnterKey {
++                OkKey {
+                     weight: 283
+                 }
+             }
+@@ -294,7 +294,7 @@ KeyboardLayoutLoader {
+                     key: Qt.Key_BracketRight
+                     text: "]"
+                 }
+-                EnterKey {
++                OkKey {
+                     weight: 283
+                 }
+             }
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/fallback/main.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/fallback/main.qml
+@@ -128,7 +128,7 @@ KeyboardLayout {
+             text: "l"
+             alternativeKeys: "ĺŀłļľl"
+         }
+-        EnterKey {
++        OkKey {
+             weight: 283
+         }
+     }
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/fallback/symbols.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/fallback/symbols.qml
+@@ -122,7 +122,7 @@ KeyboardLayoutLoader {
+                     key: Qt.Key_ParenRight
+                     text: ")"
+                 }
+-                EnterKey {
++                OkKey {
+                     weight: 283
+                 }
+             }
+@@ -292,7 +292,7 @@ KeyboardLayoutLoader {
+                     key: Qt.Key_BracketRight
+                     text: "]"
+                 }
+-                EnterKey {
++                OkKey {
+                     weight: 283
+                 }
+             }
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/fr_FR/main.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/fr_FR/main.qml
+@@ -126,7 +126,7 @@ KeyboardLayout {
+             key: Qt.Key_M
+             text: "m"
+         }
+-        EnterKey {
++        OkKey {
+             weight: 283
+         }
+     }
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/it_IT/main.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/it_IT/main.qml
+@@ -121,7 +121,7 @@ KeyboardLayout {
+             key: Qt.Key_L
+             text: "l"
+         }
+-        EnterKey {
++        OkKey {
+             weight: 283
+         }
+     }
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/pt_PT/main.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/pt_PT/main.qml
+@@ -125,7 +125,7 @@ KeyboardLayout {
+             key: Qt.Key_Ccedilla
+             text: "ç"
+         }
+-        EnterKey {
++        OkKey {
+             weight: 283
+         }
+     }
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/ru_RU/main.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/ru_RU/main.qml
+@@ -135,7 +135,7 @@ KeyboardLayoutLoader {
+                     key: 0x042D
+                     text: "э"
+                 }
+-                EnterKey {
++                OkKey {
+                     weight: 280
+                 }
+             }
+@@ -311,7 +311,7 @@ KeyboardLayoutLoader {
+                     key: Qt.Key_L
+                     text: "l"
+                 }
+-                EnterKey {
++                OkKey {
+                     weight: 283
+                 }
+             }
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/tr_TR/main.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/tr_TR/main.qml
+@@ -131,7 +131,7 @@ KeyboardLayout {
+             key: Qt.Key_I
+             text: "i"
+         }
+-        EnterKey {
++        OkKey {
+             weight: 283
+         }
+     }
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/zh_CN/symbols.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/layouts/zh_CN/symbols.qml
+@@ -85,7 +85,7 @@ KeyboardLayoutLoader {
+                         text: keysPage1[1][index]
+                     }
+                 }
+-                EnterKey {
++                OkKey {
+                     weight: 283
+                 }
+             }
+@@ -162,7 +162,7 @@ KeyboardLayoutLoader {
+                         text: keysPage2[1][index]
+                     }
+                 }
+-                EnterKey {
++                OkKey {
+                     weight: 283
+                 }
+             }
+@@ -239,7 +239,7 @@ KeyboardLayoutLoader {
+                         text: keysPage3[1][index]
+                     }
+                 }
+-                EnterKey {
++                OkKey {
+                     weight: 283
+                 }
+             }

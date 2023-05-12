@@ -1,0 +1,12 @@
+diff -Naur refpolicy/Makefile refpolicy-new/Makefile
+--- refpolicy/Makefile	2019-02-02 04:03:42.000000000 +0800
++++ refpolicy-new/Makefile	2020-03-09 19:43:51.528138321 +0800
+@@ -53,7 +53,7 @@
+ else
+ tc_usrbindir := $(BINDIR)
+ tc_usrsbindir := $(SBINDIR)
+-tc_sbindir := /sbin
++tc_sbindir := $(SBINDIR)
+ endif
+ CHECKPOLICY ?= $(tc_usrbindir)/checkpolicy
+ CHECKMODULE ?= $(tc_usrbindir)/checkmodule

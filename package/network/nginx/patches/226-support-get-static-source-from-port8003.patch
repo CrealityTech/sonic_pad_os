@@ -1,0 +1,88 @@
+--- a/conf/nginx.conf
++++ b/conf/nginx.conf
+@@ -254,6 +254,62 @@ index index.html;
+ 
+             proxy_pass http://127.0.0.1:8004;
+         }
++
++        location /sn {                                                  
++            alias /mnt/UDISK/.crealityprint/png;                      
++            autoindex on;                                                                   
++        }
++
++        location /ai {                                                  
++            alias /mnt/UDISK/.crealityprint/ai_error_png;                      
++            autoindex on;                                                                   
++        }
++
++        location /passwd {
++            alias /mnt/UDISK/.crealityprint/password.png;
++            autoindex on;
++        }
++
++        location /static {                                                  
++            root /usr/share/web/pad/build;                                   
++            index index.html;                                               
++        }                                                                   
++        location /images {                                                  
++            alias /mnt/UDISK/.crealityprint/preview_images;                      
++            autoindex on;                                                                   
++        }
++        location /pfiles {                                                                     
++            alias /mnt/UDISK/.crealityprint/upload;                                        
++            autoindex on;                                                                          
++        }
++        location /pfiles2 {                                                                     
++            alias /mnt/UDISK/.crealityprint/gcode_tmp;                                        
++            autoindex on;                                                                          
++        }
++        location /ufiles {                                                                     
++            alias /mnt/exUDISK;                                        
++            autoindex on;                                                                          
++        }
++        location /video {                                                                     
++            alias /mnt/UDISK/.crealityprint/video;                                        
++            autoindex on;                                                                          
++        }
++        location /tmpfiles {                                                                     
++            alias /mnt/UDISK/.crealityprint/tmp;                                        
++            autoindex on;                                                                          
++        }
++        location /frontlog {                                                                     
++            alias /mnt/UDISK/.crealityprint/logs/front_crealityprint_client.log;                                        
++            autoindex on;                                                                          
++        }
++        location /open_video {
++            alias /mnt/UDISK/.crealityprint/screen_saver;
++            autoindex on;
++        }
++        location /shuffling_figure {
++            alias /mnt/UDISK/.crealityprint/shuffling_figure;
++            autoindex on;
++        }		
+     }
+ 
+     server {                                                                    
+@@ -276,6 +332,11 @@ index index.html;
+             autoindex on;                                                                   
+         }
+ 
++        location /ai {                                                  
++            alias /mnt/UDISK/.crealityprint/ai_error_png;                      
++            autoindex on;                                                                   
++        }
++
+         location /passwd {
+             alias /mnt/UDISK/.crealityprint/password.png;
+             autoindex on;
+@@ -293,6 +354,10 @@ index index.html;
+             alias /mnt/UDISK/.crealityprint/upload;                                        
+             autoindex on;                                                                          
+         }
++        location /pfiles2 {                                                                     
++            alias /mnt/UDISK/.crealityprint/gcode_tmp;                                        
++            autoindex on;                                                                          
++        }
+         location /ufiles {                                                                     
+             alias /mnt/exUDISK;                                        
+             autoindex on;                                                                          

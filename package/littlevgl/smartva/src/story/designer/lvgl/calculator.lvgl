@@ -1,0 +1,78 @@
+{
+    "lvgl": {
+        "name": "calculator.lvgl",
+        "resolution": {
+            "height": 480,
+            "width": 800
+        },
+        "screen color": "#55aa7f",
+        "widgets": [
+            {
+                "accessible": true,
+                "auto size": true,
+                "class": "lv_img",
+                "drag": false,
+                "geometry": {
+                    "height": 32,
+                    "width": 32,
+                    "x": 18,
+                    "y": 14
+                },
+                "locked": false,
+                "name": "image_1",
+                "offset": {
+                    "X": 0,
+                    "Y": 0
+                },
+                "source": "home_return.png",
+                "visible": true,
+                "widget": "Image"
+            },
+            {
+                "accessible": true,
+                "class": "lv_ta",
+                "cursor blink time": 144,
+                "cursor position": 0,
+                "cursor type": "None",
+                "drag": false,
+                "edge flash": false,
+                "geometry": {
+                    "height": 121,
+                    "width": 510,
+                    "x": 139,
+                    "y": 18
+                },
+                "locked": false,
+                "max length": 0,
+                "name": "text_area_1",
+                "one line mode": false,
+                "password mode": false,
+                "placeholder": "",
+                "scroll propagation": false,
+                "scrollbars": "Drag",
+                "text": "",
+                "text align": "Left",
+                "visible": true,
+                "widget": "Text area"
+            },
+            {
+                "accessible": true,
+                "assign text area": "None",
+                "class": "lv_kb",
+                "cursor manager": false,
+                "drag": false,
+                "geometry": {
+                    "height": 331,
+                    "width": 510,
+                    "x": 139,
+                    "y": 139
+                },
+                "locked": false,
+                "mode": "Number",
+                "name": "keyboard_1",
+                "visible": true,
+                "widget": "Keyboard"
+            }
+        ]
+    }
+}

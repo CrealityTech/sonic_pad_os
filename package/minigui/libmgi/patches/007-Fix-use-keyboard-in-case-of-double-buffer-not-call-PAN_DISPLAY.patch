@@ -1,0 +1,43 @@
+--- a/src/softkeyboard/softkeyboard/common.c	2020-05-14 14:26:10.553758470 +0800
++++ b/src/softkeyboard/softkeyboard/common.c	2020-05-14 14:25:32.373759572 +0800
+@@ -1005,6 +1005,7 @@
+     } else {
+         //HideToolTip(ttw);
+         EraseBbGround(hWnd, &mk->bound);
++	InvalidateRect (hWnd, NULL, TRUE);
+     }
+ #else
+     if (mk->style & KEY_PAD_PRESSED) {
+@@ -1015,6 +1016,7 @@
+     } else{
+         EraseBbGround(hWnd, &mk->bound);
+ 	}
++    InvalidateRect (hWnd, NULL, TRUE);
+ #endif
+ }
+
+--- a/src/softkeyboard/softkeyboard/en_kbd.c    2020-06-28 20:09:01.000000000 +0800
++++ b/src/softkeyboard/softkeyboard/en_kbd.c    2020-06-29 09:15:45.000000000 +0800
+@@ -363,7 +363,8 @@
+                 vw_proceed_hit(hwnd, key_board->view_window,
+                         key_board->stroke_window, &key_board->action,
+                         FALSE, p, EN, key_board->ime);
+-                break;
++               InvalidateRect (hwnd, NULL, TRUE);
++               break;
+             }
+
+             if (PtInRect(&key_board->key_window->bound, p.x, p.y)) {
+--- a/src/softkeyboard/softkeyboard/pinyin_kbd.c        2020-06-28 20:09:01.000000000 +0800
++++ b/src/softkeyboard/softkeyboard/pinyin_kbd.c    2020-06-29 09:15:12.000000000 +0800
+@@ -376,7 +376,8 @@
+                 vw_proceed_hit(hwnd, key_board->view_window,
+                         key_board->stroke_window, &key_board->action,
+                         FALSE, p, CN, key_board->ime);
+-                break;
++               InvalidateRect (hwnd, NULL, TRUE);
++               break;
+             }
+
+             if (PtInRect(&key_board->key_window->bound, p.x, p.y)) {
+

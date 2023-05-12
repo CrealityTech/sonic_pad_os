@@ -1,0 +1,66 @@
+From 2f795ce75fc442c99e85e5dfd872ccfddc4b2196 Mon Sep 17 00:00:00 2001
+From: junsenhuang <junsenhuang@allwinnertech.com>
+Date: Fri, 17 May 2019 11:18:31 +0800
+Subject: [PATCH 3/9] gst-omx: support YV12 format.
+
+Change-Id: Id8b3891b8388ad062ae79183192509e0d4d1be97
+---
+ omx/gstomxbufferpool.c     | 1 +
+ omx/gstomxvideo.c          | 5 +++--
+ omx/openmax/OMX_IVCommon.h | 4 ++++
+ 3 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/omx/gstomxbufferpool.c b/omx/gstomxbufferpool.c
+index 2d6923e..56ab964 100644
+--- a/omx/gstomxbufferpool.c
++++ b/omx/gstomxbufferpool.c
+@@ -433,6 +433,7 @@ gst_omx_buffer_pool_alloc_buffer (GstBufferPool * bpool,
+       case GST_VIDEO_FORMAT_GRAY8:
+         break;
+       case GST_VIDEO_FORMAT_I420:
++	  case GST_VIDEO_FORMAT_YV12:
+         stride[1] = nstride / 2;
+         offset[1] = offset[0] + stride[0] * nslice;
+         stride[2] = nstride / 2;
+diff --git a/omx/gstomxvideo.c b/omx/gstomxvideo.c
+index 151b3b4..17ee380 100644
+--- a/omx/gstomxvideo.c
++++ b/omx/gstomxvideo.c
+@@ -25,9 +25,7 @@
+ #ifdef HAVE_CONFIG_H
+ #include "config.h"
+ #endif
+-
+ #include "gstomxvideo.h"
+-
+ #include <math.h>
+ 
+ GST_DEBUG_CATEGORY (gst_omx_video_debug_category);
+@@ -46,6 +44,9 @@ gst_omx_video_get_format_from_omx (OMX_COLOR_FORMATTYPE omx_colorformat)
+     case OMX_COLOR_FormatYUV420PackedPlanar:
+       format = GST_VIDEO_FORMAT_I420;
+       break;
++	case OMX_COLOR_FormatYVU420Planar:
++	  format = GST_VIDEO_FORMAT_YV12;
++	  break;
+     case OMX_COLOR_FormatYUV420SemiPlanar:
+     case OMX_COLOR_FormatYUV420PackedSemiPlanar:
+       format = GST_VIDEO_FORMAT_NV12;
+diff --git a/omx/openmax/OMX_IVCommon.h b/omx/openmax/OMX_IVCommon.h
+index 4c4995c..0ba125b 100644
+--- a/omx/openmax/OMX_IVCommon.h
++++ b/omx/openmax/OMX_IVCommon.h
+@@ -132,6 +132,10 @@ typedef enum OMX_COLOR_FORMATTYPE {
+     OMX_COLOR_Format24BitABGR6666,
+     OMX_COLOR_FormatKhronosExtensions = 0x6F000000, /**< Reserved region for introducing Khronos Standard Extensions */ 
+     OMX_COLOR_FormatVendorStartUnused = 0x7F000000, /**< Reserved region for introducing Vendor Extensions */
++    //* extended by aw;
++    OMX_COLOR_FormatYVU420SemiPlanar,
++	OMX_COLOR_FormatYVU420Planar,
++    //* end;
+     OMX_COLOR_FormatMax = 0x7FFFFFFF
+ } OMX_COLOR_FORMATTYPE;
+ 
+-- 
+1.9.1
+

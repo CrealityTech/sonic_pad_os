@@ -1,0 +1,26 @@
+#!/bin/sh
+
+device="hw:audiocodec"
+
+amixer -D$device cset name='codec vad support' 1
+[ $? != 0 ] && {
+    echo "set mixer failed. no such sound card or mad not enable."
+    exit
+}
+
+if [ $# = 1 ]; then
+    [ $1 = "dump" ] && {
+	mad-capture -D$device -f S16_LE -r 16000 -c 4 -d 2 -p 1024 -b 8192 /mnt/UDISK/vad-test.wav
+    }
+    [ $1 = "pause" ] && {
+	mad-capture -D$device -f S16_LE -r 16000 -c 4 -d 2 -t 2 -p 1024 -b 8192 /mnt/UDISK/vad-test.wav
+    }
+    [ $1 = "kill" ] && {
+        killall mad-capture
+    }
+    [ $1 = "standby" ] && {
+	kill -s SIGUSR1 `ps |grep mad-capture |grep -v grep | awk '{print $1}'`
+    }
+else
+    mad-capture -D$device -f S16_LE -r 16000 -c 4 -d 5 -p 1024 -b 8192
+fi

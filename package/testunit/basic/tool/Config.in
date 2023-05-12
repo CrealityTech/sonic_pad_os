@@ -1,0 +1,8 @@
+menuconfig TESTUNIT_BASIC_TOOL
+    bool "tool"
+    default y
+        select PACKAGE_TINATEST
+	select TINATEST_SYS_GLOBAL
+	select TINATEST_SYS_GLOBAL_INFO
+	select TINATEST_SYS_GLOBAL_INFO_OUTLOG
+        select TINATEST_SYS_GLOBAL_INFO_OUTLOG_DRAGONMAT

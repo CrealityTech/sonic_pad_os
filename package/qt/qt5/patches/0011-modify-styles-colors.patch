@@ -1,0 +1,628 @@
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/backspace-868482.svg
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/backspace-868482.svg
+@@ -1,23 +1,5 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+-	 viewBox="-420 107 159 88" enable-background="new -420 107 159 88" xml:space="preserve">
+-<g>
+-	<rect x="-420" y="107" fill="none" width="159" height="88"/>
+-	<g>
+-		<g>
+-			<path fill="#868482" d="M-261.2,195H-376l-44-44l44-44h114.8V195z M-371.3,183.7h98.8v-65.4h-98.8L-404,151L-371.3,183.7z"/>
+-		</g>
+-		<g>
+-			<g>
+-				
+-					<rect x="-332.7" y="123.2" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 -665.0558 26.5252)" fill="#868482" width="11.3" height="55.7"/>
+-			</g>
+-			<g>
+-				
+-					<rect x="-354.9" y="145.4" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 -665.0499 26.5255)" fill="#868482" width="55.7" height="11.3"/>
+-			</g>
+-		</g>
+-	</g>
+-</g>
++<svg width="159" height="88" viewBox="0 0 159 88" fill="none" xmlns="http://www.w3.org/2000/svg">
++<path d="M158.8 86C158.8 87.1046 157.905 88 156.8 88H44.8284C44.298 88 43.7893 87.7893 43.4142 87.4142L1.41422 45.4142C0.633167 44.6332 0.633165 43.3668 1.41421 42.5858L43.4142 0.585788C43.7893 0.210715 44.298 0 44.8284 0H156.8C157.905 0 158.8 0.895431 158.8 2V86ZM48.1142 76.1142C48.4893 76.4893 48.998 76.7 49.5284 76.7H145.5C146.605 76.7 147.5 75.8046 147.5 74.7V13.3C147.5 12.1954 146.605 11.3 145.5 11.3H49.5284C48.998 11.3 48.4893 11.5107 48.1142 11.8858L17.4142 42.5858C16.6332 43.3668 16.6332 44.6332 17.4142 45.4142L48.1142 76.1142Z" fill="#868482"/>
++<path d="M70.028 60.3795L76.604 66.9555C76.9945 67.346 77.6277 67.346 78.0182 66.9555L115.989 28.9842C116.38 28.5937 116.38 27.9606 115.989 27.57L109.413 20.994C109.023 20.6035 108.39 20.6035 107.999 20.994L70.028 58.9653C69.6374 59.3558 69.6374 59.9889 70.028 60.3795Z" fill="#868482"/>
++<path d="M70.0339 28.9847L108.005 66.956C108.396 67.3465 109.029 67.3465 109.419 66.956L115.995 60.38C116.386 59.9894 116.386 59.3563 115.995 58.9658L78.0241 20.9945C77.6336 20.604 77.0004 20.604 76.6099 20.9945L70.0339 27.5705C69.6433 27.9611 69.6433 28.5942 70.0339 28.9847Z" fill="#868482"/>
+ </svg>
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/check-868482.svg
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/check-868482.svg
+@@ -1,8 +1,3 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+-	 viewBox="-414 91 170 119" enable-background="new -414 91 170 119" xml:space="preserve">
+-<g>
+-	<polygon fill="#868482" points="-351.7,210 -414,147.7 -402.7,136.3 -351.7,187.3 -255.3,91 -244,102.3 	"/>
+-</g>
++<svg width="170" height="119" viewBox="0 0 170 119" fill="none" xmlns="http://www.w3.org/2000/svg">
++<path d="M63.7142 117.586C62.9332 118.367 61.6668 118.367 60.8858 117.586L1.408 58.108C0.629382 57.3294 0.626601 56.0678 1.40178 55.2858L9.8858 46.7267C10.6658 45.9398 11.937 45.937 12.7204 46.7205L60.8865 94.8865C61.6673 95.6673 62.933 95.6676 63.7142 94.8873L157.286 1.41275C158.067 0.632394 159.333 0.632718 160.113 1.41348L168.586 9.88579C169.367 10.6668 169.367 11.9332 168.586 12.7142L63.7142 117.586Z" fill="#868482"/>
+ </svg>
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/enter-868482.svg
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/enter-868482.svg
+@@ -1,13 +1,5 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+-	 viewBox="-394 111 211 80" enable-background="new -394 111 211 80" xml:space="preserve">
+-<g>
+-	<rect x="-394" y="111" fill="none" width="211" height="80"/>
+-	<g>
+-		<rect x="-384.8" y="144.8" fill="#868482" width="201.8" height="12.3"/>
+-		<rect x="-195.3" y="121.7" fill="#868482" width="12.3" height="35.3"/>
+-		<polygon fill="#868482" points="-349.5,111 -349.5,190.8 -394,151.7 		"/>
+-	</g>
+-</g>
++<svg width="211" height="80" viewBox="0 0 211 80" fill="none" xmlns="http://www.w3.org/2000/svg">
++<path d="M211 33.7998H9.20001V46.0998H207C209.209 46.0998 211 44.3089 211 42.0998V33.7998Z" fill="#868482"/>
++<path d="M209 10.7002H200.7C199.595 10.7002 198.7 11.5956 198.7 12.7002V46.0002H207C209.209 46.0002 211 44.2093 211 42.0002V12.7002C211 11.5956 210.105 10.7002 209 10.7002Z" fill="#868482"/>
++<path d="M41.1502 3.06374C42.4335 1.89 44.5 2.80042 44.5 4.53957V75.3803C44.5 77.1006 42.4722 78.0182 41.1799 76.8828L2.51392 42.9089C1.17215 41.7299 1.15138 39.6469 2.46939 38.4415L41.1502 3.06374Z" fill="#868482"/>
+ </svg>
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/hidekeyboard-868482.svg
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/hidekeyboard-868482.svg
+@@ -1,55 +1,17 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+-	 viewBox="-427 87 144 127" enable-background="new -427 87 144 127" xml:space="preserve">
+-<g>
+-	<rect x="-427" y="87" fill="none" width="144" height="127"/>
+-	<g>
+-		<g>
+-			<path fill="#868482" d="M-283,177.3h-144V87h144V177.3z M-416.1,166.4h122.2V97.9h-122.2V166.4z"/>
+-		</g>
+-		<g>
+-			<rect x="-407.5" y="107.2" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-388.9" y="107.2" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-370.2" y="107.2" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-351.5" y="107.2" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-332.8" y="107.2" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-314.1" y="107.2" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-407.5" y="126.7" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-388.9" y="126.7" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-370.2" y="126.7" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-351.5" y="126.7" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-332.8" y="126.7" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-314.1" y="126.7" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-388.9" y="146.2" fill="#868482" width="67.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<polygon fill="#868482" points="-355,202.2 -364.8,195.2 -381.1,195.2 -355,213.9 -328.9,195.2 -345.2,195.2 			"/>
+-		</g>
+-	</g>
+-</g>
++<svg width="144" height="127" viewBox="0 0 144 127" fill="none" xmlns="http://www.w3.org/2000/svg">
++<path d="M144 86.3C144 88.5091 142.209 90.3 140 90.3H4C1.79086 90.3 0 88.5091 0 86.3V4C0 1.79086 1.79086 0 4 0H140C142.209 0 144 1.79086 144 4V86.3ZM10.9 77.4C10.9 78.5046 11.7954 79.4 12.9 79.4H131.1C132.205 79.4 133.1 78.5046 133.1 77.4V12.9C133.1 11.7954 132.205 10.9 131.1 10.9H12.9C11.7954 10.9 10.9 11.7954 10.9 12.9V77.4Z" fill="#868482"/>
++<path d="M30.2 20.2002H20.5C19.9477 20.2002 19.5 20.6479 19.5 21.2002V30.9002C19.5 31.4525 19.9477 31.9002 20.5 31.9002H30.2C30.7523 31.9002 31.2 31.4525 31.2 30.9002V21.2002C31.2 20.6479 30.7523 20.2002 30.2 20.2002Z" fill="#868482"/>
++<path d="M48.8 20.2002H39.1C38.5477 20.2002 38.1 20.6479 38.1 21.2002V30.9002C38.1 31.4525 38.5477 31.9002 39.1 31.9002H48.8C49.3522 31.9002 49.8 31.4525 49.8 30.9002V21.2002C49.8 20.6479 49.3522 20.2002 48.8 20.2002Z" fill="#868482"/>
++<path d="M67.5 20.2002H57.8C57.2477 20.2002 56.8 20.6479 56.8 21.2002V30.9002C56.8 31.4525 57.2477 31.9002 57.8 31.9002H67.5C68.0523 31.9002 68.5 31.4525 68.5 30.9002V21.2002C68.5 20.6479 68.0523 20.2002 67.5 20.2002Z" fill="#868482"/>
++<path d="M86.2 20.2002H76.5C75.9477 20.2002 75.5 20.6479 75.5 21.2002V30.9002C75.5 31.4525 75.9477 31.9002 76.5 31.9002H86.2C86.7523 31.9002 87.2 31.4525 87.2 30.9002V21.2002C87.2 20.6479 86.7523 20.2002 86.2 20.2002Z" fill="#868482"/>
++<path d="M104.9 20.2002H95.2C94.6477 20.2002 94.2 20.6479 94.2 21.2002V30.9002C94.2 31.4525 94.6477 31.9002 95.2 31.9002H104.9C105.452 31.9002 105.9 31.4525 105.9 30.9002V21.2002C105.9 20.6479 105.452 20.2002 104.9 20.2002Z" fill="#868482"/>
++<path d="M123.6 20.2002H113.9C113.348 20.2002 112.9 20.6479 112.9 21.2002V30.9002C112.9 31.4525 113.348 31.9002 113.9 31.9002H123.6C124.152 31.9002 124.6 31.4525 124.6 30.9002V21.2002C124.6 20.6479 124.152 20.2002 123.6 20.2002Z" fill="#868482"/>
++<path d="M30.2 39.7002H20.5C19.9477 39.7002 19.5 40.1479 19.5 40.7002V50.4002C19.5 50.9525 19.9477 51.4002 20.5 51.4002H30.2C30.7523 51.4002 31.2 50.9525 31.2 50.4002V40.7002C31.2 40.1479 30.7523 39.7002 30.2 39.7002Z" fill="#868482"/>
++<path d="M48.8 39.7002H39.1C38.5477 39.7002 38.1 40.1479 38.1 40.7002V50.4002C38.1 50.9525 38.5477 51.4002 39.1 51.4002H48.8C49.3522 51.4002 49.8 50.9525 49.8 50.4002V40.7002C49.8 40.1479 49.3522 39.7002 48.8 39.7002Z" fill="#868482"/>
++<path d="M67.5 39.7002H57.8C57.2477 39.7002 56.8 40.1479 56.8 40.7002V50.4002C56.8 50.9525 57.2477 51.4002 57.8 51.4002H67.5C68.0523 51.4002 68.5 50.9525 68.5 50.4002V40.7002C68.5 40.1479 68.0523 39.7002 67.5 39.7002Z" fill="#868482"/>
++<path d="M86.2 39.7002H76.5C75.9477 39.7002 75.5 40.1479 75.5 40.7002V50.4002C75.5 50.9525 75.9477 51.4002 76.5 51.4002H86.2C86.7523 51.4002 87.2 50.9525 87.2 50.4002V40.7002C87.2 40.1479 86.7523 39.7002 86.2 39.7002Z" fill="#868482"/>
++<path d="M104.9 39.7002H95.2C94.6477 39.7002 94.2 40.1479 94.2 40.7002V50.4002C94.2 50.9525 94.6477 51.4002 95.2 51.4002H104.9C105.452 51.4002 105.9 50.9525 105.9 50.4002V40.7002C105.9 40.1479 105.452 39.7002 104.9 39.7002Z" fill="#868482"/>
++<path d="M123.6 39.7002H113.9C113.348 39.7002 112.9 40.1479 112.9 40.7002V50.4002C112.9 50.9525 113.348 51.4002 113.9 51.4002H123.6C124.152 51.4002 124.6 50.9525 124.6 50.4002V40.7002C124.6 40.1479 124.152 39.7002 123.6 39.7002Z" fill="#868482"/>
++<path d="M103.8 59.2002H40.1C38.9954 59.2002 38.1 60.0956 38.1 61.2002V68.9002C38.1 70.0048 38.9954 70.9002 40.1 70.9002H103.8C104.905 70.9002 105.8 70.0048 105.8 68.9002V61.2002C105.8 60.0956 104.905 59.2002 103.8 59.2002Z" fill="#868482"/>
++<path d="M72.5813 114.785C72.2336 115.033 71.7665 115.033 71.4188 114.785L62.4608 108.386C62.2912 108.265 62.088 108.2 61.8796 108.2H49.0127C48.0406 108.2 47.6401 109.447 48.4303 110.013L70.8352 126.066C71.5316 126.565 72.4685 126.565 73.1649 126.066L95.5697 110.013C96.36 109.447 95.9594 108.2 94.9873 108.2H82.1205C81.9121 108.2 81.7088 108.265 81.5392 108.386L72.5813 114.785Z" fill="#868482"/>
+ </svg>
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/shift-80c342.svg
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/shift-80c342.svg
+@@ -1,12 +1,3 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+-	 viewBox="-427 84 144 134" enable-background="new -427 84 144 134" xml:space="preserve">
+-<g>
+-	<rect x="-427" y="84" fill="none" width="144" height="134"/>
+-	<g>
+-		<path fill="#80C342" d="M-323.4,218h-63.4v-56.5H-427l71.9-77.5l71.9,77.5h-40.2L-323.4,218L-323.4,218z M-375.3,206.5h40.5v-56.5
+-			h25.4l-45.7-49.2l-45.7,49.2h25.4L-375.3,206.5L-375.3,206.5z"/>
+-	</g>
+-</g>
++<svg width="144" height="134" viewBox="0 0 144 134" fill="none" xmlns="http://www.w3.org/2000/svg">
++<path d="M103.6 130C103.6 132.209 101.809 134 99.6 134H44.2C41.9909 134 40.2 132.209 40.2 130V79.5C40.2 78.3954 39.3046 77.5 38.2 77.5H6.87546C4.25661 77.5 2.89502 74.3795 4.67617 72.4596L68.9676 3.16078C70.5503 1.45478 73.2496 1.45478 74.8324 3.16078L139.124 72.4596C140.905 74.3795 139.543 77.5 136.925 77.5H105.6C104.495 77.5 103.6 78.3954 103.6 79.5V130ZM51.6982 121.502C51.6992 122.053 52.1466 122.5 52.6982 122.5H91.2C91.7523 122.5 92.2 122.052 92.2 121.5V70C92.2 67.7909 93.9909 66 96.2 66H115.306C116.18 66 116.633 64.9592 116.039 64.3194L72.6327 17.5888C72.2371 17.1629 71.5629 17.1629 71.1673 17.5888L27.761 64.3194C27.1667 64.9592 27.6205 66 28.4937 66H47.6071C49.8135 66 51.6032 67.7866 51.6071 69.9929L51.6982 121.502Z" fill="#00DEFF"/>
+ </svg>
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/shift-868482.svg
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/shift-868482.svg
+@@ -1,12 +1,9 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+-	 viewBox="-427 84 144 134" enable-background="new -427 84 144 134" xml:space="preserve">
+-<g>
+-	<rect x="-427" y="84" fill="none" width="144" height="134"/>
+-	<g>
+-		<path fill="#868482" d="M-323.4,218h-63.4v-56.5H-427l71.9-77.5l71.9,77.5h-40.2L-323.4,218L-323.4,218z M-375.3,206.5h40.5v-56.5
+-			h25.4l-45.7-49.2l-45.7,49.2h25.4L-375.3,206.5L-375.3,206.5z"/>
+-	</g>
++<svg width="144" height="134" viewBox="0 0 144 134" fill="none" xmlns="http://www.w3.org/2000/svg">
++<g id="shift-80c342 4">
++<g id="Group">
++<g id="Group_2">
++<path id="Vector" d="M103.6 130C103.6 132.209 101.809 134 99.6 134H44.2C41.9909 134 40.2 132.209 40.2 130V79.5C40.2 78.3954 39.3046 77.5 38.2 77.5H6.87546C4.25661 77.5 2.89502 74.3795 4.67617 72.4596L68.9676 3.16078C70.5503 1.45478 73.2496 1.45478 74.8324 3.16078L139.124 72.4596C140.905 74.3795 139.543 77.5 136.925 77.5H105.6C104.495 77.5 103.6 78.3954 103.6 79.5V130ZM51.6982 121.502C51.6992 122.053 52.1466 122.5 52.6982 122.5H91.2C91.7523 122.5 92.2 122.052 92.2 121.5V70C92.2 67.7909 93.9909 66 96.2 66H115.306C116.18 66 116.633 64.9592 116.039 64.3194L72.6327 17.5888C72.2371 17.1629 71.5629 17.1629 71.1673 17.5888L27.761 64.3194C27.1667 64.9592 27.6205 66 28.4937 66H47.6071C49.8135 66 51.6032 67.7866 51.6071 69.9929L51.6982 121.502Z" fill="#868482"/>
++</g>
++</g>
+ </g>
+ </svg>
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/shift-c5d6b6.svg
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/images/shift-c5d6b6.svg
+@@ -1,12 +1,3 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+-	 viewBox="-427 84 144 134" enable-background="new -427 84 144 134" xml:space="preserve">
+-<g>
+-	<rect x="-427" y="84" fill="none" width="144" height="134"/>
+-	<g>
+-		<path fill="#C5D6B6" d="M-323.4,218h-63.4v-56.5H-427l71.9-77.5l71.9,77.5h-40.2L-323.4,218L-323.4,218z M-375.3,206.5h40.5v-56.5
+-			h25.4l-45.7-49.2l-45.7,49.2h25.4L-375.3,206.5L-375.3,206.5z"/>
+-	</g>
+-</g>
++<svg width="144" height="134" viewBox="0 0 144 134" fill="none" xmlns="http://www.w3.org/2000/svg">
++<path d="M103.6 130C103.6 132.209 101.809 134 99.6 134H44.2C41.9909 134 40.2 132.209 40.2 130V79.5C40.2 78.3954 39.3046 77.5 38.2 77.5H6.87546C4.25661 77.5 2.89502 74.3795 4.67617 72.4596L68.9676 3.16078C70.5503 1.45478 73.2496 1.45478 74.8324 3.16078L139.124 72.4596C140.905 74.3795 139.543 77.5 136.925 77.5H105.6C104.495 77.5 103.6 78.3954 103.6 79.5V130ZM51.6982 121.502C51.6992 122.053 52.1466 122.5 52.6982 122.5H91.2C91.7523 122.5 92.2 122.052 92.2 121.5V70C92.2 67.7909 93.9909 66 96.2 66H115.306C116.18 66 116.633 64.9592 116.039 64.3194L72.6327 17.5888C72.2371 17.1629 71.5629 17.1629 71.1673 17.5888L27.761 64.3194C27.1667 64.9592 27.6205 66 28.4937 66H47.6071C49.8135 66 51.6032 67.7866 51.6071 69.9929L51.6982 121.502Z" fill="#89E2EF"/>
+ </svg>
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/style.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_landscape/style.qml
+@@ -67,7 +67,7 @@ KeyboardStyle {
+         Rectangle {
+             id: keyBackground
+             radius: 5
+-            color: "#383533"
++            color: "#3A3A3D"
+             anchors.fill: keyPanel
+             anchors.margins: keyBackgroundMargin
+             Text {
+@@ -137,7 +137,7 @@ KeyboardStyle {
+         Rectangle {
+             id: backspaceKeyBackground
+             radius: 5
+-            color: "#23211E"
++            color: "#262629"
+             anchors.fill: backspaceKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Image {
+@@ -182,7 +182,7 @@ KeyboardStyle {
+         Rectangle {
+             id: languageKeyBackground
+             radius: 5
+-            color: "#35322f"
++            color: "#262629"
+             anchors.fill: languageKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Image {
+@@ -227,7 +227,7 @@ KeyboardStyle {
+         Rectangle {
+             id: enterKeyBackground
+             radius: 5
+-            color: "#1e1b18"
++            color: "#262629"
+             anchors.fill: enterKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Image {
+@@ -324,7 +324,7 @@ KeyboardStyle {
+         Rectangle {
+             id: hideKeyBackground
+             radius: 5
+-            color: "#1e1b18"
++            color: "#262629"
+             anchors.fill: hideKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Image {
+@@ -369,7 +369,7 @@ KeyboardStyle {
+         Rectangle {
+             id: shiftKeyBackground
+             radius: 5
+-            color: "#1e1b18"
++            color: "#262629"
+             anchors.fill: shiftKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Image {
+@@ -386,7 +386,7 @@ KeyboardStyle {
+                     when: InputContext.capsLockActive
+                     PropertyChanges {
+                         target: shiftKeyBackground
+-                        color: "#5a892e"
++                        color: "#262629"
+                     }
+                     PropertyChanges {
+                         target: shiftKeyIcon
+@@ -436,7 +436,7 @@ KeyboardStyle {
+         Rectangle {
+             id: spaceKeyBackground
+             radius: 5
+-            color: "#35322f"
++            color: "#3A3A3D"
+             anchors.fill: spaceKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Text {
+@@ -477,7 +477,7 @@ KeyboardStyle {
+         Rectangle {
+             id: symbolKeyBackground
+             radius: 5
+-            color: "#1e1b18"
++            color: "#262629"
+             anchors.fill: symbolKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Text {
+@@ -529,7 +529,7 @@ KeyboardStyle {
+         Rectangle {
+             id: modeKeyBackground
+             radius: 5
+-            color: "#1e1b18"
++            color: "#262629"
+             anchors.fill: modeKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Text {
+@@ -956,7 +956,7 @@ KeyboardStyle {
+             anchors.topMargin: languageNameTextMetrics.height / 3
+             anchors.bottomMargin: anchors.topMargin
+             text: languageNameFormatter.elidedText
+-            color: "#5CAA15"
++            color: "#E6E6E7"
+             font {
+                 family: fontFamily
+                 weight: Font.Normal
+@@ -988,15 +988,16 @@ KeyboardStyle {
+             when: languageListItem.ListView.isCurrentItem
+             PropertyChanges {
+                 target: languageListLabel
+-                color: "black"
++                color: "#0FC8E4"
+             }
+         }
+     }
+ 
+     languageListBackground: Rectangle {
+-        color: "white"
++        color: "#59595D"
++        radius: 5
+         border {
+-            width: 1
++            width: 0
+             color: "#929495"
+         }
+     }
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/backspace-868482.svg
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/backspace-868482.svg
+@@ -1,23 +1,5 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+-	 viewBox="-420 107 159 88" enable-background="new -420 107 159 88" xml:space="preserve">
+-<g>
+-	<rect x="-420" y="107" fill="none" width="159" height="88"/>
+-	<g>
+-		<g>
+-			<path fill="#868482" d="M-261.2,195H-376l-44-44l44-44h114.8V195z M-371.3,183.7h98.8v-65.4h-98.8L-404,151L-371.3,183.7z"/>
+-		</g>
+-		<g>
+-			<g>
+-				
+-					<rect x="-332.7" y="123.2" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 -665.0558 26.5252)" fill="#868482" width="11.3" height="55.7"/>
+-			</g>
+-			<g>
+-				
+-					<rect x="-354.9" y="145.4" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 -665.0499 26.5255)" fill="#868482" width="55.7" height="11.3"/>
+-			</g>
+-		</g>
+-	</g>
+-</g>
++<svg width="159" height="88" viewBox="0 0 159 88" fill="none" xmlns="http://www.w3.org/2000/svg">
++<path d="M158.8 86C158.8 87.1046 157.905 88 156.8 88H44.8284C44.298 88 43.7893 87.7893 43.4142 87.4142L1.41422 45.4142C0.633167 44.6332 0.633165 43.3668 1.41421 42.5858L43.4142 0.585788C43.7893 0.210715 44.298 0 44.8284 0H156.8C157.905 0 158.8 0.895431 158.8 2V86ZM48.1142 76.1142C48.4893 76.4893 48.998 76.7 49.5284 76.7H145.5C146.605 76.7 147.5 75.8046 147.5 74.7V13.3C147.5 12.1954 146.605 11.3 145.5 11.3H49.5284C48.998 11.3 48.4893 11.5107 48.1142 11.8858L17.4142 42.5858C16.6332 43.3668 16.6332 44.6332 17.4142 45.4142L48.1142 76.1142Z" fill="#868482"/>
++<path d="M70.028 60.3795L76.604 66.9555C76.9945 67.346 77.6277 67.346 78.0182 66.9555L115.989 28.9842C116.38 28.5937 116.38 27.9606 115.989 27.57L109.413 20.994C109.023 20.6035 108.39 20.6035 107.999 20.994L70.028 58.9653C69.6374 59.3558 69.6374 59.9889 70.028 60.3795Z" fill="#868482"/>
++<path d="M70.0339 28.9847L108.005 66.956C108.396 67.3465 109.029 67.3465 109.419 66.956L115.995 60.38C116.386 59.9894 116.386 59.3563 115.995 58.9658L78.0241 20.9945C77.6336 20.604 77.0004 20.604 76.6099 20.9945L70.0339 27.5705C69.6433 27.9611 69.6433 28.5942 70.0339 28.9847Z" fill="#868482"/>
+ </svg>
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/check-868482.svg
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/check-868482.svg
+@@ -1,8 +1,3 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+-	 viewBox="-414 91 170 119" enable-background="new -414 91 170 119" xml:space="preserve">
+-<g>
+-	<polygon fill="#868482" points="-351.7,210 -414,147.7 -402.7,136.3 -351.7,187.3 -255.3,91 -244,102.3 	"/>
+-</g>
++<svg width="170" height="119" viewBox="0 0 170 119" fill="none" xmlns="http://www.w3.org/2000/svg">
++<path d="M63.7142 117.586C62.9332 118.367 61.6668 118.367 60.8858 117.586L1.408 58.108C0.629382 57.3294 0.626601 56.0678 1.40178 55.2858L9.8858 46.7267C10.6658 45.9398 11.937 45.937 12.7204 46.7205L60.8865 94.8865C61.6673 95.6673 62.933 95.6676 63.7142 94.8873L157.286 1.41275C158.067 0.632394 159.333 0.632718 160.113 1.41348L168.586 9.88579C169.367 10.6668 169.367 11.9332 168.586 12.7142L63.7142 117.586Z" fill="#868482"/>
+ </svg>
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/enter-868482.svg
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/enter-868482.svg
+@@ -1,13 +1,5 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+-	 viewBox="-394 111 211 80" enable-background="new -394 111 211 80" xml:space="preserve">
+-<g>
+-	<rect x="-394" y="111" fill="none" width="211" height="80"/>
+-	<g>
+-		<rect x="-384.8" y="144.8" fill="#868482" width="201.8" height="12.3"/>
+-		<rect x="-195.3" y="121.7" fill="#868482" width="12.3" height="35.3"/>
+-		<polygon fill="#868482" points="-349.5,111 -349.5,190.8 -394,151.7 		"/>
+-	</g>
+-</g>
++<svg width="211" height="80" viewBox="0 0 211 80" fill="none" xmlns="http://www.w3.org/2000/svg">
++<path d="M211 33.7998H9.20001V46.0998H207C209.209 46.0998 211 44.3089 211 42.0998V33.7998Z" fill="#868482"/>
++<path d="M209 10.7002H200.7C199.595 10.7002 198.7 11.5956 198.7 12.7002V46.0002H207C209.209 46.0002 211 44.2093 211 42.0002V12.7002C211 11.5956 210.105 10.7002 209 10.7002Z" fill="#868482"/>
++<path d="M41.1502 3.06374C42.4335 1.89 44.5 2.80042 44.5 4.53957V75.3803C44.5 77.1006 42.4722 78.0182 41.1799 76.8828L2.51392 42.9089C1.17215 41.7299 1.15138 39.6469 2.46939 38.4415L41.1502 3.06374Z" fill="#868482"/>
+ </svg>
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/hidekeyboard-868482.svg
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/hidekeyboard-868482.svg
+@@ -1,55 +1,17 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+-	 viewBox="-427 87 144 127" enable-background="new -427 87 144 127" xml:space="preserve">
+-<g>
+-	<rect x="-427" y="87" fill="none" width="144" height="127"/>
+-	<g>
+-		<g>
+-			<path fill="#868482" d="M-283,177.3h-144V87h144V177.3z M-416.1,166.4h122.2V97.9h-122.2V166.4z"/>
+-		</g>
+-		<g>
+-			<rect x="-407.5" y="107.2" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-388.9" y="107.2" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-370.2" y="107.2" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-351.5" y="107.2" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-332.8" y="107.2" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-314.1" y="107.2" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-407.5" y="126.7" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-388.9" y="126.7" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-370.2" y="126.7" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-351.5" y="126.7" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-332.8" y="126.7" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-314.1" y="126.7" fill="#868482" width="11.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<rect x="-388.9" y="146.2" fill="#868482" width="67.7" height="11.7"/>
+-		</g>
+-		<g>
+-			<polygon fill="#868482" points="-355,202.2 -364.8,195.2 -381.1,195.2 -355,213.9 -328.9,195.2 -345.2,195.2 			"/>
+-		</g>
+-	</g>
+-</g>
++<svg width="144" height="127" viewBox="0 0 144 127" fill="none" xmlns="http://www.w3.org/2000/svg">
++<path d="M144 86.3C144 88.5091 142.209 90.3 140 90.3H4C1.79086 90.3 0 88.5091 0 86.3V4C0 1.79086 1.79086 0 4 0H140C142.209 0 144 1.79086 144 4V86.3ZM10.9 77.4C10.9 78.5046 11.7954 79.4 12.9 79.4H131.1C132.205 79.4 133.1 78.5046 133.1 77.4V12.9C133.1 11.7954 132.205 10.9 131.1 10.9H12.9C11.7954 10.9 10.9 11.7954 10.9 12.9V77.4Z" fill="#868482"/>
++<path d="M30.2 20.2002H20.5C19.9477 20.2002 19.5 20.6479 19.5 21.2002V30.9002C19.5 31.4525 19.9477 31.9002 20.5 31.9002H30.2C30.7523 31.9002 31.2 31.4525 31.2 30.9002V21.2002C31.2 20.6479 30.7523 20.2002 30.2 20.2002Z" fill="#868482"/>
++<path d="M48.8 20.2002H39.1C38.5477 20.2002 38.1 20.6479 38.1 21.2002V30.9002C38.1 31.4525 38.5477 31.9002 39.1 31.9002H48.8C49.3522 31.9002 49.8 31.4525 49.8 30.9002V21.2002C49.8 20.6479 49.3522 20.2002 48.8 20.2002Z" fill="#868482"/>
++<path d="M67.5 20.2002H57.8C57.2477 20.2002 56.8 20.6479 56.8 21.2002V30.9002C56.8 31.4525 57.2477 31.9002 57.8 31.9002H67.5C68.0523 31.9002 68.5 31.4525 68.5 30.9002V21.2002C68.5 20.6479 68.0523 20.2002 67.5 20.2002Z" fill="#868482"/>
++<path d="M86.2 20.2002H76.5C75.9477 20.2002 75.5 20.6479 75.5 21.2002V30.9002C75.5 31.4525 75.9477 31.9002 76.5 31.9002H86.2C86.7523 31.9002 87.2 31.4525 87.2 30.9002V21.2002C87.2 20.6479 86.7523 20.2002 86.2 20.2002Z" fill="#868482"/>
++<path d="M104.9 20.2002H95.2C94.6477 20.2002 94.2 20.6479 94.2 21.2002V30.9002C94.2 31.4525 94.6477 31.9002 95.2 31.9002H104.9C105.452 31.9002 105.9 31.4525 105.9 30.9002V21.2002C105.9 20.6479 105.452 20.2002 104.9 20.2002Z" fill="#868482"/>
++<path d="M123.6 20.2002H113.9C113.348 20.2002 112.9 20.6479 112.9 21.2002V30.9002C112.9 31.4525 113.348 31.9002 113.9 31.9002H123.6C124.152 31.9002 124.6 31.4525 124.6 30.9002V21.2002C124.6 20.6479 124.152 20.2002 123.6 20.2002Z" fill="#868482"/>
++<path d="M30.2 39.7002H20.5C19.9477 39.7002 19.5 40.1479 19.5 40.7002V50.4002C19.5 50.9525 19.9477 51.4002 20.5 51.4002H30.2C30.7523 51.4002 31.2 50.9525 31.2 50.4002V40.7002C31.2 40.1479 30.7523 39.7002 30.2 39.7002Z" fill="#868482"/>
++<path d="M48.8 39.7002H39.1C38.5477 39.7002 38.1 40.1479 38.1 40.7002V50.4002C38.1 50.9525 38.5477 51.4002 39.1 51.4002H48.8C49.3522 51.4002 49.8 50.9525 49.8 50.4002V40.7002C49.8 40.1479 49.3522 39.7002 48.8 39.7002Z" fill="#868482"/>
++<path d="M67.5 39.7002H57.8C57.2477 39.7002 56.8 40.1479 56.8 40.7002V50.4002C56.8 50.9525 57.2477 51.4002 57.8 51.4002H67.5C68.0523 51.4002 68.5 50.9525 68.5 50.4002V40.7002C68.5 40.1479 68.0523 39.7002 67.5 39.7002Z" fill="#868482"/>
++<path d="M86.2 39.7002H76.5C75.9477 39.7002 75.5 40.1479 75.5 40.7002V50.4002C75.5 50.9525 75.9477 51.4002 76.5 51.4002H86.2C86.7523 51.4002 87.2 50.9525 87.2 50.4002V40.7002C87.2 40.1479 86.7523 39.7002 86.2 39.7002Z" fill="#868482"/>
++<path d="M104.9 39.7002H95.2C94.6477 39.7002 94.2 40.1479 94.2 40.7002V50.4002C94.2 50.9525 94.6477 51.4002 95.2 51.4002H104.9C105.452 51.4002 105.9 50.9525 105.9 50.4002V40.7002C105.9 40.1479 105.452 39.7002 104.9 39.7002Z" fill="#868482"/>
++<path d="M123.6 39.7002H113.9C113.348 39.7002 112.9 40.1479 112.9 40.7002V50.4002C112.9 50.9525 113.348 51.4002 113.9 51.4002H123.6C124.152 51.4002 124.6 50.9525 124.6 50.4002V40.7002C124.6 40.1479 124.152 39.7002 123.6 39.7002Z" fill="#868482"/>
++<path d="M103.8 59.2002H40.1C38.9954 59.2002 38.1 60.0956 38.1 61.2002V68.9002C38.1 70.0048 38.9954 70.9002 40.1 70.9002H103.8C104.905 70.9002 105.8 70.0048 105.8 68.9002V61.2002C105.8 60.0956 104.905 59.2002 103.8 59.2002Z" fill="#868482"/>
++<path d="M72.5813 114.785C72.2336 115.033 71.7665 115.033 71.4188 114.785L62.4608 108.386C62.2912 108.265 62.088 108.2 61.8796 108.2H49.0127C48.0406 108.2 47.6401 109.447 48.4303 110.013L70.8352 126.066C71.5316 126.565 72.4685 126.565 73.1649 126.066L95.5697 110.013C96.36 109.447 95.9594 108.2 94.9873 108.2H82.1205C81.9121 108.2 81.7088 108.265 81.5392 108.386L72.5813 114.785Z" fill="#868482"/>
+ </svg>
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/shift-80c342.svg
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/shift-80c342.svg
+@@ -1,12 +1,3 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+-	 viewBox="-427 84 144 134" enable-background="new -427 84 144 134" xml:space="preserve">
+-<g>
+-	<rect x="-427" y="84" fill="none" width="144" height="134"/>
+-	<g>
+-		<path fill="#80C342" d="M-323.4,218h-63.4v-56.5H-427l71.9-77.5l71.9,77.5h-40.2L-323.4,218L-323.4,218z M-375.3,206.5h40.5v-56.5
+-			h25.4l-45.7-49.2l-45.7,49.2h25.4L-375.3,206.5L-375.3,206.5z"/>
+-	</g>
+-</g>
++<svg width="144" height="134" viewBox="0 0 144 134" fill="none" xmlns="http://www.w3.org/2000/svg">
++<path d="M103.6 130C103.6 132.209 101.809 134 99.6 134H44.2C41.9909 134 40.2 132.209 40.2 130V79.5C40.2 78.3954 39.3046 77.5 38.2 77.5H6.87546C4.25661 77.5 2.89502 74.3795 4.67617 72.4596L68.9676 3.16078C70.5503 1.45478 73.2496 1.45478 74.8324 3.16078L139.124 72.4596C140.905 74.3795 139.543 77.5 136.925 77.5H105.6C104.495 77.5 103.6 78.3954 103.6 79.5V130ZM51.6982 121.502C51.6992 122.053 52.1466 122.5 52.6982 122.5H91.2C91.7523 122.5 92.2 122.052 92.2 121.5V70C92.2 67.7909 93.9909 66 96.2 66H115.306C116.18 66 116.633 64.9592 116.039 64.3194L72.6327 17.5888C72.2371 17.1629 71.5629 17.1629 71.1673 17.5888L27.761 64.3194C27.1667 64.9592 27.6205 66 28.4937 66H47.6071C49.8135 66 51.6032 67.7866 51.6071 69.9929L51.6982 121.502Z" fill="#00DEFF"/>
+ </svg>
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/shift-868482.svg
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/shift-868482.svg
+@@ -1,12 +1,9 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+-	 viewBox="-427 84 144 134" enable-background="new -427 84 144 134" xml:space="preserve">
+-<g>
+-	<rect x="-427" y="84" fill="none" width="144" height="134"/>
+-	<g>
+-		<path fill="#868482" d="M-323.4,218h-63.4v-56.5H-427l71.9-77.5l71.9,77.5h-40.2L-323.4,218L-323.4,218z M-375.3,206.5h40.5v-56.5
+-			h25.4l-45.7-49.2l-45.7,49.2h25.4L-375.3,206.5L-375.3,206.5z"/>
+-	</g>
++<svg width="144" height="134" viewBox="0 0 144 134" fill="none" xmlns="http://www.w3.org/2000/svg">
++<g id="shift-80c342 4">
++<g id="Group">
++<g id="Group_2">
++<path id="Vector" d="M103.6 130C103.6 132.209 101.809 134 99.6 134H44.2C41.9909 134 40.2 132.209 40.2 130V79.5C40.2 78.3954 39.3046 77.5 38.2 77.5H6.87546C4.25661 77.5 2.89502 74.3795 4.67617 72.4596L68.9676 3.16078C70.5503 1.45478 73.2496 1.45478 74.8324 3.16078L139.124 72.4596C140.905 74.3795 139.543 77.5 136.925 77.5H105.6C104.495 77.5 103.6 78.3954 103.6 79.5V130ZM51.6982 121.502C51.6992 122.053 52.1466 122.5 52.6982 122.5H91.2C91.7523 122.5 92.2 122.052 92.2 121.5V70C92.2 67.7909 93.9909 66 96.2 66H115.306C116.18 66 116.633 64.9592 116.039 64.3194L72.6327 17.5888C72.2371 17.1629 71.5629 17.1629 71.1673 17.5888L27.761 64.3194C27.1667 64.9592 27.6205 66 28.4937 66H47.6071C49.8135 66 51.6032 67.7866 51.6071 69.9929L51.6982 121.502Z" fill="#868482"/>
++</g>
++</g>
+ </g>
+ </svg>
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/shift-c5d6b6.svg
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/images/shift-c5d6b6.svg
+@@ -1,12 +1,3 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+-	 viewBox="-427 84 144 134" enable-background="new -427 84 144 134" xml:space="preserve">
+-<g>
+-	<rect x="-427" y="84" fill="none" width="144" height="134"/>
+-	<g>
+-		<path fill="#C5D6B6" d="M-323.4,218h-63.4v-56.5H-427l71.9-77.5l71.9,77.5h-40.2L-323.4,218L-323.4,218z M-375.3,206.5h40.5v-56.5
+-			h25.4l-45.7-49.2l-45.7,49.2h25.4L-375.3,206.5L-375.3,206.5z"/>
+-	</g>
+-</g>
++<svg width="144" height="134" viewBox="0 0 144 134" fill="none" xmlns="http://www.w3.org/2000/svg">
++<path d="M103.6 130C103.6 132.209 101.809 134 99.6 134H44.2C41.9909 134 40.2 132.209 40.2 130V79.5C40.2 78.3954 39.3046 77.5 38.2 77.5H6.87546C4.25661 77.5 2.89502 74.3795 4.67617 72.4596L68.9676 3.16078C70.5503 1.45478 73.2496 1.45478 74.8324 3.16078L139.124 72.4596C140.905 74.3795 139.543 77.5 136.925 77.5H105.6C104.495 77.5 103.6 78.3954 103.6 79.5V130ZM51.6982 121.502C51.6992 122.053 52.1466 122.5 52.6982 122.5H91.2C91.7523 122.5 92.2 122.052 92.2 121.5V70C92.2 67.7909 93.9909 66 96.2 66H115.306C116.18 66 116.633 64.9592 116.039 64.3194L72.6327 17.5888C72.2371 17.1629 71.5629 17.1629 71.1673 17.5888L27.761 64.3194C27.1667 64.9592 27.6205 66 28.4937 66H47.6071C49.8135 66 51.6032 67.7866 51.6071 69.9929L51.6982 121.502Z" fill="#89E2EF"/>
+ </svg>
+--- a/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/style.qml
++++ b/qtvirtualkeyboard/src/virtualkeyboard/content/styles/default_portrait/style.qml
+@@ -67,7 +67,7 @@ KeyboardStyle {
+         Rectangle {
+             id: keyBackground
+             radius: 5
+-            color: "#383533"
++            color: "#3A3A3D"
+             anchors.fill: keyPanel
+             anchors.margins: keyBackgroundMargin
+             Text {
+@@ -137,7 +137,7 @@ KeyboardStyle {
+         Rectangle {
+             id: backspaceKeyBackground
+             radius: 5
+-            color: "#23211E"
++            color: "#262629"
+             anchors.fill: backspaceKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Image {
+@@ -182,7 +182,7 @@ KeyboardStyle {
+         Rectangle {
+             id: languageKeyBackground
+             radius: 5
+-            color: "#35322f"
++            color: "#262629"
+             anchors.fill: languageKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Image {
+@@ -227,7 +227,7 @@ KeyboardStyle {
+         Rectangle {
+             id: enterKeyBackground
+             radius: 5
+-            color: "#1e1b18"
++            color: "#262629"
+             anchors.fill: enterKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Image {
+@@ -324,7 +324,7 @@ KeyboardStyle {
+         Rectangle {
+             id: hideKeyBackground
+             radius: 5
+-            color: "#1e1b18"
++            color: "#262629"
+             anchors.fill: hideKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Image {
+@@ -369,7 +369,7 @@ KeyboardStyle {
+         Rectangle {
+             id: shiftKeyBackground
+             radius: 5
+-            color: "#1e1b18"
++            color: "#262629"
+             anchors.fill: shiftKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Image {
+@@ -386,7 +386,7 @@ KeyboardStyle {
+                     when: InputContext.capsLockActive
+                     PropertyChanges {
+                         target: shiftKeyBackground
+-                        color: "#5a892e"
++                        color: "#262629"
+                     }
+                     PropertyChanges {
+                         target: shiftKeyIcon
+@@ -436,7 +436,7 @@ KeyboardStyle {
+         Rectangle {
+             id: spaceKeyBackground
+             radius: 5
+-            color: "#35322f"
++            color: "#3A3A3D"
+             anchors.fill: spaceKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Text {
+@@ -477,7 +477,7 @@ KeyboardStyle {
+         Rectangle {
+             id: symbolKeyBackground
+             radius: 5
+-            color: "#1e1b18"
++            color: "#262629"
+             anchors.fill: symbolKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Text {
+@@ -529,7 +529,7 @@ KeyboardStyle {
+         Rectangle {
+             id: modeKeyBackground
+             radius: 5
+-            color: "#1e1b18"
++            color: "#262629"
+             anchors.fill: modeKeyPanel
+             anchors.margins: keyBackgroundMargin
+             Text {
+@@ -956,7 +956,7 @@ KeyboardStyle {
+             anchors.topMargin: languageNameTextMetrics.height / 3
+             anchors.bottomMargin: anchors.topMargin
+             text: languageNameFormatter.elidedText
+-            color: "#5CAA15"
++            color: "#E6E6E7"
+             font {
+                 family: fontFamily
+                 weight: Font.Normal
+@@ -988,15 +988,16 @@ KeyboardStyle {
+             when: languageListItem.ListView.isCurrentItem
+             PropertyChanges {
+                 target: languageListLabel
+-                color: "black"
++                color: "#0FC8E4"
+             }
+         }
+     }
+ 
+     languageListBackground: Rectangle {
+-        color: "white"
++        color: "#59595D"
++        radius: 5
+         border {
+-            width: 1
++            width: 0
+             color: "#929495"
+         }
+     }

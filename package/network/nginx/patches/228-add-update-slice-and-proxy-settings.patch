@@ -1,0 +1,52 @@
+--- a/conf/nginx.conf
++++ b/conf/nginx.conf
+@@ -251,7 +251,13 @@ index index.html;
+         add_header Referrer-Policy "no-referrer" always;
+ 
+         location / {
+-
++            # https://blog.csdn.net/fdipzone/article/details/79355576
++            proxy_connect_timeout  300s;
++            proxy_send_timeout  300s;
++            proxy_read_timeout  300s;
++            fastcgi_connect_timeout 300s;
++            fastcgi_send_timeout 300s;
++            fastcgi_read_timeout 300s;
+             proxy_pass http://127.0.0.1:8004;
+         }
+ 
+@@ -315,12 +321,18 @@ index index.html;
+     server {                                                                    
+         charset utf-8;                                                      
+         listen 9005;                                                        
++        if ($request_method ~* OPTIONS) {
++            return 204;
++        }
+         root /usr/share/web/pad/build;                                       
+         index index.html;                                                   
+         add_header Access-Control-Allow-Origin *;
+         add_header Access-Control-Allow-Methods 'GET,POST,PUT,OPTIONS,DELETE,PATCH,VIEW';
+-        add_header Access-Control-Allow-Headers 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization'; 
++        add_header Access-Control-Allow-Headers 'Range,responseType,If-Range,DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization'; 
+         add_header Referrer-Policy "no-referrer" always;                                                                    
++        add_header 'Access-Control-Expose-Headers' 'Authorization,X-Custom-Header,Content-Range,ETag,Last-Modified,Total-Size';
++        # error_page  405 =200 $uri;
++
+         location / {                                                  
+             slice             1m;
+             proxy_cache_key   $uri$is_args$args$slice_range;
+@@ -330,6 +342,14 @@ index index.html;
+             proxy_buffers 16 10240k;
+             proxy_busy_buffers_size 40960k;
+             proxy_temp_file_write_size 40960k; 
++
++            # https://blog.csdn.net/fdipzone/article/details/79355576
++            proxy_connect_timeout  300s;
++            proxy_send_timeout  300s;
++            proxy_read_timeout  300s;
++            fastcgi_connect_timeout 300s;
++            fastcgi_send_timeout 300s;
++            fastcgi_read_timeout 300s;
+         }
+         location /sn {                                                  
+             alias /mnt/UDISK/.crealityprint/png;                      

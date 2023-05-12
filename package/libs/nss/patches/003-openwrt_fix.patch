@@ -1,0 +1,118 @@
+diff --git a/nss/coreconf/Linux.mk b/nss/coreconf/Linux.mk
+index c3ae5b6..5071241 100644
+--- a/nss/coreconf/Linux.mk
++++ b/nss/coreconf/Linux.mk
+@@ -117,11 +117,6 @@ ifeq ($(OS_RELEASE),2.0)
+ endif
+ 
+ ifdef BUILD_OPT
+-ifeq (11,$(ALLOW_OPT_CODE_SIZE)$(OPT_CODE_SIZE))
+-	OPTIMIZER = -Os
+-else
+-	OPTIMIZER = -O2
+-endif
+ ifdef MOZ_DEBUG_SYMBOLS
+ 	ifdef MOZ_DEBUG_FLAGS
+ 		OPTIMIZER += $(MOZ_DEBUG_FLAGS)
+@@ -148,7 +143,8 @@ endif
+ 
+ ARCH			= linux
+ 
+-DSO_CFLAGS		= -fPIC
++ifndef USE_NATIVE
++DSO_CFLAGS		= $(fpic)
+ DSO_LDOPTS		= -shared $(ARCHFLAG) -Wl,--gc-sections
+ # The linker on Red Hat Linux 7.2 and RHEL 2.1 (GNU ld version 2.11.90.0.8)
+ # incorrectly reports undefined references in the libraries we link with, so
+@@ -160,6 +156,7 @@ ifneq ($(USE_ASAN),1)
+ DSO_LDOPTS		+= $(if $(findstring 2.11.90.0.8,$(shell ld -v)),,$(ZDEFS_FLAG))
+ endif
+ LDFLAGS			+= $(ARCHFLAG)
++endif
+ 
+ # On Maemo, we need to use the -rpath-link flag for even the standard system
+ # library directories.
+diff --git a/nss/coreconf/UNIX.mk b/nss/coreconf/UNIX.mk
+index b448e75..c91b5b7 100644
+--- a/nss/coreconf/UNIX.mk
++++ b/nss/coreconf/UNIX.mk
+@@ -10,7 +10,6 @@ AR          = ar cr $@
+ LDOPTS     += -L$(SOURCE_LIB_DIR)
+ 
+ ifdef BUILD_OPT
+-	OPTIMIZER  += -O
+ 	DEFINES    += -UDEBUG -DNDEBUG
+ else
+ 	OPTIMIZER  += -g
+diff --git a/nss/coreconf/arch.mk b/nss/coreconf/arch.mk
+index 8135949..0e56680 100644
+--- a/nss/coreconf/arch.mk
++++ b/nss/coreconf/arch.mk
+@@ -296,7 +296,7 @@ OBJDIR_NAME = $(OS_TARGET)$(OS_RELEASE)$(CPU_TAG)$(LIBC_TAG)$(IMPL_STRATEGY)$(OB
+ else
+ OBJDIR_NAME = $(OS_TARGET)$(OS_RELEASE)$(CPU_TAG)$(COMPILER_TAG)$(LIBC_TAG)$(IMPL_STRATEGY)$(OBJDIR_TAG).OBJ
+ endif
+-
++OBJDIR_NAME = build_dir
+ 
+ ifeq (,$(filter-out WIN%,$(OS_TARGET)))
+ ifndef BUILD_OPT
+diff --git a/nss/coreconf/rules.mk b/nss/coreconf/rules.mk
+index 34b742a..a8e6a98 100644
+--- a/nss/coreconf/rules.mk
++++ b/nss/coreconf/rules.mk
+@@ -261,7 +261,7 @@ $(LIBRARY): $(OBJS)
+ ifeq (,$(filter-out _WIN%,$(NS_USE_GCC)_$(OS_TARGET)))
+ 	$(AR) $(subst /,\\,$(OBJS))
+ else
+-	$(AR) $(OBJS)
++	$(AR) rcs $@ $(OBJS)
+ endif
+ 	$(RANLIB) $@
+ 
+diff --git a/nss/lib/dbm/src/dirent.h b/nss/lib/dbm/src/dirent.h
+index 0b4ae5d..a9895af 100644
+--- a/nss/lib/dbm/src/dirent.h
++++ b/nss/lib/dbm/src/dirent.h
+@@ -30,7 +30,7 @@
+ #define MAXNAMLEN FILENAME_MAX
+ 
+ #else
+-#include <param.h>
++#include <sys/param.h>
+ #endif
+ #endif
+
+diff --git a/nss/coreconf/UNIX.mk b/nss/coreconf/UNIX.mk
+index c91b5b7..4b9cacd 100644
+--- a/nss/coreconf/UNIX.mk
++++ b/nss/coreconf/UNIX.mk
+@@ -6,7 +6,7 @@
+ XP_DEFINE  += -DXP_UNIX
+ LIB_SUFFIX  = a
+ DLL_SUFFIX  = so
+-AR          = ar cr $@
++# AR          = ar cr $@
+ LDOPTS     += -L$(SOURCE_LIB_DIR)
+ 
+ ifdef BUILD_OPT
+ 
+diff --git a/nss/lib/Makefile b/nss/lib/Makefile
+index 8eedad0..3560eac 100644
+--- a/nss/lib/Makefile
++++ b/nss/lib/Makefile
+@@ -31,10 +31,12 @@ ZLIB_SRCDIR = zlib  # Add the zlib directory to DIRS.
+ endif
+ 
+ ifndef MOZILLA_CLIENT
+-ifndef NSS_USE_SYSTEM_SQLITE
++ifdef NSS_USE_NATICE_SQLITE
++ifdef NSS_USE_SYSTEM_SQLITE
+ SQLITE_SRCDIR = sqlite  # Add the sqlite directory to DIRS.
+ endif
+ endif
++endif
+ 
+ ifndef MOZILLA_CLIENT
+ ifeq ($(OS_ARCH),Linux)
+

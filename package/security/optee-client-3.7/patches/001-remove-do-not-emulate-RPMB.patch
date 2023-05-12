@@ -1,0 +1,23 @@
+diff -Naur optee_client-3.7.0/tee-supplicant/CMakeLists.txt optee_client-3.7.0-bak/tee-supplicant/CMakeLists.txt
+--- optee_client-3.7.0/tee-supplicant/CMakeLists.txt	2019-08-07 03:20:06.000000000 +0800
++++ optee_client-3.7.0-bak/tee-supplicant/CMakeLists.txt	2020-03-30 17:20:20.180294259 +0800
+@@ -4,7 +4,7 @@
+ # Configuration flags always included
+ ################################################################################
+ option (CFG_TA_TEST_PATH "Enable tee-supplicant to load from test/debug path" OFF)
+-option (RPMB_EMU "Enable tee-supplicant to emulate RPMB" ON)
++option (RPMB_EMU "Enable tee-supplicant to emulate RPMB" OFF)
+ option (CFG_TA_GPROF_SUPPORT "Enable tee-supplicant support for TAs instrumented with gprof" ON)
+ option (CFG_TA_FTRACE_SUPPORT "Enable tee-supplicant support for TAs instrumented with ftrace" ON)
+
+diff -Naur optee_client-3.7.0/tee-supplicant/Makefile optee_client-3.7.0-bak/tee-supplicant/Makefile
+--- optee_client-3.7.0/tee-supplicant/Makefile	2019-08-07 03:20:06.000000000 +0800
++++ optee_client-3.7.0-bak/tee-supplicant/Makefile	2020-03-30 17:20:11.268293879 +0800
+@@ -4,7 +4,7 @@
+ OUT_DIR := $(OO)/tee-supplicant
+
+ # Emulate RPMB ioctl's
+-RPMB_EMU	:= 1
++RPMB_EMU	:= 0
+
+ .PHONY: all tee-supplicant clean

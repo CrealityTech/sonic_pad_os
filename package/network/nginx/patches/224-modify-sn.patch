@@ -1,0 +1,11 @@
+--- a/conf/nginx.conf
++++ b/conf/nginx.conf
+@@ -251,7 +251,7 @@ index index.html;
+         add_header Access-Control-Allow-Headers 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization'; 
+         add_header Referrer-Policy "no-referrer" always;                                                                    
+         location /sn {                                                  
+-            alias /mnt/UDISK/.crealityprint/serial_number.png;                      
++            alias /mnt/UDISK/.crealityprint/png;                      
+             autoindex on;                                                                   
+         }
+ 

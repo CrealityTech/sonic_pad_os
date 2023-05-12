@@ -1,0 +1,26 @@
+--- a/conf/nginx.conf
++++ b/conf/nginx.conf
+@@ -618,6 +618,11 @@ index index.html;
+         location /webcam4/ {
+             proxy_pass http://mjpgstreamer4/;
+         }
++		
++        location /FAQ {
++            alias /mnt/UDISK/.crealityprint/FAQ;
++            autoindex on;
++        }
+     }
+ 
+     server {
+@@ -690,6 +695,11 @@ index index.html;
+         location /webcam4/ {
+             proxy_pass http://mjpgstreamer4/;
+         }
++
++        location /FAQ {
++            alias /mnt/UDISK/.crealityprint/FAQ;
++            autoindex on;
++        }
+     }
+ 
+     # HTTPS server

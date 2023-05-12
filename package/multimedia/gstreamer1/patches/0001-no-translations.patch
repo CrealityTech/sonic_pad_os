@@ -1,0 +1,47 @@
+From 3520aead95d3e72bb62ef36e57646d1b544f307d Mon Sep 17 00:00:00 2001
+From: houxiaoni <houxiaoni@allwinnertech.com>
+Date: Mon, 13 Jul 2020 14:08:53 +0800
+Subject: [PATCH] no translations
+
+Change-Id: I2bba2b2732ac8e6c7c03ad7dec61f4c2f92cb4a0
+Signed-off-by: houxiaoni <houxiaoni@allwinnertech.com>
+---
+ Makefile.am  | 2 --
+ configure.ac | 1 -
+ 2 files changed, 3 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index de057c4..ef26440 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -9,7 +9,6 @@ aclocal_DATA = gst-element-check-1.0.m4
+ SUBDIRS = pkgconfig \
+ 	gst libs plugins tests \
+ 	docs \
+-	po \
+ 	m4 \
+ 	common \
+ 	data
+@@ -22,7 +21,6 @@ endif
+ DIST_SUBDIRS = pkgconfig \
+ 	gst libs plugins tools tests \
+ 	docs \
+-	po \
+ 	m4 \
+ 	common \
+ 	data
+diff --git a/configure.ac b/configure.ac
+index 2b59482..93587f7 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1086,7 +1086,6 @@ libs/gst/net/Makefile
+ plugins/Makefile
+ plugins/elements/Makefile
+ plugins/tracers/Makefile
+-po/Makefile.in
+ tests/Makefile
+ tests/benchmarks/Makefile
+ tests/check/Makefile
+-- 
+1.9.1
+

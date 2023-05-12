@@ -1,0 +1,26 @@
+From 97fa1f115707a36f6d794b331b7f10575cb5626a Mon Sep 17 00:00:00 2001
+From: junsenhuang <junsenhuang@allwinnertech.com>
+Date: Tue, 4 Jun 2019 09:45:21 +0800
+Subject: [PATCH 01/11] disable fdkaac to avoid compile error temporarily.
+
+Change-Id: I4556e28cc777ea2b1ef512138d7ee8f9b7163c2f
+---
+ ext/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ext/Makefile.am b/ext/Makefile.am
+index 4de9214..dfe49dd 100644
+--- a/ext/Makefile.am
++++ b/ext/Makefile.am
+@@ -107,7 +107,7 @@ else
+ endif
+ 
+ if USE_FDK_AAC
+- FDK_AAC_DIR=fdkaac
++ FDK_AAC_DIR=#fdkaac
+ else
+  FDK_AAC_DIR=
+ endif
+-- 
+1.9.1
+

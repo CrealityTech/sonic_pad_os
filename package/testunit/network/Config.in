@@ -1,0 +1,9 @@
+menuconfig TESTUNIT_NETWORK
+    bool "network"
+    default y
+
+if TESTUNIT_NETWORK
+    source wifi/Config.in
+    source bt/Config.in
+endif
+

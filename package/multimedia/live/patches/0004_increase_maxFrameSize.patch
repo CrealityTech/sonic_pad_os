@@ -1,0 +1,11 @@
+Index: live/liveMedia/FramedSource.cpp
+===================================================================
+--- live.orig/liveMedia/FramedSource.cpp
++++ live/liveMedia/FramedSource.cpp
+@@ -122,5 +122,5 @@ void FramedSource::doStopGettingFrames()
+ 
+ unsigned FramedSource::maxFrameSize() const {
+   // By default, this source has no maximum frame size.
+-  return 0;
++  return 130000;
+ }
