@@ -1,0 +1,12 @@
+--- a/klipper/klippy/gcode.py
++++ b/klipper/klippy/gcode.py
+@@ -3,6 +3,9 @@
+ # Copyright (C) 2016-2021  Kevin O'Connor <kevin@koconnor.net>
+ #
+ # This file may be distributed under the terms of the GNU GPLv3 license.
++import sys
++reload(sys)
++sys.setdefaultencoding('utf8')
+ import os, re, logging, collections, shlex
+ 
+ class CommandError(Exception):

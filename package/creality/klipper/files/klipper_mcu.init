@@ -1,0 +1,58 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2006-2011 OpenWrt.org
+
+START=55
+STOP=1
+DEPEND=fstab
+USE_PROCD=1
+PROG=/usr/bin/klipper_mcu
+OOM_ADJ=-17
+
+mcu_host_stop() {
+	# Shutdown existing Klipper instance (if applicable). The goal is to
+	# put the GPIO pins in a safe state.
+	
+	if [ -c /tmp/klipper_host_mcu ]; then
+		echo "Attempting to shutdown host mcu..."
+		set -e
+		(echo "FORCE_SHUTDOWN" > /tmp/klipper_host_mcu ) 2> /dev/null || (echo "Firmware busy! Please shutdown Klipper and then retry." && exit 1)
+		sleep 1
+		(echo "FORCE_SHUTDOWN" > /tmp/klipper_host_mcu ) 2> /dev/null || (echo "Firmware busy! Please shutdown Klipper and then retry." && exit 1)
+		sleep 1
+		set +e
+	fi
+
+	mcu=`ps | grep $PROG | grep -v grep | awk '{print $1}'`
+	[ -n "$mcu" ] && {
+		for pid in $mcu
+		do
+			kill -9 $pid
+		done
+	}
+	
+}
+
+mcu_host_start() {
+
+	[ -x $PROG ] || return
+
+	if [ -c /tmp/klipper_host_mcu ]; then
+		mcu_host_stop		
+	fi
+
+	echo "Starting klipper MCU"
+
+	procd_open_instance
+	procd_set_param oom_adj $OOM_ADJ
+	procd_set_param command $PROG -r
+	procd_close_instance
+
+}
+
+start_service() {
+	mcu_host_start
+}
+
+stop_service() {
+	mcu_host_stop
+}

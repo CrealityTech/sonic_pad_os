@@ -1,0 +1,18 @@
+#!/bin/sh /etc/rc.common
+
+START=60
+STOP=1
+USE_PROCD=1
+# cause we need /mnt/UDISK already mounted
+DEPEND=fstab
+PROG=monitor
+FILE=/tmp/browser_reload
+
+start_service() {
+
+    [ ! -f $FILE ] && touch $FILE && chmod o-r $FILE
+
+	procd_open_instance
+    procd_set_param command $PROG $FILE
+    procd_close_instance
+}

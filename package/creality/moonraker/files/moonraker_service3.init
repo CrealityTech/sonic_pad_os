@@ -1,0 +1,32 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2006-2011 OpenWrt.org
+
+START=55
+STOP=1
+DEPEND=fstab
+USE_PROCD=1
+PROG=/usr/share/moonraker-env/bin/python
+USERDATA=/mnt/UDISK/
+PRINTER_CONFIG_DIR=$USERDATA/printer_config3
+PRINTER_LOGS_DIR=$USERDATA/printer_logs3
+PRINTER_CUSTOM_CFG=$PRINTER_CONFIG_DIR/moonraker.conf
+PRINTER_DEFAULT_CFG=/usr/share/klipper-brain/printer_config3/moonraker.conf
+OOM_ADJ=-17
+
+start_service() {
+
+    [ -d $PRINTER_CONFIG_DIR ] || mkdir -p $PRINTER_CONFIG_DIR
+    [ -d $PRINTER_CONFIG_DIR ] && chmod o=rwx $PRINTER_CONFIG_DIR
+
+    [ -s $PRINTER_CUSTOM_CFG ] || cp $PRINTER_DEFAULT_CFG $PRINTER_CUSTOM_CFG
+    [ -s $PRINTER_CUSTOM_CFG ] && chmod o=rwx $PRINTER_CUSTOM_CFG
+
+    [ -d $PRINTER_LOGS_DIR ] || mkdir -p $PRINTER_LOGS_DIR
+    [ -d $PRINTER_LOGS_DIR ] && chmod o=rwx $PRINTER_LOGS_DIR
+
+    procd_open_instance
+    procd_set_param env HOME=/root
+    procd_set_param oom_adj $OOM_ADJ
+    procd_set_param command $PROG /usr/share/moonraker/moonraker/moonraker.py -c $PRINTER_CUSTOM_CFG -l $PRINTER_LOGS_DIR/moonraker.log
+    procd_close_instance
+}

@@ -1,0 +1,46 @@
+#!/bin/sh /etc/rc.common
+
+START=55
+STOP=1
+DEPEND=nginx
+PROG=qt-browser
+USE_PROCD=1
+
+remove_cache() {
+	find /.cache/ -type f | xargs rm
+	find /.local/ -type f ! -name "Cookies*" -exec rm -rf {} \;
+}
+
+start_browser(){
+	# set core file size, 614400 blocks = 300M
+	ulimit -c 614400
+
+	export QT_QPA_EGLFS_INTEGRATION=none
+	export XDG_RUNTIME_DIR=/dev/shm
+	#export QT_QPA_EVDEV_TOUCHSCREEN_PARAMETERS='evdev:/dev/event2'
+	export QT_QPA_EGLFS_PHYSICAL_WIDTH='384'
+	export QT_QPA_EGLFS_PHYSICAL_HEIGHT='207'
+	$PROG --no-sandbox -platform eglfs --js-flags=--no-icu-timezone-data &
+}
+
+start_service() {
+
+	remove_cache
+	start_browser
+}
+
+stop_service() {
+	browser=`ps | grep -w $PROG | grep -v grep | awk '{print $1}'`
+	[ -n "$browser" ] && {
+        for pid in "$browser"
+        do
+            kill -9 $pid
+        done
+	}
+}
+
+reload_service() {
+	stop_service
+	sleep 1
+	start_browser
+}
